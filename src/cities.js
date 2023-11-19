@@ -1,0 +1,33 @@
+const Cities = [
+    { "id": "alexandria", "name": "Alexandria" },
+    { "id": "assiut", "name": "Assiut" },
+    { "id": "aswan", "name": "Aswan" },
+    { "id": "beheira", "name": "Beheira" },
+    { "id": "bani_suef", "name": "Bani Suef" },
+    { "id": "cairo", "name": "Cairo" },
+    { "id": "daqahliya", "name": "Daqahliya" },
+    { "id": "damietta", "name": "Damietta" },
+    { "id": "fayyoum", "name": "Fayyoum" },
+    { "id": "gharbiya", "name": "Gharbiya" },
+    { "id": "giza", "name": "Giza" },
+    { "id": "helwan", "name": "Helwan" },
+    { "id": "ismailia", "name": "Ismailia" },
+    { "id": "kafr_el_sheikh", "name": "Kafr El Sheikh" },
+    { "id": "luxor", "name": "Luxor" },
+    { "id": "marsa_matrouh", "name": "Marsa Matrouh" },
+    { "id": "minya", "name": "Minya" },
+    { "id": "monofiya", "name": "Monofiya" },
+    { "id": "new_valley", "name": "New Valley" },
+    { "id": "north_sinai", "name": "North Sinai" },
+    { "id": "port_said", "name": "Port Said" },
+    { "id": "qalioubiya", "name": "Qalioubiya" },
+    { "id": "qena", "name": "Qena" },
+    { "id": "red_sea", "name": "Red Sea" },
+    { "id": "sharqiya", "name": "Sharqiya" },
+    { "id": "sohag", "name": "Sohag" },
+    { "id": "south_sinai", "name": "South Sinai" },
+    { "id": "suez", "name": "Suez" },
+    { "id": "tanta", "name": "Tanta" }
+]
+
+export default Cities;
