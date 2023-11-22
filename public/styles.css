@@ -126,3 +126,131 @@ select {
 #login {
   margin-left: 13%;
 }
+
+
+.heading {
+  text-align: center;
+  font-size: 2em;
+  color: #2d3436;
+  margin: 20px 0 30px;
+}
+.topleft{
+  padding-left: 2%;
+  border-radius: 25px 25px 0 0;
+  height: 100px;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+
+}
+
+.topright{
+  border-radius: 25px 25px 0 0;
+  height: 100px;
+  width: 100%;
+  padding-right: 1.5%;
+  position: relative;
+  top: 0;
+  right: 0;
+  display: flex;
+}
+.card {
+  border-radius: 5px;
+  position: relative;
+  padding: 25px;
+  background-color: rgb(195, 197, 197);
+  margin: 5%;
+  height: 100px;
+  width:80%;
+  box-shadow: 0 2px 5px #ccc;
+  text-align: left;
+}
+
+.top {
+  color: black;
+  border-radius:5px;
+  height: 48px;
+  width: 100%;
+  background-color: #798383;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+}
+
+.nameleft {
+  font-size: 18px;
+  flex: 1;
+  text-align: left;
+  margin-top: 18px;
+  padding-left: 5%;
+
+}
+.nameright {
+  font-size: 18px;
+  flex: 1;
+  text-align: right;
+  margin-top: 18px;
+  padding-right: 5%;
+  padding-left: 45%;
+
+}
+.middle {
+  margin-top: 40px;
+  color: black;
+  font-size: 15px;
+  text-align: left;
+  position: relative;
+  display: flex;
+}
+.leftmiddle {
+  position: relative;
+  margin-top: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  color: #2d3436;
+  font-size: 18px;
+  text-align: center;
+  margin-left: 30%;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-top: 10%;
+  padding-left: 0px;
+  display: flex;
+}
+.rightmiddle {
+  position: relative;
+  margin-top: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  color: #2d3436;
+  font-size: 18px;
+  text-align: center;
+  right:0;
+  margin-right: 30%;
+  margin-bottom: 0px;
+  margin-top: 10%;
+  display: flex;
+}
+.card img {
+  margin: 10px 20px 0 0;
+}
+
+.circle-img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.bottom {
+  margin-top: 120px;
+}
+
+.info {
+  margin: 20px 0;
+  color: #1a7e76;
+}
