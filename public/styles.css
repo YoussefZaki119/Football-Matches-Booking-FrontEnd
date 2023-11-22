@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,12 +6,12 @@
   font-weight: 300;
 }
 
-body {
+body{
   font-family: "Source Sans Pro", sans-serif;
   color: white;
   font-weight: 300;
-  background-color: #004869;
-  background-image: url("https://www.transparenttextures.com/patterns/escheresque.png");
+  /*background-color: #004869;*/
+  background-image: url("./image(1).png");
   width: 100%;
   height: 100%;
 }
@@ -22,7 +23,7 @@ body {
   width: 30%;
   margin-left: 36%;
   text-align: center;
-  background-color: rgba(252, 252, 252, 0.2);
+  background-color: rgba(252, 252, 252, 0.15);
   border: 1px solid rgba(252, 252, 252, 0.4);
   border-radius: 15px;
 
@@ -102,10 +103,15 @@ input {
   text-decoration: underline;
   cursor: pointer;
 }
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
 
 .secondarybutton:hover {
   /* color:black; */
-  color: #004869;
+  color: #bade07;
 }
 
 select {
@@ -125,4 +131,21 @@ select {
 
 #login {
   margin-left: 13%;
+}
+/***************************************************************************************************/
+/*Home Page*/
+header {
+  background-color: #004869;
+  background-image: url("https://www.transparenttextures.com/patterns/escheresque.png");
+  padding: 5px 15px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  color: #fff;
+  font-family: "McLaren", cursive;
+  font-weight: 200;
+}
+body{
+  margin: 0%;
 }
