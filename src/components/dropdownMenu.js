@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import { Padding } from '@mui/icons-material';
 
 export default function ControlledOpenSelect() {
   const [age, setAge] = React.useState('');
@@ -22,9 +23,8 @@ export default function ControlledOpenSelect() {
   };
 
   return (
-    <div>
-      <Button sx={{ display: 'block', mt: 2 }} onClick={handleOpen}>
-        Open the select
+    <div className='topright'>
+      <Button sx={{ display: 'block', mt: 0  }} onClick={handleOpen}>
       </Button>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-controlled-open-select-label">Age</InputLabel>
