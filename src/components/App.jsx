@@ -5,7 +5,8 @@ import Login from "./Login"
 import Register from "./Register";
 import Card from "./Card.jsx";
 import Matches from "../matches.js";
-
+import ResponsiveAppBar from "../components/main/Header.jsx"
+import ard from "../components/matchCard.js"
 var IsRegistered = true;
 function createMatch(Matches) {
   return (
@@ -30,7 +31,9 @@ function App() {
     //   {IsRegistered ? <Login /> : <Register />}
     // </div>
     <div>
+      <ResponsiveAppBar/>
       {Matches.map(createMatch)}
+      {/* <MatchCard/> */}
 
     </div>
   );
