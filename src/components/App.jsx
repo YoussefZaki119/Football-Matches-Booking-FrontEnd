@@ -15,12 +15,12 @@ function createMatch(Matches) {
       team2={Matches.team2}
       date={Matches.date}
       time={Matches.time}
-      image_url1 ={Matches.image_url1}
-      image_url2 ={Matches.image_url2}
+      image_url1={Matches.image_url1}
+      image_url2={Matches.image_url2}
       venue={Matches.venue}
       mainRefree={Matches.mainRefree}
       linesmen={Matches.linesmen}
-     
+
     />
   );
 }
@@ -31,8 +31,8 @@ function App() {
     // </div>
     <div>
       {Matches.map(createMatch)}
-      
-</div>
+
+    </div>
   );
 }
 
