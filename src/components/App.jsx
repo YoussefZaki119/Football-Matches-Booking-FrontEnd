@@ -5,6 +5,7 @@ import Login from "./Login"
 import Register from "./Register";
 import Card from "./Card.jsx";
 import Matches from "../matches.js";
+import MatchCreation from "./MatchCreation.jsx";
 
 var IsRegistered = true;
 function createMatch(Matches) {
@@ -30,7 +31,8 @@ function App() {
     //   {IsRegistered ? <Login /> : <Register />}
     // </div>
     <div>
-      {Matches.map(createMatch)}
+      {/* {Matches.map(createMatch)} */}
+      <MatchCreation />
 
     </div>
   );

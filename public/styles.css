@@ -9,14 +9,75 @@
 
 body {
   font-family: "Source Sans Pro", sans-serif;
-  /* background-color: #eee; */
-  background-image: url("./image(1).png");
+  background-color: #003459
+    /* background-image: url("./image(1).png"); */
 }
 
 .cardbody {
   display: flex;
   justify-content: center;
 }
+
+#DivMatchCreationcontainer {
+  display: flex;
+  justify-content: center;
+  align-content: space-evenly;
+  flex-wrap: nowrap;
+}
+
+.MatchCreationcontainer {
+  width: 70%;
+  padding: 15px;
+  margin-top: 3%;
+  /* margin-left: 36%; */
+  text-align: center;
+  background-color: rgba(252, 252, 252, 0.2);
+  border: 1px solid rgba(252, 252, 252, 0.4);
+  border-radius: 15px;
+
+}
+
+.MatchCreationcontainer select {
+  width: 45%;
+  display: inline;
+
+}
+
+.MatchCreationcontainer label {
+  font-weight: 700;
+  color: white;
+  font-size: large;
+  text-align: left;
+  width: 120px;
+  display: inline-block;
+}
+
+.MatchCreationcontainer h1 {
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  height: fit-content;
+  font-size: 88px;
+}
+
+.MatchCreationcontainer input {
+  width: 45%;
+  display: inline;
+  margin-left: 6px;
+
+  text-align: center;
+}
+
+.MatchCreationcontainer div {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.MatchCreationcontainer button {
+  width: 30%;
+}
+
+
 
 
 @media only screen and (min-width: 1024px) {
@@ -25,6 +86,12 @@ body {
 
 
 
+  /*//////////////For match creation/////////////////*/
+
+
+
+
+  /*////////////////////////////////////////////////////////*/
 
   .containersbody {
     font-family: "Source Sans Pro", sans-serif;
