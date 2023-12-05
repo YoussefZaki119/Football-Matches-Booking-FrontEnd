@@ -156,6 +156,28 @@ body {
     font-weight: 300;
   }
 
+  
+
+  .buybutton{
+      margin-top: 10px;
+      appearance: none;
+      outline: 0;
+      background-color: rgba(172, 160, 160, 0.449);
+      border: 0;
+      font-weight: bold;
+      padding: 10px 15px;
+      color: #004869;
+      border-radius: 10px;
+      width: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      margin-bottom: 15px;
+  }
+  .buybutton:hover {
+    color: white;
+    background-color: #004869;
+  }
+
   .mainbutton {
     appearance: none;
     outline: 0;
@@ -175,6 +197,7 @@ body {
     color: white;
     background-color: #004869;
   }
+
 
   .secondarybutton {
     appearance: none;
@@ -333,9 +356,12 @@ header h1 {
 }
 
 .rightmiddle {
-  display: flex;
+  
+  display: flow;
   width: 30%;
-  text-align: right;
+  align-content: flex-start;
+  flex-wrap: wrap;
+
 
 }
 
@@ -364,6 +390,7 @@ header h1 {
 }
 
 .rightmiddle h3 {
+  position: relative;
   width: 100%;
 
 }
@@ -453,6 +480,26 @@ header h1 {
     color: #004869;
     font-weight: 300;
   }
+  .buybutton {
+    appearance: none;
+    outline: 0;
+    background-color: rgba(172, 160, 160, 0.449);
+    border: 0;
+    font-weight: bold;
+    padding: 10px 15px;
+    color: #004869;
+    border-radius: 10px;
+    width: 50%;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 50px;
+  }
+
+  .buybutton:hover {
+    color: white;
+    background-color: #004869;
+  }
+
 
   .mainbutton {
     appearance: none;
@@ -555,7 +602,9 @@ header h1 {
 
 
   }
-
+  .test{
+    width:100%;
+  }
   .card {
     border-radius: 5px;
     position: relative;
@@ -649,9 +698,9 @@ header h1 {
   margin-bottom: 0px;
   margin-top: 10%;
   display: flex; */
-    display: flex;
+    display: flow;
     width: 32%;
-    text-align: right;
+    text-align: center;
 
   }
 
@@ -680,6 +729,7 @@ header h1 {
   }
 
   .rightmiddle h3 {
+    height: 20%;
     width: 100%;
 
   }

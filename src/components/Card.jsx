@@ -27,12 +27,21 @@ function Card(props) {
             <div id="date"> <CalendarMonthIcon /> {props.date} </div>
             <div id="time"><AccessAlarmIcon />{props.time}</div>
           </div>
-          <div className="rightmiddle">
+        <div className="rightmiddle">
+        
+          <div className="test">
             <h3><StadiumIcon />{props.venue}</h3>
           </div>
+          <div className="test">
+          <button className="buybutton" type="button">
+            Buy Ticket
+         </button>
+          </div>
+        </div>
+        
         </div>
         <div className="bottom">
-
+          
         </div>
       </div>
     </div>
