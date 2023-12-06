@@ -16,9 +16,9 @@ import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const pages = [{name:"Matches",link:"matches"}
-, {name:"Stadium",link:"main"}
-, {name:"About",link:"main"}];
+const pages = [{ name: "Matches", link: "matches" }
+    , { name: "Stadium", link: "addstadium" }
+    , { name: "About", link: "main" }];
 
 const settings = [
     { name: "Profile", link: "./home.html" },
@@ -29,7 +29,7 @@ const settings = [
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-     const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -58,7 +58,7 @@ function ResponsiveAppBar() {
                         variant="h6"
                         noWrap
                         component="a"
-                        href= "main"
+                        href="main"
                         sx={{
                             mr: 2,
                             display: { xs: "none", md: "flex" },
@@ -103,7 +103,7 @@ function ResponsiveAppBar() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography  component="a" href={page.link} textAlign="center"> {page.name}</Typography>
+                                    <Typography component="a" href={page.link} textAlign="center"> {page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -115,7 +115,7 @@ function ResponsiveAppBar() {
                         variant="h5"
                         noWrap
                         component="a"
-                        href= "main"
+                        href="main"
                         sx={{
                             mr: 2,
                             display: { xs: "flex", md: "none" },
@@ -137,7 +137,7 @@ function ResponsiveAppBar() {
                                 component="a" href={page.link}
                                 sx={{ my: 2, color: "white", display: "block" }}
                             >
-                               {page.name}
+                                {page.name}
                             </Button>
                         ))}
                     </Box>
@@ -166,7 +166,7 @@ function ResponsiveAppBar() {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography  component="a" href={setting.link} textAlign="center"> {setting.name}</Typography>
+                                    <Typography component="a" href={setting.link} textAlign="center"> {setting.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
