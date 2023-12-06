@@ -10,6 +10,7 @@ function EditData(props) {
         
         <div className="regcontainer">
         <ManagerResponsiveAppBar />
+
             <h1>Edit Profile</h1>
             <form>
                 <input name="password" placeholder="Password" required minLength="8" />

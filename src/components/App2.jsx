@@ -6,7 +6,7 @@ import Card from "./Card";
 import Matches from "../matches.js";
 import MatchCreation from "./MatchCreation.jsx";
 import AddStadium from "./AddStadium.jsx"
-//import ViewStadiums from "./ViewStadiums.jsx";
+import ViewStadiums from "./ViewStadiums.jsx";
 import EditMatch from "./EditMatch.jsx";
 import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
 import ManagerCard from "./MangerCard.jsx";
@@ -37,6 +37,7 @@ function App2() {
             />
         );
     }
+
     function createManagerMatch(Matches) {
         return (
             <ManagerCard
@@ -54,6 +55,7 @@ function App2() {
             />
         );
     }
+
 
     const [isRegistered, setIsRegistered] = useState(true);
 
@@ -81,13 +83,20 @@ function App2() {
 
         },
         {
-           path:"matches",
-           element: <div>
-           <Main />
-           {Matches.map(createMatch)} 
-           </div>
+            path: "/matches",
+            element: <div>
+                <Main />
+                {Matches.map(createMatch)}
+            </div>
         },
         {
+            path: "manager",
+            element: <div>
+                <MatchCreation />
+            </div>
+        },
+        {
+
 
             path: "manager",
             element: <div>
@@ -95,10 +104,12 @@ function App2() {
             </div>
         },
         {
+
             path: "addstadium",
             element: <div>
                 <ViewStadiums />
             </div>
+
         },
         {
             path: "managermatches",
@@ -111,6 +122,7 @@ function App2() {
             element:<div>
                 <EditMatch />
             </div>
+
 
         }
 

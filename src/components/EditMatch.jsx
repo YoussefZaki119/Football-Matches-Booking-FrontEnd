@@ -6,6 +6,7 @@ import Cities from "../cities"
 import { Link } from "react-router-dom";
 import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
 
+
 function EditMatch(props) {
     const [Teams, setTeams] = useState([]);
     const [selectedHTeam, setSelectedHTeam] = useState('');
@@ -32,7 +33,9 @@ function EditMatch(props) {
 
     return (
         <div>
+
             <ManagerResponsiveAppBar />
+
             <div id='DivMatchCreationcontainer'>
                 <div className="MatchCreationcontainer">
                     <h1>Edit Match</h1>
