@@ -38,11 +38,7 @@ function Card(props) {
             <h3><StadiumIcon />{props.venue}</h3>
           </div>
           <div className="test">
-<<<<<<< Updated upstream
-          <button className="buybutton" type="button">
-=======
           <button className="buybutton" type="button" >
->>>>>>> Stashed changes
             Buy Ticket
          </button>
           </div>

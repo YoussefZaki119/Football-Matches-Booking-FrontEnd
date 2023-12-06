@@ -5,17 +5,14 @@ import Main from "./main/Main";
 import Card from "./Card";
 import Matches from "../matches.js";
 import MatchCreation from "./MatchCreation.jsx";
-<<<<<<< Updated upstream
-=======
 import AddStadium from "./AddStadium.jsx"
-import ViewStadiums from "./ViewStadiums.jsx";
+//import ViewStadiums from "./ViewStadiums.jsx";
 import EditMatch from "./EditMatch.jsx";
 import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
 import ManagerCard from "./MangerCard.jsx";
 
 
 
->>>>>>> Stashed changes
 import {
     createBrowserRouter,
     RouterProvider,
@@ -25,23 +22,6 @@ import {
 function App2() {
     function createMatch(Matches) {
         return (
-<<<<<<< Updated upstream
-          <Card
-            key={Matches.id}
-            team1={Matches.team1}
-            team2={Matches.team2}
-            date={Matches.date}
-            time={Matches.time}
-            image_url1={Matches.image_url1}
-            image_url2={Matches.image_url2}
-            venue={Matches.venue}
-            mainRefree={Matches.mainRefree}
-            linesmen={Matches.linesmen}
-      
-          />
-        );}
-    
-=======
             <Card
                 key={Matches.id}
                 team1={Matches.team1}
@@ -75,7 +55,6 @@ function App2() {
         );
     }
 
->>>>>>> Stashed changes
     const [isRegistered, setIsRegistered] = useState(true);
 
     function notRegistered() {
@@ -109,12 +88,7 @@ function App2() {
            </div>
         },
         {
-<<<<<<< Updated upstream
-            path:"manager",
-           element: <div>
-           <MatchCreation/>
-           </div>
-=======
+
             path: "manager",
             element: <div>
                 <ManagerResponsiveAppBar />
@@ -137,7 +111,7 @@ function App2() {
             element:<div>
                 <EditMatch />
             </div>
->>>>>>> Stashed changes
+
         }
 
     ]);
