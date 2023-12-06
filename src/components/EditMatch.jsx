@@ -6,8 +6,7 @@ import Cities from "../cities"
 import { Link } from "react-router-dom";
 import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
 
-
-function MatchCreation(props) {
+function EditMatch(props) {
     const [Teams, setTeams] = useState([]);
     const [selectedHTeam, setSelectedHTeam] = useState('');
     const [selectedATeam, setSelectedATeam] = useState('');
@@ -36,7 +35,7 @@ function MatchCreation(props) {
             <ManagerResponsiveAppBar />
             <div id='DivMatchCreationcontainer'>
                 <div className="MatchCreationcontainer">
-                    <h1>Create Match</h1>
+                    <h1>Edit Match</h1>
                     <form>
                         <div>
                             <label htmlFor="homeTeam">Home Team:</label>
@@ -114,7 +113,7 @@ function MatchCreation(props) {
                             <input type='text' name='line2ref' />
                         </div>
 
-                        <button className='mainbutton'>Create</button>
+                        <button className='mainbutton'>Save</button>
 
 
                     </form>
@@ -126,4 +125,4 @@ function MatchCreation(props) {
 }
 
 
-export default MatchCreation;
+export default EditMatch;
