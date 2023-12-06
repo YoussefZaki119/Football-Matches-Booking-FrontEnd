@@ -4,12 +4,14 @@ import Register from "./Register";
 import Main from "./main/Main";
 import Card from "./Card";
 import Matches from "../matches.js";
-import MatchCreation from "./MatchCreation.jsx";
-import AddStadium from "./AddStadium.jsx"
+import MatchCreation from "./manager/MatchCreation.jsx";
+import AddStadium from "./manager/AddStadium.jsx"
 import ViewStadiums from "./ViewStadiums.jsx";
-import EditMatch from "./EditMatch.jsx";
+import EditMatch from "./manager/EditMatch.jsx";
 import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
-import ManagerCard from "./MangerCard.jsx";
+import ManagerCard from "./manager/MangerCard.jsx";
+import ManagerViewStadium from "./manager/ManagerViewStadium.jsx";
+import Seatbooking from "./Reservation.jsx";
 
 
 
@@ -107,13 +109,14 @@ function App2() {
 
             path: "addstadium",
             element: <div>
-                <ViewStadiums />
+                <AddStadium />
             </div>
 
         },
         {
             path: "managermatches",
             element: <div>
+            <ManagerResponsiveAppBar />
                  {Matches.map(createManagerMatch)}
             </div>
         },
@@ -123,6 +126,20 @@ function App2() {
                 <EditMatch />
             </div>
 
+
+        },
+        {
+            path:"managerstadium",
+            element:<div>
+              <ManagerViewStadium />
+            </div>
+
+        },
+        { 
+            path:"reservation",
+            element:<div>
+                <Seatbooking/>
+            </div>
 
         }
 

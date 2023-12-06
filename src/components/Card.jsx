@@ -7,8 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Card(props) {
     const navigate = useNavigate();
-    function clicked(){
-        navigate("/editmatch");
+    function GoTo(){
+        navigate("/reservation");
     }
   return (
     <div className="cardbody">
@@ -38,7 +38,7 @@ function Card(props) {
             <h3><StadiumIcon />{props.venue}</h3>
           </div>
           <div className="test">
-          <button className="buybutton" type="button" >
+          <button className="buybutton" type="button" onClick={GoTo}>
             Buy Ticket
          </button>
           </div>

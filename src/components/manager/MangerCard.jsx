@@ -7,7 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 function MangerCard(props) {
     const navigate = useNavigate();
-    function clicked(){
+    function GoTo()
+    {
         navigate("/editmatch");
     }
   return (
@@ -38,7 +39,7 @@ function MangerCard(props) {
             <h3><StadiumIcon />{props.venue}</h3>
           </div>
           <div className="test">
-          <button className="buybutton" type="button" onClick={clicked}>
+          <button className="buybutton" type="button" onClick={GoTo}>
             Edit
          </button>
           </div>

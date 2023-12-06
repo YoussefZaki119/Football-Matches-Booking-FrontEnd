@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const pages = [{ name: "Matches", link: "managermatches" }
-    , { name: "Stadium", link: "manager" }
+    , { name: "Stadium", link: "managerstadium" }
     , { name: "About", link: "manager" }];
 
 const settings = [
