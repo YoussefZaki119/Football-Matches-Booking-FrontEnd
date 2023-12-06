@@ -4,10 +4,13 @@ import Stack from '@mui/material/Stack';
 import { dividerClasses } from "@mui/material";
 import Cities from "../cities"
 import { Link } from "react-router-dom";
-
+import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
 function EditData(props) {
     return (
+        
         <div className="regcontainer">
+        <ManagerResponsiveAppBar />
+
             <h1>Edit Profile</h1>
             <form>
                 <input name="password" placeholder="Password" required minLength="8" />

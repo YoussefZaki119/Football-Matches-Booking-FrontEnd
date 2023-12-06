@@ -5,7 +5,7 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link, useNavigate } from "react-router-dom";
 
-function Card(props) {
+function MangerCard(props) {
     const navigate = useNavigate();
     function clicked(){
         navigate("/editmatch");
@@ -38,8 +38,8 @@ function Card(props) {
             <h3><StadiumIcon />{props.venue}</h3>
           </div>
           <div className="test">
-          <button className="buybutton" type="button" >
-            Buy Ticket
+          <button className="buybutton" type="button" onClick={clicked}>
+            Edit
          </button>
           </div>
         </div>
@@ -54,4 +54,4 @@ function Card(props) {
 }
 
 
-export default Card;
+export default MangerCard;

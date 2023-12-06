@@ -4,7 +4,8 @@ import Stack from '@mui/material/Stack';
 import { dividerClasses } from "@mui/material";
 import Cities from "../cities"
 import { Link } from "react-router-dom";
-import ResponsiveAppBar from "./main/Header"
+import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
+
 
 function EditMatch(props) {
     const [Teams, setTeams] = useState([]);
@@ -32,7 +33,9 @@ function EditMatch(props) {
 
     return (
         <div>
-            <ResponsiveAppBar />
+
+            <ManagerResponsiveAppBar />
+
             <div id='DivMatchCreationcontainer'>
                 <div className="MatchCreationcontainer">
                     <h1>Edit Match</h1>
