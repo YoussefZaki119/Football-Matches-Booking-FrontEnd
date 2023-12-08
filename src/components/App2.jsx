@@ -12,6 +12,8 @@ import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
 import ManagerCard from "./manager/MangerCard.jsx";
 import ManagerViewStadium from "./manager/ManagerViewStadium.jsx";
 import Seatbooking from "./Reservation.jsx";
+import PaymentForm from "./PaymentForm.jsx"
+
 
 
 
@@ -95,6 +97,7 @@ function App2() {
             path: "manager",
             element: <div>
                 <MatchCreation />
+                {/* <PaymentForm /> */}
             </div>
         },
         {
@@ -116,29 +119,29 @@ function App2() {
         {
             path: "managermatches",
             element: <div>
-            <ManagerResponsiveAppBar />
-                 {Matches.map(createManagerMatch)}
+                <ManagerResponsiveAppBar />
+                {Matches.map(createManagerMatch)}
             </div>
         },
         {
-            path:"editmatch",
-            element:<div>
+            path: "editmatch",
+            element: <div>
                 <EditMatch />
             </div>
 
 
         },
         {
-            path:"managerstadium",
-            element:<div>
-              <ManagerViewStadium />
+            path: "managerstadium",
+            element: <div>
+                <ManagerViewStadium />
             </div>
 
         },
-        { 
-            path:"reservation",
-            element:<div>
-                <Seatbooking/>
+        {
+            path: "reservation",
+            element: <div>
+                <Seatbooking />
             </div>
 
         }

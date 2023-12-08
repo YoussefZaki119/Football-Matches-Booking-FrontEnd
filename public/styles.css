@@ -20,7 +20,8 @@ body {
   width: 600px;
   margin: auto;
 }
-.containerforseats{
+
+.containerforseats {
   align-items: center;
   width: 600px;
   margin: auto;
@@ -143,13 +144,13 @@ li {
 }
 
 .stadiumtable {
-  width :100%;
+  width: 100%;
   margin-top: 5%;
   display: flex;
   justify-content: center;
 }
 
-.stdContainer{
+.stdContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -183,6 +184,23 @@ li {
 
 .stadiumtable .cityandLocation {
   text-align: center;
+}
+
+.creditcardform {
+  background-color: white;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  height: 40%;
+  border-radius: 15px;
+  padding: 3%;
+
+}
+
+.creditcardcontainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
 }
 
 
@@ -226,10 +244,11 @@ li {
     border-radius: 15px;
 
   }
+
   .containerforseats {
     margin: 10% auto;
     text-align: center;
-    width: 50%; 
+    width: 50%;
     text-align: center;
     align-items: center;
     background-color: rgba(252, 252, 252, 0.2);
@@ -278,23 +297,24 @@ li {
     font-weight: 300;
   }
 
-  
 
-  .buybutton{
-      margin-top: 10px;
-      appearance: none;
-      outline: 0;
-      background-color: rgba(172, 160, 160, 0.449);
-      border: 0;
-      font-weight: bold;
-      padding: 10px 15px;
-      color: #004869;
-      border-radius: 10px;
-      width: 50%;
-      font-size: 18px;
-      cursor: pointer;
-      margin-bottom: 15px;
+
+  .buybutton {
+    margin-top: 10px;
+    appearance: none;
+    outline: 0;
+    background-color: rgba(172, 160, 160, 0.449);
+    border: 0;
+    font-weight: bold;
+    padding: 10px 15px;
+    color: #004869;
+    border-radius: 10px;
+    width: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    margin-bottom: 15px;
   }
+
   .buybutton:hover {
     color: white;
     background-color: #004869;
@@ -478,7 +498,7 @@ header h1 {
 }
 
 .rightmiddle {
-  
+
   display: flow;
   width: 30%;
   align-content: flex-start;
@@ -613,6 +633,7 @@ header h1 {
     color: #004869;
     font-weight: 300;
   }
+
   .buybutton {
     appearance: none;
     outline: 0;
@@ -735,9 +756,11 @@ header h1 {
 
 
   }
-  .test{
-    width:100%;
+
+  .test {
+    width: 100%;
   }
+
   .card {
     border-radius: 5px;
     position: relative;
