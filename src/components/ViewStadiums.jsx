@@ -11,12 +11,26 @@ import PlaceIcon from '@mui/icons-material/Place';
 import { Stadium } from '@mui/icons-material';
 import ResponsiveAppBar from "./main/Header"
 
+console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
 }
 
 
 function ViewStadiums() {
+
+    async function logMovies() {
+        const response = await fetch("http://localhost:3000/stadiums");
+        const stadiums = await response.json();
+        console.log(stadiums);
+    }
+    useEffect(() => {
+        
+        logMovies();
+    }, []); 
+    
+
     return (
         <div>
             <ResponsiveAppBar />
@@ -30,11 +44,11 @@ function ViewStadiums() {
                         </tr>
                     </thead>
                     <tbody>
-                        {FootballStadiums.map((Stadium) => (
+                        {FootballStadiums.map((stadiums) => (
                             <tr>
-                                <td>{Stadium.name}</td>
-                                <td className='cityandLocation'>{Stadium.city}</td>
-                                <td className='cityandLocation'><a href={Stadium.location} target='_blank'><PlaceIcon /></a></td>
+                                <td>{stadiums.name}</td>
+                                <td className='cityandLocation'>{stadiums.city}</td>
+                                <td className='cityandLocation'><a href={stadiums.location} target='_blank'><PlaceIcon /></a></td>
                             </tr>
                         ))}
 
