@@ -18,11 +18,34 @@ function createData(name, calories, fat, carbs, protein) {
 
 
 function ManagerViewStadiums() {
+    const [stad,setstad]=React.useState([ {id: '', name: '', city: '',googleMapLocation:'',seatingRows:'',seatingColumns:''} ])
     const navigate = useNavigate();
     function GoTo(){
         navigate("/addstadium");
 
     }
+    async function logMovies() {
+        const response = await fetch("http://localhost:3000/stadiums",
+       { 
+        method:"get",
+        mode: "cors"});
+        const stadiums = await response.json();
+        return stadiums;
+        
+        console.log(stadiums);
+    }
+    const Farida= async () => {
+        let response = await logMovies()
+        setstad(response)
+
+    }
+    React.useEffect(() => {
+        Farida()
+    }, [])
+    
+
+    
+
     return (
         <div>
             <ResponsiveAppBar />
@@ -37,11 +60,11 @@ function ManagerViewStadiums() {
                             </tr>
                         </thead>
                         <tbody>
-                            {FootballStadiums.map((Stadium) => (
+                            {stad.map((Stadium) => (
                                 <tr>
                                     <td>{Stadium.name}</td>
                                     <td className='cityandLocation'>{Stadium.city}</td>
-                                    <td className='cityandLocation'><a href={Stadium.location} target='_blank'><PlaceIcon /></a></td>
+                                    <td className='cityandLocation'><a href={Stadium.googleMapLocation} target='_blank'><PlaceIcon /></a></td>
                                 </tr>
                             ))}
 
