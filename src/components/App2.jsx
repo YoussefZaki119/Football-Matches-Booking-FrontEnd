@@ -96,8 +96,8 @@ function App2() {
         {
             path: "manager",
             element: <div>
-                <MatchCreation />
-                {/* <PaymentForm /> */}
+                
+                 <PaymentForm /> 
             </div>
         },
         {
