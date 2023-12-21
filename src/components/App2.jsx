@@ -13,6 +13,7 @@ import ManagerCard from "./manager/MangerCard.jsx";
 import ManagerViewStadium from "./manager/ManagerViewStadium.jsx";
 import Seatbooking from "./Reservation.jsx";
 import PaymentForm from "./PaymentForm.jsx"
+import ViewUsers from "./ViewUsers.jsx"
 
 
 
@@ -134,7 +135,8 @@ function App2() {
         {
             path: "managerstadium",
             element: <div>
-                <ManagerViewStadium />
+                {/* <ManagerViewStadium /> */}
+                <ViewUsers />
             </div>
 
         },

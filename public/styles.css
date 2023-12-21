@@ -203,7 +203,10 @@ li {
   margin-top: 5%;
 }
 
+.roleanddelete:hover {
+  cursor: pointer;
 
+}
 
 
 
