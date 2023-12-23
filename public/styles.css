@@ -10,11 +10,16 @@
 
 body {
   font-family: "Source Sans Pro", sans-serif;
-  background-color: #003459
+  
     /* background-image: url("./image(1).png"); */
 }
 
+.App{
+  background-image: url("./image(1).png");
+ height: 100vh;
+  width: 100%;
 
+}
 
 .container {
   width: 600px;
