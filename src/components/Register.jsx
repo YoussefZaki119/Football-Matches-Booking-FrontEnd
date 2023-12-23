@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 
 function Register(props) {
     return (
-        <div className="regcontainer">
+        <div className="containersbody">
+        <div className="regcontainer" style={{marginRight:600}}>
             <h1>Welcome</h1>
             <form>
                 <input name="username" placeholder="UserName" required />
@@ -36,6 +37,7 @@ function Register(props) {
                 <a className="secondarybutton" ><Link to="main">Continue as a Guest</Link></a>
 
             </form>
+        </div>
         </div>
     );
 

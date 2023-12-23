@@ -9,7 +9,7 @@ function EditData(props) {
     return (
         
         <div className="regcontainer">
-        <ManagerResponsiveAppBar />
+      
 
             <h1>Edit Profile</h1>
             <form>

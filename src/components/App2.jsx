@@ -14,9 +14,11 @@ import ManagerViewStadium from "./manager/ManagerViewStadium.jsx";
 import Seatbooking from "./Reservation.jsx";
 import PaymentForm from "./PaymentForm.jsx"
 import ViewUsers from "./ViewUsers.jsx"
-
-
-
+import ResponsiveAppBar from "./main/Header.jsx";
+import EditProfile from "./EditData.jsx";
+import GuestCard from "./Guest/GuestCard.jsx";
+import GuestResponsiveAppBar from "./main/GuestHeader.jsx";
+import GuestViewStadium from "./Guest/GuestViewStadium.jsx";
 
 import {
     createBrowserRouter,
@@ -61,6 +63,24 @@ function App2() {
         );
     }
 
+    function createGuestMatch(Matches){
+        return (
+            <GuestCard
+                key={Matches.id}
+                team1={Matches.team1}
+                team2={Matches.team2}
+                date={Matches.date}
+                time={Matches.time}
+                image_url1={Matches.image_url1}
+                image_url2={Matches.image_url2}
+                venue={Matches.venue}
+                mainRefree={Matches.mainRefree}
+                linesmen={Matches.linesmen}
+
+            />
+        );
+    }
+
 
     const [isRegistered, setIsRegistered] = useState(true);
 
@@ -89,8 +109,8 @@ function App2() {
         },
         {
             path: "/matches",
-            element: <div>
-                <Main />
+            element: <div className="matchesviewing">
+                <ResponsiveAppBar />
                 {Matches.map(createMatch)}
             </div>
         },
@@ -146,7 +166,41 @@ function App2() {
                 <Seatbooking />
             </div>
 
+        },{
+            path: "payment",
+            element: <div>
+                <PaymentForm />
+            </div>
+        },{
+            path: "viewusers",
+            element: <div>
+                <ViewUsers />
+            </div>
+        },{
+            path: "viewstadiums",
+            element: <div>
+                <ViewStadiums />
+            </div>
+        },{
+            path: "editprofile",
+            element: <div>
+            <ResponsiveAppBar/>
+                <EditProfile />
+            </div>
+        },{
+            path: "guest",
+            element: <div>
+                <GuestResponsiveAppBar />
+                {Matches.map(createGuestMatch)}
+            </div>
+        },{
+            path: "gueststadium",
+            element: <div>
+                <GuestResponsiveAppBar />
+                <GuestViewStadium />
+            </div>
         }
+
 
     ]);
 

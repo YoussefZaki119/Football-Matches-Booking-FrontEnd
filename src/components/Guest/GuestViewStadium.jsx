@@ -6,11 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import FootballStadiums from "../stadiums";
 import PlaceIcon from '@mui/icons-material/Place';
 import { Stadium } from '@mui/icons-material';
 import { useEffect } from 'react';
-import ResponsiveAppBar from "./main/Header"
 import { useState } from 'react';
 
 console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
@@ -20,7 +18,7 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 
-function ViewStadiums() {
+function GuestViewStadiums() {
 
     async function logMovies() {
         const response = await fetch("http://localhost:3000/stadiums");
@@ -35,7 +33,7 @@ function ViewStadiums() {
 
     return (
         <div>
-            <ResponsiveAppBar />
+        
             <div className='stadiumtable'>
                 <table>
                     <thead>
@@ -61,4 +59,4 @@ function ViewStadiums() {
     );
 }
 
-export default ViewStadiums;
+export default GuestViewStadiums;

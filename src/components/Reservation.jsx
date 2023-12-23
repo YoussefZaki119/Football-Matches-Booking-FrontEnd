@@ -10,183 +10,86 @@ class Seatbooking extends React.Component {
   constructor() {
     super();
     this.state = {
-      seat: [
-        "A1",
-        "A2",
-        "A3",
-        "A4",
-        "A5",
-        "A6",
-        "A7",
-        "A8",
-        "A9",
-        "A10",
-        "A11",
-        "A12",
-        "A13",
-        "A14",
-        "A15",
-        "A16",
-        "A17",
-
-        "B1",
-        "B2",
-        "B3",
-        "B4",
-        "B5",
-        "B6",
-        "B7",
-        "C1",
-        "C2",
-        "C3",
-        "C4",
-        "C5",
-        "C6",
-        "C7",
-      ],
-      seatAvailable: [
-        "A1",
-        "A2",
-        "A3",
-        "A4",
-        "A5",
-        "A6",
-        "A7",
-        "A8",
-        "A9",
-        "A10",
-        "A11",
-        "A12",
-        "A13",
-        "A14",
-        "A15",
-        "A16",
-        "A17",
-
-        "B1",
-        "B2",
-        "B3",
-        "B4",
-        "B5",
-        "B6",
-        "B7",
-        "C1",
-        "C2",
-        "C3",
-        "C4",
-        "C5",
-        "C6",
-        "C7",
-      ],
+      rows: 3,
+      columns: 12,
+      seats: [],
       seatReserved: [],
       seatSelected: post,
     };
   }
 
-  onClickData(seat) {
-    if (this.state.seatReserved.indexOf(seat) > -1) {
-      this.setState({
-        seatAvailable: this.state.seatAvailable.concat(seat),
-        seatReserved: this.state.seatReserved.filter((res) => res != seat),
-        //seatSelected: this.state.seatSelected.filter(res => res != seat)
-      });
-    } else {
-      this.setState({
-        seatReserved: this.state.seatReserved.concat(seat),
-        //seatSelected: this.state.seatSelected.concat(seat),
-        seatAvailable: this.state.seatAvailable.filter((res) => res != seat),
-      });
-    }
-  }
-  checktrue(row) {
-    if (this.state.seatSelected.indexOf(row) > -1) {
-      return false;
-    } else {
-      return true;
-    }
+  componentDidMount() {
+    this.generateSeats();
   }
 
-  handleSubmited() {
+  generateSeats() {
+    const { rows, columns } = this.state;
+    const seats = [];
+
+    for (let i = 1; i <= rows; i++) {
+      for (let j = 1; j <= columns; j++) {
+        const seat = {
+          id: `Row ${i} Seat ${j}`,
+          reserved: false,
+          selected: false,
+        };
+        seats.push(seat);
+      }
+    }
+
+    this.setState({ seats });
+  }
+
+  onClickData(seat) {
     this.setState({
-      seatSelected: this.state.seatSelected.concat(this.state.seatReserved),
+      seats: this.state.seats.map((s) =>
+        s.id === seat ? { ...s, selected: !s.selected, reserved: !s.reserved } : s
+      ),
     });
+  }
+
+  onReserveClick() {
+    const { seats } = this.state;
+    const seatReserved = seats
+      .filter((seat) => seat.selected)
+      .map((seat) => seat.id);
+
     this.setState({
-      seatReserved: [],
+      seats: this.state.seats.map((s) =>
+        seatReserved.includes(s.id) ? { ...s, reserved: true, selected: false } : s
+      ),
+      seatReserved: [...this.state.seatReserved, ...seatReserved],
     });
   }
 
   render() {
+    const { seats, seatReserved } = this.state;
+    const columns = 12;
+    const seatWidth = `${100 / columns}%`; // Set a fixed width for each seat
+
     return (
-      
       <div>
-      <ResponsiveAppBar/>
-  
-      <div className="containerforseats">
-        <h1>Seat Reservation System</h1>
-        <DrawGrid
-          seat={this.state.seat}
-          available={this.state.seatAvailable}
-          reserved={this.state.seatReserved}
-          selected={this.state.seatSelected}
-          onClickData={this.onClickData.bind(this)}
-          checktrue={this.checktrue.bind(this)}
-          handleSubmited={this.handleSubmited.bind(this)}
-        />
+        <ResponsiveAppBar />
+        <div className="containerforseats">
+          <h1>Seat Reservation System</h1>
+          <Grid container spacing={0}>
+            {seats.map((seat) => (
+              <Grid item xs={12 / columns} style={{ width: seatWidth }} key={seat.id}>
+                <button
+                  onClick={() => this.onClickData(seat.id)}
+                  disabled={seat.reserved}
+                  className={seat.selected ? "selected" : seat.reserved ? "reserved" : ""}
+                >
+                  {seat.id}
+                </button>
+              </Grid>
+            ))}
+          </Grid>
+          <button onClick={() => this.onReserveClick()}>Reserve</button>
         </div>
       </div>
     );
   }
 }
 
-class DrawGrid extends React.Component {
-  render() {
-    return (
-      <Grid container>
-        <Grid item xs={10}>
-          <h2 />
-          <Col xs={18}>
-            <table className="grid">
-              <tbody>
-                <tr>
-                  {this.props.seat.map((row) => (
-                    <td
-                      className={
-                        this.props.selected.indexOf(row) > -1
-                          ? "reserved"
-                          : this.props.reserved.indexOf(row) > -1
-                          ? "selected"
-                          : "available"
-                      }
-                      key={row}
-                      onClick={
-                        this.props.checktrue(row)
-                          ? (e) => this.onClickSeat(row)
-                          : null
-                      }
-                    >
-                      {row}{" "}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-            <button
-              type="button"
-              className="btn-success btnmargin mainbutton"
-
-              onClick={() => this.props.handleSubmited()}
-            >
-              Confirm Booking
-            </button>
-          
-          </Col>
-        </Grid>
-      </Grid>
-    );
-  }
-
-  onClickSeat(seat) {
-    this.props.onClickData(seat);
-  }
-}
 export default Seatbooking;
