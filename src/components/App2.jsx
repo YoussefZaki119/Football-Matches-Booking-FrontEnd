@@ -135,8 +135,8 @@ function App2() {
         {
             path: "managerstadium",
             element: <div>
-                {/* <ManagerViewStadium /> */}
-                <ViewUsers />
+                <ManagerViewStadium />
+                {/* <ViewUsers /> */}
             </div>
 
         },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login(props) {
@@ -7,8 +7,32 @@ function Login(props) {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [warning, setWarning] = useState("");
+    const [user, setUser] = useState({id: '', userName: '', password: '', firstName: '', lastName: '', birthDate: '', gender: '', city: '', address: '', email: '', role: 'asdfg' });
+    const [submit, setsubmit] = useState("");
+    useEffect(() => {
+        async function logMovies() {
+            const response = await fetch("http://localhost:3000/users/" + username + "/" + password,
+                {
+                    method: "get",
+                    mode: "cors"
+                });
+            const specificuser = await response.json();
+            console.log(specificuser);
+            setUser(specificuser);
+            console.log(`ashan zaki:${user.role}`)
 
+            if(user.role==="Fan")
+            {
+                navigate("main");
+            }
+        }
+
+        logMovies();
+    }, [submit]);
+    
     function CheckType() {
+        setsubmit("s");
+
         if (username.trim() === "" || password.trim() === "") {
             setWarning("Please enter both username and password.");
             return; // Don't proceed with login if the form is empty
