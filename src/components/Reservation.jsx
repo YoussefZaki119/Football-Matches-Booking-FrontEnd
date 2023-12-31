@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, withRouter } from "react-router";
 import ResponsiveAppBar from "./main/Header";
 
 import Grid from "@material-ui/core/Grid";
@@ -60,12 +61,32 @@ class Seatbooking extends React.Component {
       ),
       seatReserved: [...this.state.seatReserved, ...seatReserved],
     });
+
+    // Use history.push to navigate to the new page with selected values as URL parameters
+    this.props.history.push({
+      pathname: "/payment",
+      search: `?selectedSeats=${encodeURIComponent(JSON.stringify(seatReserved))}`,
+    });
+  }
+
+  renderReservedSeats() {
+    const { seatReserved } = this.state;
+    return (
+      <div>
+        <h2>Reserved Seats:</h2>
+        <ul>
+          {seatReserved.map((reservedSeat) => (
+            <li key={reservedSeat}>{reservedSeat}</li>
+          ))}
+        </ul>
+      </div>
+    );
   }
 
   render() {
-    const { seats, seatReserved } = this.state;
+    const { seats } = this.state;
     const columns = 12;
-    const seatWidth = `${100 / columns}%`; // Set a fixed width for each seat
+    const seatWidth = `${100 / columns}%`;
 
     return (
       <div>
@@ -85,11 +106,14 @@ class Seatbooking extends React.Component {
               </Grid>
             ))}
           </Grid>
-          <button onClick={() => this.onReserveClick()}>Reserve</button>
+          <button onClick={() => this.onReserveClick()}>
+            Reserve
+          </button>
         </div>
       </div>
     );
   }
 }
 
+// Use withRouter to inject history object into the component's props
 export default Seatbooking;

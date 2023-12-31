@@ -11,6 +11,10 @@ function MangerCard(props) {
     {
         navigate("/editmatch");
     }
+    function GoToCheck()
+    {
+        navigate("/checkseats");
+    }
   return (
     <div className="cardbody">
       <div className="card">
@@ -41,6 +45,9 @@ function MangerCard(props) {
           <div className="test">
           <button className="buybutton" type="button" onClick={GoTo}>
             Edit
+         </button>
+         <button className="buybutton" type="button" onClick={GoToCheck}>
+          Check Seats
          </button>
           </div>
         </div>

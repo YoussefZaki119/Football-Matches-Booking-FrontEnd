@@ -21,9 +21,8 @@ const pages = [{ name: "Matches", link: "managermatches" }
     , { name: "About", link: "manager" }];
 
 const settings = [
-    { name: "Profile", link: "./home.html" },
-    { name: "Reservation", link: "./home.html" },
-    { name: "Logout", link: "public\home.html" },
+    { name: "Profile", link: "editprofilemanager" },
+    { name: "Logout", link: "/"},
 ];
 
 function ManagerResponsiveAppBar() {

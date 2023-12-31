@@ -19,7 +19,8 @@ import EditProfile from "./EditData.jsx";
 import GuestCard from "./Guest/GuestCard.jsx";
 import GuestResponsiveAppBar from "./main/GuestHeader.jsx";
 import GuestViewStadium from "./Guest/GuestViewStadium.jsx";
-
+import CheckSeats from "./manager/CheckSeats.jsx";
+import EditProfileManager from "./manager/EditData.jsx"
 import {
     createBrowserRouter,
     RouterProvider,
@@ -155,8 +156,7 @@ function App2() {
         {
             path: "managerstadium",
             element: <div>
-                {/* <ManagerViewStadium /> */}
-                <ViewUsers />
+                <ManagerViewStadium />
             </div>
 
         },
@@ -198,6 +198,17 @@ function App2() {
             element: <div>
                 <GuestResponsiveAppBar />
                 <GuestViewStadium />
+            </div>
+        },{
+            path: "checkseats",
+            element: <div>
+                <CheckSeats />
+            </div>
+        },{
+            path: "editprofilemanager",
+            element: <div>
+                <ManagerResponsiveAppBar />
+                <EditProfileManager />
             </div>
         }
 
