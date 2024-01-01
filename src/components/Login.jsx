@@ -1,25 +1,70 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect,useRef } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 
+let loginusername = "";
 function Login(props) {
     const [isManager, setIsManager] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [warning, setWarning] = useState("");
-    const [user, setUser] = useState({id: '', userName: '', password: '', firstName: '', lastName: '', birthDate: '', gender: '', city: '', address: '', email: '', role: 'asdfg' });
+    const [user, setUser] = useState({id: '', userName: '', password: '', firstName: '', lastName: '', birthDate: '', gender: '', city: '', address: '', email: '', role: '' });
     const [submit, setsubmit] = useState("");
+    const isMounted = useRef(false);
     useEffect(() => {
+        
         async function logMovies() {
-            const response = await fetch("http://localhost:3000/users/" + username + "/" + password,
-                {
-                    method: "get",
-                    mode: "cors"
-                });
+          try {
+            const response = await fetch("http://localhost:3000/users/" + username + "/" + password, {
+              method: "get",
+              mode: "cors"
+            });
+      
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+      
             const specificuser = await response.json();
             console.log(specificuser);
-            setUser(specificuser);
-            console.log(`ashan zaki:${user.role}`)
+             setUser(specificuser);
+           
+      
+            // if (specificuser.role === "Fan") {
+            //   navigate("main");
+            // } else if (specificuser.role === "Manager") {
+            //   navigate("manager");
+            // }
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+            setWarning("WRONG PASSWORD OR EMAIL");
+          }
+        }
+      
+        if (isMounted.current) {
+        logMovies();
+        }else
+        {
+            isMounted.current = true;
+        }
+      }, [submit]);
+
+      useEffect(() => {
+        if (isMounted.current) {
+        if (user.role === "Fan") {
+            loginusername = user.userName;
+            navigate("main");
+          } else if (user.role === "Manager") {
+            navigate("manager");
+          }}else
+          {
+            isMounted.current = true;
+          }
+
+      },[user]);
+      
+   
 
             if(user.role==="Fan")
             {
@@ -31,12 +76,18 @@ function Login(props) {
     }, [submit]);
     
     function CheckType() {
-        setsubmit("s");
+
 
         if (username.trim() === "" || password.trim() === "") {
             setWarning("Please enter both username and password.");
             return; // Don't proceed with login if the form is empty
         }
+        setsubmit("s");
+        
+        if (submit === "s"){
+            setsubmit("");
+        }
+        
 
         // Assuming username, password, M, and manager are defined somewhere in your code
         if (username === "M" && password === "M") {
@@ -82,5 +133,5 @@ function Login(props) {
         </div>
     );
 }
-
+export {loginusername};
 export default Login;
