@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect,useRef } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 
 let loginusername = "";
@@ -64,20 +62,9 @@ function Login(props) {
 
       },[user]);
       
-   
 
-            if(user.role==="Fan")
-            {
-                navigate("main");
-            }
-        }
-
-        logMovies();
-    }, [submit]);
-    
     function CheckType() {
-
-
+        
         if (username.trim() === "" || password.trim() === "") {
             setWarning("Please enter both username and password.");
             return; // Don't proceed with login if the form is empty
@@ -91,9 +78,9 @@ function Login(props) {
 
         // Assuming username, password, M, and manager are defined somewhere in your code
         if (username === "M" && password === "M") {
-            setIsManager("manager");
+           
             // Use navigate to navigate to the manager path
-            navigate("/manager");
+            navigate("admin");
         }
     }
 
