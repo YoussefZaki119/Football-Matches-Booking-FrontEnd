@@ -9,28 +9,88 @@ import ManagerResponsiveAppBar from "../main/ManagerHeader.jsx";
 
 function MatchCreation(props) {
     const [Teams, setTeams] = useState([]);
-    const [selectedHTeam, setSelectedHTeam] = useState('');
-    const [selectedATeam, setSelectedATeam] = useState('');
+    const [selectedHTeam, setSelectedHTeam] = useState(0);
+    const [selectedATeam, setSelectedATeam] = useState(0);
+    const [time, setTime] = useState("")
+    const [date, setDate] = useState("")
+    const [selectedMReferee, setSelectedMReferee] = useState(0);
+    const [selectedAReferee1, setSelectedAReferee1] = useState(0);
+    const [selectedAReferee2, setSelectedAReferee2] = useState(0);
     const [Venues, setVenues] = useState([]);
-    const [selectedVenue, setSelectedVenue] = useState('');
-
-    useEffect(() => {
-        // Fetch options from the server when the component mounts
-        fetch('http://localhost:8081/teams')
+    const [mainReferee, setMainReferee] = useState([])
+    const [assistantReferee, setAssistantReferee] = useState([])
+    const [selectedVenue, setSelectedVenue] = useState(0);
+    const [newMatch, setNewMatch] = useState({ teamAway: "", teamHome: "", stadiumId: "", time: "", mainReferee: "", lineRefereeRight: "", lineRefereeLeft: "", isFull: false })
+    async function callPostMatch() {
+        setNewMatch({ teamAway: selectedATeam, teamHome: selectedHTeam, stadiumId: selectedVenue, time: `${date}T${time}:00Z`, mainReferee: selectedMReferee, lineRefereeRight: selectedAReferee2, lineRefereeLeft: selectedAReferee1, isfull: false })
+        console.log(newMatch)
+        console.log(selectedHTeam)
+        fetch("http://localhost:3000/matches", {
+            method: "post",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newMatch),
+        })
             .then((res) => res.json())
-            .then((data) => setTeams(data))
-            .catch((err) => console.log(err));
+            .then((res) => console.log(res))
+            .catch((err) => err);
+    }
+    function postMatch(e) {
+        e.preventDefault();
+        callPostMatch();
+    }
+
+    async function callTeamAPI() {
+        fetch("http://localhost:3000/teams", {
+            method: "get",
+            mode: "cors"
+        })
+            .then((res) => res.json())
+            .then((res) => setTeams(res))
+            .catch((err) => err);
+    };
+    useEffect(() => {
+        callTeamAPI();
+    }, []);
+    async function callVenueAPI() {
+        fetch("http://localhost:3000/stadiums", {
+            method: "get",
+            mode: "cors"
+        })
+            .then((res) => res.json())
+            .then((res) => setVenues(res))
+            .catch((err) => err);
+    }
+    useEffect(() => {
+        callVenueAPI();
     }, []);
 
-    useEffect(() => {
-        // Fetch options from the server when the component mounts
-        fetch('http://localhost:8081/stadiums')
+    async function callRefereeAPI() {
+        fetch("http://localhost:3000/referees/main", {
+            method: "get",
+            mode: "cors"
+        })
             .then((res) => res.json())
-            .then((data) => setVenues(data))
-            .catch((err) => console.log(err));
+            .then((res) => setMainReferee(res))
+            .catch((err) => err);
+    }
+    useEffect(() => {
+        callRefereeAPI();
     }, []);
-
-
+    async function callAssisRefAPI() {
+        fetch("http://localhost:3000/referees/assistant", {
+            method: "get",
+            mode: "cors"
+        })
+            .then((res) => res.json())
+            .then((res) => setAssistantReferee(res))
+            .catch((err) => err);
+    }
+    useEffect(() => {
+        callAssisRefAPI();
+    }, []);
     return (
         <div>
             <ManagerResponsiveAppBar />
@@ -50,8 +110,8 @@ function MatchCreation(props) {
                                     Select a Team
                                 </option>
                                 {Teams.map((team) => (
-                                    <option value={team.Teamname}>
-                                        {team.Teamname}
+                                    <option value={team.id}>
+                                        {team.name}
                                     </option>
                                 ))}
                             </select>
@@ -68,8 +128,8 @@ function MatchCreation(props) {
                                     Select a Team
                                 </option>
                                 {Teams.map((team) => (
-                                    <option value={team.Teamname}>
-                                        {team.Teamname}
+                                    <option value={team.id}>
+                                        {team.name}
                                     </option>
                                 ))}
                             </select>
@@ -87,34 +147,77 @@ function MatchCreation(props) {
                                     Select a Venue
                                 </option>
                                 {Venues.map((venue) => (
-                                    <option value={venue.stadiumname}>
-                                        {venue.stadiumname}
+                                    <option value={venue.id}>
+                                        {venue.name}
                                     </option>
                                 ))}
                             </select>
                         </div>
                         <div>
                             <label htmlFor="date">Date:</label>
-                            <input type='date' name='date' />
+                            <input type='date' name='date' onChange={(e) => setDate(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="time">Time:</label>
-                            <input type='time' name='time' />
+                            <input type='time' name='time' onChange={(e) => setTime( e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="mainref">Main Refree:</label>
-                            <input type='text' name='mainref' />
+                            <select
+                                name="mainref"
+                                id="mainref"
+                                value={selectedMReferee}
+                                onChange={(e) => setSelectedMReferee(e.target.value)}
+                            >
+                                <option value="" disabled>
+                                    Select a Refree
+                                </option>
+                                {mainReferee.map((mReferee) => (
+                                    <option value={mReferee.id}>
+                                        {mReferee.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {/* selected reffff */}
                         </div>
                         <div>
                             <label htmlFor="line1ref">Line Refree 1:</label>
-                            <input type='text' name='line1ref' />
+                            <select
+                                name="line1ref"
+                                id="line1ref"
+                                value={selectedAReferee1}
+                                onChange={(e) => setSelectedAReferee1(e.target.value)}
+                            >
+                                <option value="" disabled>
+                                    Select a Left Line Man
+                                </option>
+                                {assistantReferee.map((aReferee) => (
+                                    <option value={aReferee.id}>
+                                        {aReferee.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div>
                             <label htmlFor="line2ref">Line Refree 2:</label>
-                            <input type='text' name='line2ref' />
+                            <select
+                                name="line2ref"
+                                id="line2ref"
+                                value={selectedAReferee2}
+                                onChange={(e) => setSelectedAReferee2(e.target.value)}
+                            >
+                                <option value="" disabled>
+                                    Select a Right Line Man
+                                </option>
+                                {assistantReferee.map((aReferee) => (
+                                    <option value={aReferee.id}>
+                                        {aReferee.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
-                        <button className='mainbutton'>Create</button>
+                        <button className='mainbutton'onClick={postMatch}>Create</button>
 
 
                     </form>

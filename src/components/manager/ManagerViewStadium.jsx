@@ -25,7 +25,7 @@ function ManagerViewStadiums() {
         navigate("/addstadium");
 
     }
-    async function logMovies() {
+    async function callAPI() {
         const response = await fetch("http://localhost:3000/stadiums",
        { 
         method:"get",
@@ -35,13 +35,13 @@ function ManagerViewStadiums() {
         
         console.log(stadiums);
     }
-    const Farida= async () => {
-        let response = await logMovies()
+    const waitForResponse= async () => {
+        let response = await callAPI()
         setstad(response)
 
     }
     React.useEffect(() => {
-        Farida()
+        waitForResponse()
     }, [])
     
 
