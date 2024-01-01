@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 
 import Col from "react-bootstrap/Col";
 import post from "./post.json";
+import { loginusername } from "./Login";
 
 class Seatbooking extends React.Component {
   constructor() {
