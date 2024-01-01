@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect,useRef } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 
 let loginusername = "";
@@ -62,9 +64,20 @@ function Login(props) {
 
       },[user]);
       
+   
 
+            if(user.role==="Fan")
+            {
+                navigate("main");
+            }
+        }
+
+        logMovies();
+    }, [submit]);
+    
     function CheckType() {
-        
+
+
         if (username.trim() === "" || password.trim() === "") {
             setWarning("Please enter both username and password.");
             return; // Don't proceed with login if the form is empty

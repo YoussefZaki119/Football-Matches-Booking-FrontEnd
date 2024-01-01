@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
 import Main from "./main/Main";
 import Card from "./Card";
-import Matches from "../matches.js";
+//import Matches from "../matches.js";
 import MatchCreation from "./manager/MatchCreation.jsx";
 import AddStadium from "./manager/AddStadium.jsx"
 import ViewStadiums from "./ViewStadiums.jsx";
@@ -29,60 +29,111 @@ import {
 
 
 function App2() {
-    function createMatch(Matches) {
-        return (
-            <Card
-                key={Matches.id}
-                team1={Matches.team1}
-                team2={Matches.team2}
-                date={Matches.date}
-                time={Matches.time}
-                image_url1={Matches.image_url1}
-                image_url2={Matches.image_url2}
-                venue={Matches.venue}
-                mainRefree={Matches.mainRefree}
-                linesmen={Matches.linesmen}
+    const [Matches, setMatches] = useState([]);
+    const [TeamA, setTeamA] = useState([]);
+    const [TeamH, setTeamH] = useState([]);
+    const [Stadiums, setStadiums] = useState([]);
+    const [HeadRef, setHeadRef] = useState([]);
+    const [RightMan, setRightMan] = useState([]);
+    const [LeftMan, setLeftMan] = useState([]);
 
-            />
-        );
+    useEffect(() => {
+        async function fetchMatches() {
+            try {
+                const response = await fetch("http://localhost:3000/matches", {
+                    method: "GET",
+                    mode: "cors"
+                });
+                const data = await response.json();
+                setMatches(data);
+            } catch (error) {
+                console.error('Error fetching matches:', error);
+            }
+        }
+
+        fetchMatches();
+    }, []);
+
+    useEffect(() => {
+        async function fetchTeams() {
+            try {
+                const fetchPromisesA = Matches.map(match =>
+                    fetch(`http://localhost:3000/teams/${match.teamAway}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesH = Matches.map(match =>
+                    fetch(`http://localhost:3000/teams/${match.teamHome}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesStadium = Matches.map(match =>
+                    fetch(`http://localhost:3000/stadiums/${match.stadiumId}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesHeadRef = Matches.map(match =>
+                    fetch(`http://localhost:3000/referees?id=${match.mainReferee}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesRightMan = Matches.map(match =>
+                    fetch(`http://localhost:3000/referees?id=${match.lineRefereeRight}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesLeftMan = Matches.map(match =>
+                    fetch(`http://localhost:3000/referees?id=${match.lineRefereeLeft}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                
+                const teamsA = await Promise.all(fetchPromisesA);
+                const teamsH = await Promise.all(fetchPromisesH);
+                const stadiums = await Promise.all(fetchPromisesStadium);
+                const headRef = await Promise.all(fetchPromisesHeadRef);
+                const rightMan = await Promise.all(fetchPromisesRightMan);
+                const leftMan = await Promise.all(fetchPromisesLeftMan);
+                setTeamA(teamsA);
+                setTeamH(teamsH);
+                setStadiums(stadiums);
+                setHeadRef(headRef);
+                setRightMan(rightMan);
+                setLeftMan(leftMan);
+            } catch (error) {
+                console.error('Error fetching teams:', error);
+            }
+        }
+
+        fetchTeams();
+    }, [Matches]);
+
+    function createMatch() {
+        if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
+            return Matches.map((match, index) => (
+                <Card
+                    key={match.id}
+                    team1={TeamA[index]?.name || 'Team A Name'}
+                    team2={TeamH[index]?.name || 'Team H Name'}
+                    date={match.time.slice(0, 10)}
+                    time={match.time.slice(11, 16)}
+                    image_url1={TeamA[index]?.logo || 'Image URL for Team A'}
+                    image_url2={TeamH[index]?.logo || 'Image URL for Team H'}
+                    venue={Stadiums[index]?.name || 'Stadium Name'}
+                    mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
+                    linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
+                />
+            ));
+        } else {
+            return <p>Loading...</p>;
+        }
     }
-
-    function createManagerMatch(Matches) {
-        return (
-            <ManagerCard
-                key={Matches.id}
-                team1={Matches.team1}
-                team2={Matches.team2}
-                date={Matches.date}
-                time={Matches.time}
-                image_url1={Matches.image_url1}
-                image_url2={Matches.image_url2}
-                venue={Matches.venue}
-                mainRefree={Matches.mainRefree}
-                linesmen={Matches.linesmen}
-
-            />
-        );
-    }
-
-    function createGuestMatch(Matches){
-        return (
-            <GuestCard
-                key={Matches.id}
-                team1={Matches.team1}
-                team2={Matches.team2}
-                date={Matches.date}
-                time={Matches.time}
-                image_url1={Matches.image_url1}
-                image_url2={Matches.image_url2}
-                venue={Matches.venue}
-                mainRefree={Matches.mainRefree}
-                linesmen={Matches.linesmen}
-
-            />
-        );
-    }
-
 
     const [isRegistered, setIsRegistered] = useState(true);
 
@@ -113,7 +164,9 @@ function App2() {
             path: "/matches",
             element: <div className="matchesviewing">
                 <ResponsiveAppBar />
-                {Matches.map(createMatch)}
+                {
+                    createMatch()
+                }
             </div>
         },
         {
@@ -129,6 +182,9 @@ function App2() {
             path: "manager",
             element: <div>
                 <ManagerResponsiveAppBar />
+                {
+                    // createMatch(Matches, TeamA, TeamH)
+                }
             </div>
         },
         {
@@ -143,7 +199,9 @@ function App2() {
             path: "managermatches",
             element: <div>
                 <ManagerResponsiveAppBar />
-                {Matches.map(createManagerMatch)}
+                {
+                    // createMatch(Matches, TeamA, TeamH)
+                }
             </div>
         },
         {
@@ -158,6 +216,10 @@ function App2() {
             path: "managerstadium",
             element: <div>
                 <ManagerViewStadium />
+
+
+                {/* <ViewUsers /> */}
+
             </div>
 
         },
@@ -167,45 +229,47 @@ function App2() {
                 <Seatbooking />
             </div>
 
-        },{
+        }, {
             path: "payment",
             element: <div>
                 <PaymentForm />
             </div>
-        },{
+        }, {
             path: "viewusers",
             element: <div>
                 <ViewUsers />
             </div>
-        },{
+        }, {
             path: "viewstadiums",
             element: <div>
                 <ViewStadiums />
             </div>
-        },{
+        }, {
             path: "editprofile",
             element: <div>
-            <ResponsiveAppBar/>
+                <ResponsiveAppBar />
                 <EditProfile />
             </div>
-        },{
+        }, {
             path: "guest",
             element: <div>
                 <GuestResponsiveAppBar />
-                {Matches.map(createGuestMatch)}
+                {
+                    createMatch(Matches, TeamA, TeamH)
+                }
             </div>
-        },{
+        }, {
             path: "gueststadium",
             element: <div>
                 <GuestResponsiveAppBar />
                 <GuestViewStadium />
             </div>
-        },{
+        }, {
             path: "checkseats",
             element: <div>
                 <CheckSeats />
             </div>
-        },{
+        }, {
             path: "editprofilemanager",
             element: <div>
                 <ManagerResponsiveAppBar />
@@ -220,6 +284,7 @@ function App2() {
         <RouterProvider router={router} />
 
     );
+
 }
 
 export default App2;
