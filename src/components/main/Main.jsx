@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginusername } from "../Login";
 
 function Main() {
-    const [uname, setunmae] = useState("");
+    const [user, setUser] = useState({id: '', userName: '', password: '', firstName: '', lastName: '', birthDate: '', gender: '', city: '', address: '', email: '', role: '' });
     useEffect(() => {
         
         async function logMovies() {

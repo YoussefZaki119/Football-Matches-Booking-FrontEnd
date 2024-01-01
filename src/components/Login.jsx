@@ -78,9 +78,9 @@ function Login(props) {
 
         // Assuming username, password, M, and manager are defined somewhere in your code
         if (username === "M" && password === "M") {
-            setIsManager("manager");
+           
             // Use navigate to navigate to the manager path
-            navigate("/manager");
+            navigate("admin");
         }
     }
 
