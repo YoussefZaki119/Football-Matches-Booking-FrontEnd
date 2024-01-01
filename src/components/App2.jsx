@@ -21,6 +21,7 @@ import GuestResponsiveAppBar from "./main/GuestHeader.jsx";
 import GuestViewStadium from "./Guest/GuestViewStadium.jsx";
 import CheckSeats from "./manager/CheckSeats.jsx";
 import EditProfileManager from "./manager/EditData.jsx"
+import AuthUsers from "./AuthorizeUsers.jsx"
 
 import {
     createBrowserRouter,
@@ -215,7 +216,8 @@ function App2() {
         },{
             path: "admin",
             element: <div>
-                <ViewUsers />
+                {/* <ViewUsers /> */}
+                <AuthUsers/>
             </div>
         }
 
