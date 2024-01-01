@@ -2,9 +2,9 @@ import React from "react";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { dividerClasses } from "@mui/material";
-import Cities from "../cities"
+import Cities from "../../cities"
 import { Link } from "react-router-dom";
-import ManagerResponsiveAppBar from "./main/ManagerHeader.jsx";
+import ManagerResponsiveAppBar from "../main/ManagerHeader.jsx";
 function EditData(props) {
     return (
         

@@ -17,13 +17,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const pages = [{ name: "Matches", link: "matches" }
-    , { name: "Stadium", link: "addstadium" }
+    , { name: "Stadium", link: "viewstadiums" }
     , { name: "About", link: "main" }];
 
 const settings = [
-    { name: "Profile", link: "./home.html" },
+    { name: "Profile", link: "editprofile" },
     { name: "Reservation", link: "./home.html" },
-    { name: "Logout", link: "public\home.html" },
+    { name: "Logout", link: "/" },
 ];
 
 function ResponsiveAppBar() {

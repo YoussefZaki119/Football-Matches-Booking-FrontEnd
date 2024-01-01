@@ -11,6 +11,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import { Stadium } from '@mui/icons-material';
 import ResponsiveAppBar from "../main/Header";
 import { Link, useNavigate } from "react-router-dom";
+import ManagerResponsiveAppBar from '../main/ManagerHeader';
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -24,7 +25,7 @@ function ManagerViewStadiums() {
         navigate("/addstadium");
 
     }
-    async function logMovies() {
+    async function callAPI() {
         const response = await fetch("http://localhost:3000/stadiums",
        { 
         method:"get",
@@ -34,13 +35,13 @@ function ManagerViewStadiums() {
         
         console.log(stadiums);
     }
-    const Farida= async () => {
-        let response = await logMovies()
+    const waitForResponse= async () => {
+        let response = await callAPI()
         setstad(response)
 
     }
     React.useEffect(() => {
-        Farida()
+        waitForResponse()
     }, [])
     
 
@@ -48,7 +49,7 @@ function ManagerViewStadiums() {
 
     return (
         <div>
-            <ResponsiveAppBar />
+            <ManagerResponsiveAppBar />
             <div className='stdContainer'>
                 <div className='stadiumtable'>
                     <table>

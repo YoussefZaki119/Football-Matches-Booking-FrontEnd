@@ -48,7 +48,7 @@ function Login(props) {
 
     return (
         <div className="containersbody">
-            <div className="container">
+            <div className="container" style={{marginTop:200}}>
                 <h1>Welcome Back</h1>
                 <form>
                     <input
@@ -75,7 +75,7 @@ function Login(props) {
                         Register
                     </a>
                     <a className="secondarybutton">
-                        <Link to="main">Continue as a Guest</Link>
+                        <Link to="guest">Continue as a Guest</Link>
                     </a>
                 </form>
             </div>

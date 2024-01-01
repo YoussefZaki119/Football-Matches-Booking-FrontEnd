@@ -5,10 +5,10 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link, useNavigate } from "react-router-dom";
 
-function Card(props) {
+function GuestCard(props) {
     const navigate = useNavigate();
     function GoTo(){
-        navigate("/reservation");
+        navigate("/");
     }
   return (
     <div>
@@ -40,7 +40,7 @@ function Card(props) {
           </div>
           <div className="test">
           <button className="buybutton" type="button" onClick={GoTo}>
-            Buy Ticket
+            Login to Buy Ticket
          </button>
           </div>
         </div>
@@ -59,4 +59,4 @@ function Card(props) {
 }
 
 
-export default Card;
+export default GuestCard;
