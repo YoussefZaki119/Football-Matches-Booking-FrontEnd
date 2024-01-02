@@ -14,7 +14,7 @@ import { stadiumid } from "./Card";
 let iWillBook = [];//ROWS 3 SEAT 5
 let matchid = 0;
 const Seatbooking = () => {
-  const { id,username} = useParams();
+  const { username,id} = useParams();
   matchid = id;
   const [rows, setRows] = useState(3);
   const [columns, setColumns] = useState(12);
@@ -81,12 +81,12 @@ const Seatbooking = () => {
         generatedSeats.push(seat);
       }
     }
-    const count=seatReserved.length();
-    if(count==rows*columns)
-    {
-      setIsFull(true);
+    //onst count=seatReserved.length();
+    // if(count==rows*columns)
+    // {
+    //   setIsFull(true);
       
-    }
+    // }
     setSeats(generatedSeats);
   }, [rows, columns, seatReserved]);
 

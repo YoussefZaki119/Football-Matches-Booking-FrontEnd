@@ -14,7 +14,7 @@ function Card(props) {
     const navigate = useNavigate();
     function GoTo(){
         stadiumid=props.venue;
-       navigate(`/reservation/${props.Key}/${id}`);
+       navigate(`/reservation/${id}/${props.Key}`);
     }
   return (
     <div>

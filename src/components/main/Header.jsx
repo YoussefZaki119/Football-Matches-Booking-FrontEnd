@@ -15,6 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { Link, useNavigate } from "react-router-dom";
 import { mainusername } from "./Main";
+import { useParams } from "react-router-dom";
 
 let husername = "";
 //husername=mainusername;
@@ -23,16 +24,17 @@ let husername = "";
 
 
 function ResponsiveAppBar() {
+    const{id}=useParams();
     husername = mainusername;
     const settings = [
 
-        { name: "Profile", link:` ../editprofile/${husername}` },
-        { name: "Reservation", link:    `../viewres/${husername}` },
+        { name: "Profile", link:`../../editprofile/${id}` },
+        { name: "Reservation", link: `../viewres/${id}` },
         { name: "Logout", link: "/" },
     ];    
-    const pages = [{ name: "Matches", link: `../matches/${husername}` }
-    , { name: "Stadium", link: "viewstadiums" }
-    , { name: "About", link: "main" }];
+    const pages = [{ name: "Matches", link: `../matches/${id}` }
+    //, { name: "Stadium", link: `../viewstadiums/${id}` }
+    , { name: "About", link: `../main/${id}` }];
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);

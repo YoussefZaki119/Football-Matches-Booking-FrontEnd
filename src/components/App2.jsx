@@ -226,7 +226,7 @@ function App2() {
             </div>,
         },
         { 
-            path: "main",
+            path: "main/:id",
             element: <Main />
 
         },
@@ -246,17 +246,6 @@ function App2() {
             element: <div>
                 <MatchCreation />
                 {/* <PaymentForm /> */}
-            </div>
-        },
-        {
-
-
-            path: "manager",
-            element: <div>
-                <ManagerResponsiveAppBar />
-                {
-                    // createMatch(Matches, TeamA, TeamH)
-                }
             </div>
         },
         {
@@ -320,10 +309,10 @@ function App2() {
             </div>
         }, {
 
-            path: "editprofile/:username",
+            path: "editprofile/:id",
 
             element: <div>
-                <ResponsiveAppBar />
+                
                 <EditProfile />
             </div>
         }, {

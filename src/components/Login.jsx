@@ -53,7 +53,7 @@ function Login(props) {
         if (isMounted.current) {
         if (user.role === "Fan") {
           loginusername = user.userName;
-          navigate(`main`);
+          navigate(`main/${user.userName}`);
           } else if (user.role === "Manager") {
             navigate("manager");
           }}else

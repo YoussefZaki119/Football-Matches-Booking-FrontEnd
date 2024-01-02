@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { Link, useNavigate } from "react-router-dom";
 import { loginusername } from "../Login";
+import { useParams } from "react-router-dom";
 
 let mainusername = "";
 let mainusername1 = "";
 function Main() {
+    const { id } = useParams();
     const [uname, setunmae] = useState("");
     mainusername = loginusername;
     mainusername1 = loginusername;
@@ -41,7 +43,7 @@ function Main() {
     function CheckType() {
             // Use navigate to navigate to the manager path
             
-            navigate("/matches");
+            navigate("../matches/"+id);
         
     }
     return (

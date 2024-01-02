@@ -3,12 +3,15 @@ import Cities from "../cities"
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { loginusername } from "./Login";
-import { husername } from "./main/Header";
+import ResponsiveAppBar from "./main/Header";
+//import { husername } from "./main/Header";
+
+
 function EditData() {
-    const { username } = useParams();
+    const { id } = useParams();
     //let username="john_doe"
     console.log("dsfa");
-    console.log(husername);
+    //console.log(husername);
     const [user, setuser] = useState({});
     const [password, setPassword] = useState("");
     const [fnmae, setfname] = useState("");
@@ -19,7 +22,7 @@ function EditData() {
     const [address, setaddress] = useState("");
     useEffect(() => {
         async function logMovies() {
-            const response = await fetch("http://localhost:3000/users?user=" + username, {
+            const response = await fetch("http://localhost:3000/users?user=" + id, {
                 method: "get",
                 mode: "cors"
             });
@@ -82,7 +85,7 @@ function EditData() {
         const result = window.confirm(confirmationMessage);
 
         if (result) {
-            fetch(`http://localhost:3000/users/${username}`, {
+            fetch(`http://localhost:3000/users/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,8 +113,10 @@ function EditData() {
 
 
     return (
-
+        <div>
+            <ResponsiveAppBar />
         <div id='DivMatchCreationcontainer'>
+       
             <div className="MatchCreationcontainer">
 
 
@@ -161,6 +166,7 @@ function EditData() {
 
                 </form>
             </div>
+        </div>
         </div>
     );
 
