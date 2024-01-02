@@ -31,7 +31,7 @@ function EditMatch(props) {
     const [selectedAReferee2, setSelectedAReferee2] = useState('');
     const [mainReferee, setMainReferee] = useState([])
     const [assistantReferee, setAssistantReferee] = useState([])
-    const [matchDetails, setMatchDetails] = useState({ teamAway: "", teamHome: "", stadiumId: "", time: "", mainReferee: "", lineRefereeRight: "", lineRefereeLeft: "", isFull: false });
+    const [matchDetails, setMatchDetails] = useState({ teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull });
     const [isRerenderNeeded, setIsRerenderNeeded] = useState(false);
     console.log(`match lineRefereeLeft: ${match.lineRefereeLeft}`)
     useEffect(() => {
@@ -44,35 +44,27 @@ function EditMatch(props) {
         return () => clearTimeout(timeout);
     }, []); // Run this effect only once (on initial render)
     function postEditedMatch() {
-
+        setMatchDetails({ id: match.id, teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull })
         fetch(`http://localhost:3000/matches/${id}`, {
-            method: "put",
-            mode: "cors",
-            body: JSON.stringify(matchDetails),
+            method: "PUT", // Change "patch" to "put"
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify(matchDetails)
         })
             .then((res) => res.json())
             .then((res) => console.log(res))
             .catch((err) => err);
-
+        console.log("details")
+        console.log(matchDetails)
     }
     function callPostEditedMatch(e) {
         e.preventDefault();
         postEditedMatch();
 
     }
-    useEffect(() => {
-        setMatchDetails({
-            teamAway: selectedATeamId,
-            teamHome: selectedHTeamId,
-            stadiumId: selectedVenueId,
-            time: match.time,
-            mainReferee: selectedMRefereeId,
-            lineRefereeRight: selectedAReferee2Id,
-            lineRefereeLeft: selectedAReferee1Id,
-            isFull: match.isFull
-        });
-    }, [selectedATeamId, selectedHTeamId, selectedVenueId, selectedMRefereeId, selectedAReferee2Id, selectedAReferee1Id, match.time, match.isFull]);
-    
+
     useEffect(() => {
         // Fetch options from the server when the component mounts
         fetch(`http://localhost:3000/matches?match=${id}`, {
@@ -82,7 +74,19 @@ function EditMatch(props) {
             .then((res) => res.json())
             .then((data) => {
                 setMatch(data);
-
+                setMatchDetails({
+                    id: data.id,
+                    teamAway: data.teamAway,
+                    teamHome: data.teamHome,
+                    stadiumId: data.stadiumId,
+                    time: data.time,
+                    mainReferee: data.mainReferee,
+                    lineRefereeRight: data.lineRefereeRight,
+                    lineRefereeLeft: data.lineRefereeLeft,
+                    isFull: data.isFull,
+                    teamAwayLogo: data.teamAwayLogo,
+                    teamHomeLogo: data.teamHomeLogo,
+                });
             })
             .catch((err) => console.log(err));
 
@@ -91,7 +95,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedATeam(res.name))
+            .then((res) => {setSelectedATeam(res.name)
+                setSelectedATeamId(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/teams/${match.teamHome}`, {
@@ -99,7 +105,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedHTeam(res.name))
+            .then((res) => {setSelectedHTeam(res.name)
+                selectedHTeamId(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/referees?id=${match.mainReferee}`, {
@@ -107,7 +115,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedMReferee(res.name))
+            .then((res) =>{ setSelectedMReferee(res.name)
+                selectedMRefereeId(res.id)
+            })
             .catch((err) => err);
 
 
@@ -116,7 +126,10 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedAReferee1(res.name))
+            .then((res) => {
+                setSelectedAReferee1(res.name)
+                selectedAReferee1Id(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/referees?id=${match.lineRefereeRight}`, {
@@ -124,7 +137,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedAReferee2(res.name))
+            .then((res) => {setSelectedAReferee2(res.name)
+                selectedAReferee2Id(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/stadiums/${match.stadiumId}`, {
@@ -132,8 +147,12 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedVenue(res.name))
+            .then((res) => {
+                setSelectedVenue(res.name)
+                selectedVenueId(res.id)
+            })
             .catch((err) => err);
+
 
         fetch("http://localhost:3000/teams", {
             method: "get",
@@ -169,6 +188,22 @@ function EditMatch(props) {
         // setMatchDetails({ teamAway: selectedATeamId, teamHome: selectedHTeamId, stadiumId: selectedVenueId, time: match.time, mainReferee: selectedMRefereeId, lineRefereeRight: selectedAReferee2Id, lineRefereeLeft: selectedAReferee1Id, isFull: match.isFull })
 
     }, [id, isRerenderNeeded]);
+    useEffect(() => {
+        setMatchDetails({
+            id: match.id,
+            teamAway: parseInt(selectedATeamId),
+            teamHome: parseInt(selectedHTeamId),
+            stadiumId: parseInt(selectedVenueId),
+            time: match.time,
+            mainReferee: parseInt(selectedMRefereeId),
+            lineRefereeRight: parseInt(selectedAReferee2Id),
+            lineRefereeLeft: parseInt(selectedAReferee1Id),
+            isFull: match.isFull,
+            teamAwayLogo: match.teamAwayLogo,
+            teamHomeLogo: match.teamHomeLogo,
+        });
+    }, [selectedATeamId, selectedHTeamId, selectedVenueId, selectedMRefereeId, selectedAReferee2Id, selectedAReferee1Id, match.time, match.isFull]);
+
     return (
         <div>
             {isRerenderNeeded && (
@@ -185,18 +220,26 @@ function EditMatch(props) {
                                     <select
                                         name="homeTeam"
                                         id="homeTeam"
-                                        value={selectedHTeamId}
                                         onChange={(e) => {
-                                            setSelectedHTeamId(e.target.value)
-                                            
+                                            setSelectedHTeamId(e.target.value);
+                                            setSelectedATeamId((prevSelectedATeamId) => {
+                                                if (prevSelectedATeamId === e.target.value) {
+                                                    return ''; // Reset selected away team if it matches the home team
+                                                }
+                                                return prevSelectedATeamId;
+                                            });
                                         }}
+                                        value={selectedHTeamId}
                                     >
-
-                                        <option value="" disabled selected>
+                                        <option value="" disabled>
                                             {selectedHTeam ? selectedHTeam : "Select Home Team"}
                                         </option>
                                         {Teams.map((team) => (
-                                            <option value={team.id}>
+                                            <option
+                                                key={team.id}
+                                                value={team.id}
+                                                disabled={team.id === selectedATeamId}
+                                            >
                                                 {team.name}
                                             </option>
                                         ))}
@@ -207,18 +250,26 @@ function EditMatch(props) {
                                     <select
                                         name="awayTeam"
                                         id="awayTeam"
-                                        // placeholder={selectedATeam}
-                                        value={selectedATeamId}
                                         onChange={(e) => {
-                                            // setSelectedATeam(e.target.placeholder)
-                                            setSelectedATeamId(e.target.value)
+                                            setSelectedATeamId(e.target.value);
+                                            setSelectedHTeamId((prevSelectedHTeamId) => {
+                                                if (prevSelectedHTeamId === e.target.value) {
+                                                    return ''; // Reset selected home team if it matches the away team
+                                                }
+                                                return prevSelectedHTeamId;
+                                            });
                                         }}
+                                        value={selectedATeamId}
                                     >
-                                         <option value="" disabled selected>
-                                            {selectedATeam ? selectedATeam : "Select Home Team"}
+                                        <option value="" disabled>
+                                            {selectedATeam ? selectedATeam : "Select Away Team"}
                                         </option>
                                         {Teams.map((team) => (
-                                            <option value={team.id}>
+                                            <option
+                                                key={team.id}
+                                                value={team.id}
+                                                disabled={team.id === selectedHTeamId}
+                                            >
                                                 {team.name}
                                             </option>
                                         ))}
@@ -237,7 +288,7 @@ function EditMatch(props) {
                                             // setSelectedVenue(e.target.value)
                                         }}
                                     >
-                                         <option value="" disabled selected>
+                                        <option value="" disabled selected>
                                             {selectedVenue ? selectedVenue : "Select Home Team"}
                                         </option>
                                         {Venues.map((venue) => (
@@ -267,7 +318,7 @@ function EditMatch(props) {
                                             // setSelectedMReferee(e.target.placeholder)
                                         }}
                                     >
-                                         <option value="" disabled selected>
+                                        <option value="" disabled selected>
                                             {selectedMReferee ? selectedMReferee : "Select Home Team"}
                                         </option>
                                         {mainReferee.map((mReferee) => (
@@ -283,18 +334,26 @@ function EditMatch(props) {
                                     <select
                                         name="line1ref"
                                         id="line1ref"
-                                        // placeholder={selectedAReferee1}
                                         value={selectedAReferee1Id}
                                         onChange={(e) => {
-                                            setSelectedAReferee1Id(e.target.value)
-                                            // setSelectedAReferee1(e.target.placeholder)
+                                            setSelectedAReferee1Id(e.target.value);
+                                            setSelectedAReferee2Id((prevSelectedAReferee2Id) => {
+                                                if (prevSelectedAReferee2Id === e.target.value) {
+                                                    return ''; // Reset selected line referee 2 if it matches line referee 1
+                                                }
+                                                return prevSelectedAReferee2Id;
+                                            });
                                         }}
                                     >
-                                         <option value="" disabled selected>
-                                            {selectedAReferee1 ? selectedAReferee1 : "Select Home Team"}
+                                        <option value="" disabled>
+                                            {selectedAReferee1 ? selectedAReferee1 : "Select Line Referee 1"}
                                         </option>
                                         {assistantReferee.map((aReferee) => (
-                                            <option value={aReferee.id}>
+                                            <option
+                                                key={aReferee.id}
+                                                value={aReferee.id}
+                                                disabled={aReferee.id === selectedAReferee2Id}
+                                            >
                                                 {aReferee.name}
                                             </option>
                                         ))}
@@ -305,18 +364,26 @@ function EditMatch(props) {
                                     <select
                                         name="line2ref"
                                         id="line2ref"
-                                        // placeholder={selectedAReferee2}
                                         value={selectedAReferee2Id}
                                         onChange={(e) => {
-                                            setSelectedAReferee2Id(e.target.value)
-                                            // setSelectedAReferee2(e.target.placeholder)
+                                            setSelectedAReferee2Id(e.target.value);
+                                            setSelectedAReferee1Id((prevSelectedAReferee1Id) => {
+                                                if (prevSelectedAReferee1Id === e.target.value) {
+                                                    return ''; // Reset selected line referee 1 if it matches line referee 2
+                                                }
+                                                return prevSelectedAReferee1Id;
+                                            });
                                         }}
                                     >
-                                         <option value="" disabled selected>
-                                            {selectedAReferee2 ? selectedAReferee2 : "Select Home Team"}
+                                        <option value="" disabled>
+                                            {selectedAReferee2 ? selectedAReferee2 : "Select Line Referee 2"}
                                         </option>
                                         {assistantReferee.map((aReferee) => (
-                                            <option value={aReferee.id}>
+                                            <option
+                                                key={aReferee.id}
+                                                value={aReferee.id}
+                                                disabled={aReferee.id === selectedAReferee1Id}
+                                            >
                                                 {aReferee.name}
                                             </option>
                                         ))}
