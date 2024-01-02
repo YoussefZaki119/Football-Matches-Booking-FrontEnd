@@ -15,9 +15,9 @@ function Main() {
       
       
             const specificuser = await response.json();
-            console.log(specificuser);
-            setunmae(specificuser[0].firstName);
-          
+            // console.log(specificuser);
+            setunmae(specificuser[0].firstName)
+            console.log(uname);
            
       
             // if (specificuser.role === "Fan") {
