@@ -117,7 +117,7 @@ function App2() {
         if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
             return Matches.map((match, index) => (
                 <Card
-                    key={match.id}
+                    Key={match.id}
                     team1={TeamA[index]?.name || 'Team A Name'}
                     team2={TeamH[index]?.name || 'Team H Name'}
                     date={match.time.slice(0, 10)}
@@ -133,6 +133,50 @@ function App2() {
             return <p>Loading...</p>;
         }
     }
+    function createManagerMatch() {
+        if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
+            // console.log(`ssssss${Matches[0].id}`)
+            return Matches.map((match, index) => (
+                
+                <ManagerCard
+                    Key={match.id}
+                    team1={TeamA[index]?.name || 'Team A Name'}
+                    team2={TeamH[index]?.name || 'Team H Name'}
+                    date={match.time.slice(0, 10)}
+                    time={match.time.slice(11, 16)}
+                    image_url1={TeamA[index]?.logo || 'Image URL for Team A'}
+                    image_url2={TeamH[index]?.logo || 'Image URL for Team H'}
+                    venue={Stadiums[index]?.name || 'Stadium Name'}
+                    mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
+                    linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
+                />
+            ));
+        } else {
+            return <p>Loading...</p>;
+        }
+    }
+    function createGuestMatch() {
+        if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
+            return Matches.map((match, index) => (
+                <GuestCard
+                    Key={match.id}
+                    team1={TeamA[index]?.name || 'Team A Name'}
+                    team2={TeamH[index]?.name || 'Team H Name'}
+                    date={match.time.slice(0, 10)}
+                    time={match.time.slice(11, 16)}
+                    image_url1={TeamA[index]?.logo || 'Image URL for Team A'}
+                    image_url2={TeamH[index]?.logo || 'Image URL for Team H'}
+                    venue={Stadiums[index]?.name || 'Stadium Name'}
+                    mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
+                    linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
+                />
+            ));
+        } else {
+            return <p>Loading...</p>;
+        }
+    }
+
+
 
     const [isRegistered, setIsRegistered] = useState(true);
 
@@ -160,7 +204,7 @@ function App2() {
 
         },
         {
-            path: "/matches",
+            path: "matches",
             element: <div className="matchesviewing">
                 <ResponsiveAppBar />
                 {
@@ -199,17 +243,15 @@ function App2() {
             element: <div>
                 <ManagerResponsiveAppBar />
                 {
-                    // createMatch(Matches, TeamA, TeamH)
+                     createManagerMatch()
                 }
             </div>
         },
         {
-            path: "editmatch",
+            path: `editmatch/:id`,
             element: <div>
-                <EditMatch />
+              <EditMatch />
             </div>
-
-
         },
         {
             path: "managerstadium",
@@ -254,7 +296,7 @@ function App2() {
             element: <div>
                 <GuestResponsiveAppBar />
                 {
-                    createMatch(Matches, TeamA, TeamH)
+                    createGuestMatch()
                 }
             </div>
         }, {
