@@ -359,6 +359,7 @@ function App2() {
             element: <div>
                 <ViewUsers />
                 {/* <AuthUsers/> */}
+                </div>
 
         },
         {
