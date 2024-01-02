@@ -44,7 +44,7 @@ function EditMatch(props) {
         return () => clearTimeout(timeout);
     }, []); // Run this effect only once (on initial render)
     function postEditedMatch() {
-        setMatchDetails({id:match.id, teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull })
+        setMatchDetails({ id: match.id, teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull })
         fetch(`http://localhost:3000/matches/${id}`, {
             method: "PUT", // Change "patch" to "put"
             headers: {
@@ -56,15 +56,15 @@ function EditMatch(props) {
             .then((res) => res.json())
             .then((res) => console.log(res))
             .catch((err) => err);
-            console.log("details")
-            console.log(matchDetails)
+        console.log("details")
+        console.log(matchDetails)
     }
     function callPostEditedMatch(e) {
         e.preventDefault();
         postEditedMatch();
 
     }
-   
+
     useEffect(() => {
         // Fetch options from the server when the component mounts
         fetch(`http://localhost:3000/matches?match=${id}`, {
@@ -95,7 +95,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedATeam(res.name))
+            .then((res) => {setSelectedATeam(res.name)
+                setSelectedATeamId(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/teams/${match.teamHome}`, {
@@ -103,7 +105,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedHTeam(res.name))
+            .then((res) => {setSelectedHTeam(res.name)
+                selectedHTeamId(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/referees?id=${match.mainReferee}`, {
@@ -111,7 +115,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedMReferee(res.name))
+            .then((res) =>{ setSelectedMReferee(res.name)
+                selectedMRefereeId(res.id)
+            })
             .catch((err) => err);
 
 
@@ -120,7 +126,10 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedAReferee1(res.name))
+            .then((res) => {
+                setSelectedAReferee1(res.name)
+                selectedAReferee1Id(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/referees?id=${match.lineRefereeRight}`, {
@@ -128,7 +137,9 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedAReferee2(res.name))
+            .then((res) => {setSelectedAReferee2(res.name)
+                selectedAReferee2Id(res.id)
+            })
             .catch((err) => err);
 
         fetch(`http://localhost:3000/stadiums/${match.stadiumId}`, {
@@ -136,8 +147,12 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => setSelectedVenue(res.name))
+            .then((res) => {
+                setSelectedVenue(res.name)
+                selectedVenueId(res.id)
+            })
             .catch((err) => err);
+
 
         fetch("http://localhost:3000/teams", {
             method: "get",
