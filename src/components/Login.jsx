@@ -2,6 +2,7 @@ import React, { useState, useEffect,useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 let loginusername = "";
+
 function Login(props) {
     const [isManager, setIsManager] = useState("");
     const [username, setUsername] = useState("");
@@ -51,8 +52,8 @@ function Login(props) {
       useEffect(() => {
         if (isMounted.current) {
         if (user.role === "Fan") {
-            loginusername = user.userName;
-            navigate("main");
+          loginusername = user.userName;
+          navigate(`main`);
           } else if (user.role === "Manager") {
             navigate("manager");
           }}else

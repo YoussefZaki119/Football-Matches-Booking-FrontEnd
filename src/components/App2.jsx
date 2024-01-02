@@ -67,7 +67,7 @@ function App2() {
         );
     }
 
-    function createGuestMatch(Matches){
+    function createGuestMatch(Matches) {
         return (
             <GuestCard
                 key={Matches.id}
@@ -106,7 +106,7 @@ function App2() {
                 )}
             </div>,
         },
-        {
+        { 
             path: "main",
             element: <Main />
 
@@ -169,55 +169,55 @@ function App2() {
                 <Seatbooking />
             </div>
 
-        },{
+        }, {
             path: "payment",
             element: <div>
                 <PaymentForm />
             </div>
-        },{
+        }, {
             path: "viewusers",
             element: <div>
                 <ViewUsers />
             </div>
-        },{
+        }, {
             path: "viewstadiums",
             element: <div>
                 <ViewStadiums />
             </div>
-        },{
-            path: "editprofile",
+        }, {
+            path: "editprofile/:username",
             element: <div>
-            <ResponsiveAppBar/>
+                <ResponsiveAppBar />
                 <EditProfile />
             </div>
-        },{
+        }, {
             path: "guest",
             element: <div>
                 <GuestResponsiveAppBar />
                 {Matches.map(createGuestMatch)}
             </div>
-        },{
+        }, {
             path: "gueststadium",
             element: <div>
                 <GuestResponsiveAppBar />
                 <GuestViewStadium />
             </div>
-        },{
+        }, {
             path: "checkseats",
             element: <div>
                 <CheckSeats />
             </div>
-        },{
+        }, {
             path: "editprofilemanager",
             element: <div>
                 <ManagerResponsiveAppBar />
                 <EditProfileManager />
             </div>
-        },{
+        }, {
             path: "admin",
             element: <div>
-                {/* <ViewUsers /> */}
-                <AuthUsers/>
+                <ViewUsers />
+                {/* <AuthUsers/> */}
             </div>
         }
 
