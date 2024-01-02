@@ -177,6 +177,7 @@ function App2() {
             return <p>Loading...</p>;
         }
 
+
     }
     function createGuestMatch() {
         if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
@@ -197,6 +198,7 @@ function App2() {
         } else {
             return <p>Loading...</p>;
         }
+
     }
 
 
@@ -223,7 +225,7 @@ function App2() {
                 )}
             </div>,
         },
-        {
+        { 
             path: "main",
             element: <Main />
 
@@ -300,7 +302,9 @@ function App2() {
             </div>
 
         }, {
+
             path: "payment/:id",
+
             element: <div>
                 <PaymentForm />
             </div>
@@ -315,7 +319,9 @@ function App2() {
                 <ViewStadiums />
             </div>
         }, {
-            path: "editprofile",
+
+            path: "editprofile/:username",
+
             element: <div>
                 <ResponsiveAppBar />
                 <EditProfile />
@@ -347,11 +353,19 @@ function App2() {
                 <ManagerResponsiveAppBar />
                 <EditProfileManager />
             </div>
+
+        }, {
+            path: "admin",
+            element: <div>
+                <ViewUsers />
+                {/* <AuthUsers/> */}
+
         },
         {
             path:"viewres/:id",
             element:<div>
                 <ViewRes />
+
             </div>
         }
 

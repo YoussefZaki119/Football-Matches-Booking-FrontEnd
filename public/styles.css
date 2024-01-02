@@ -89,7 +89,7 @@ body {
   border: 0;
   font-weight: bold;
   padding: 10px 15px;
-  color: #004869;
+  color:rgb(80,140,196);
   border-radius: 10px;
   width: 80%;
   font-size: 18px;
@@ -99,7 +99,7 @@ body {
 
 .mainbutton:hover {
   color: white;
-  background-color: #004869;
+  background-color: rgb(80,140,196);
 }
 
 .matchesviewing{
@@ -187,7 +187,7 @@ hr{
 
 .MatchCreationcontainer label {
   font-weight: 700;
-  color: white;
+  color: rgb(80,140,196);
   font-size: large;
   text-align: left;
   width: 120px;
@@ -196,7 +196,7 @@ hr{
 
 .MatchCreationcontainer h1 {
   font-weight: bold;
-  color: white;
+  color: rgb(80,140,196);
   text-align: center;
   height: fit-content;
   font-size: 88px;
@@ -286,6 +286,10 @@ hr{
   /* Add any other styles you want for the hover and click states */
 }
 
+.editdatalabels
+{
+  width:88px;
+}
 
 
 @media only screen and (min-width: 1024px) {
@@ -725,7 +729,7 @@ header h1 {
     border: 0;
     font-weight: bold;
     padding: 10px 15px;
-    color: #004869;
+    color: rgb(80,140,196);
     border-radius: 10px;
     width: 80%;
     font-size: 18px;
@@ -735,7 +739,7 @@ header h1 {
 
   .mainbutton:hover {
     color: white;
-    background-color: #004869;
+    background-color:rgb(80,140,196);
   }
 
   .secondarybutton {

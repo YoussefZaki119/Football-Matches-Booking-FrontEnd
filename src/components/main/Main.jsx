@@ -9,20 +9,21 @@ function Main() {
     const [uname, setunmae] = useState("");
     mainusername = loginusername;
     mainusername1 = loginusername;
+
     useEffect(() => {
         
         async function logMovies() {
-            const response = await fetch("http://localhost:3000/users?users=" + loginusername , {
+            const response = await fetch("http://localhost:3000/users?user=" + loginusername , {
               method: "get",
               mode: "cors"
             });
       
       
             const specificuser = await response.json();
-            // console.log(specificuser);
-            setunmae(specificuser[0].firstName)
-            console.log(uname);
-           
+            setunmae(specificuser.firstName)
+            console.log("loginusername");
+            console.log(loginusername);
+            console.log(mainusername);
       
             // if (specificuser.role === "Fan") {
             //   navigate("main");

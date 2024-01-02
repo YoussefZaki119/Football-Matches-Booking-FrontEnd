@@ -22,11 +22,10 @@ let husername = "";
 
 
 
-
-
 function ResponsiveAppBar() {
     husername = mainusername;
     const settings = [
+
         { name: "Profile", link:` ../editprofile/${husername}` },
         { name: "Reservation", link:    `../viewres/${husername}` },
         { name: "Logout", link: "/" },
@@ -34,6 +33,7 @@ function ResponsiveAppBar() {
     const pages = [{ name: "Matches", link: `../matches/${husername}` }
     , { name: "Stadium", link: "viewstadiums" }
     , { name: "About", link: "main" }];
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
