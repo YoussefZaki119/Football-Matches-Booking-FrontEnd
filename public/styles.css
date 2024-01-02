@@ -278,8 +278,13 @@ hr{
   margin-top: 5%;
 }
 
-
-
+.roleanddeleteicon:hover,
+.roleanddeleteicon:active {
+  /* Add your styles for hover and click here */
+  cursor: pointer; /* Change cursor to pointer to indicate clickability */
+  color: red; /* Change color when hovered or clicked */
+  /* Add any other styles you want for the hover and click states */
+}
 
 
 
@@ -814,7 +819,10 @@ header h1 {
 
 
   }
-
+  .reserved {
+    color: red;
+  }
+  
   .test {
     width: 100%;
   }
