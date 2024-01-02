@@ -339,7 +339,7 @@ function App2() {
                 <GuestViewStadium />
             </div>
         }, {
-            path: "checkseats",
+            path: "checkseats/:id",
             element: <div>
                 <CheckSeats />
             </div>

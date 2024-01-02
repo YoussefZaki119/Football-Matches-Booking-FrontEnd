@@ -14,8 +14,8 @@ import { stadiumid } from "./Card";
 let iWillBook = [];//ROWS 3 SEAT 5
 let matchid = 0;
 const Seatbooking = () => {
-  const { username,id} = useParams();
-  matchid = id;
+  const { id,username} = useParams();
+  matchid = username;
   const [rows, setRows] = useState(3);
   const [columns, setColumns] = useState(12);
   const [seats, setSeats] = useState([]);
@@ -46,7 +46,7 @@ const Seatbooking = () => {
   useEffect(() => {
     async function fetchMatches() {
       try {
-        const response = await fetch("http://localhost:3000/reservations/match/" + id, {
+        const response = await fetch("http://localhost:3000/reservations/match/" + username, {
           method: "GET",
           mode: "cors",
         });
@@ -113,7 +113,7 @@ const Seatbooking = () => {
 
   const onReserveClick = () => {
     // Your reservation logic goes here
-    navigate(`../../payment/${username}`);
+    navigate(`../../payment/${id}`);
   };
 
   const renderReservedSeats = () => {

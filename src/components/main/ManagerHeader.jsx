@@ -17,11 +17,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const pages = [{ name: "Matches", link: "../managermatches" }
-    , { name: "Stadium", link: "managerstadium" }
+    , { name: "Stadium", link: "../managerstadium" }
     , { name: "About", link: "manager" }];
 
 const settings = [
-    { name: "Profile", link: "editprofilemanager" },
+    // { name: "Profile", link: "editprofilemanager" },
     { name: "Logout", link: "/"},
 ];
 

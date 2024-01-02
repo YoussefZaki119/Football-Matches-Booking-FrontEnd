@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 function ViewRes() {
     const { id } = useParams();
     const [reservations, setReservations] = useState([]);
+    const [Matches, setMatches] = useState([]);
 
     const fetchMatches = async () => {
         try {
@@ -51,6 +52,62 @@ function ViewRes() {
     useEffect(() => {
         fetchMatches();
     }, []);
+
+    useEffect(() => {
+        async function fetchMatches() {
+            try {
+                const response = reservations.map(reserve=> fetch("http://localhost:3000/matches?match="+reserve.matchId, {
+                    method: "GET",
+                    mode: "cors"
+                }).then(res => res.json())
+                );
+                setMatches(data);
+            } catch (error) {
+                console.error('Error fetching matches:', error);
+            }
+        }
+
+        fetchMatches();
+    }, [reservations]);
+
+
+    useEffect(() => {
+        async function fetchTeams() {
+            try {
+                const fetchPromisesA = Matches.map(match =>
+                    fetch(`http://localhost:3000/teams/${match.teamAway}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesH = Matches.map(match =>
+                    fetch(`http://localhost:3000/teams/${match.teamHome}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesStadium = Matches.map(match =>
+                    fetch(`http://localhost:3000/stadiums/${match.stadiumId}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                
+                
+                const teamsA = await Promise.all(fetchPromisesA);
+                const teamsH = await Promise.all(fetchPromisesH);
+                const stadiums = await Promise.all(fetchPromisesStadium);
+                setTeamA(teamsA);
+                setTeamH(teamsH);
+                setStadiums(stadiums);            
+            } catch (error) {
+                console.error('Error fetching teams:', error);
+            }
+        }
+
+        fetchTeams();
+    }, [Matches]);
+
 
     return (
         <div>
