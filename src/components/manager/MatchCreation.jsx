@@ -25,7 +25,7 @@ function MatchCreation(props) {
         setNewMatch({ teamAway: selectedATeam, teamHome: selectedHTeam, stadiumId: selectedVenue, time: `${date}T${time}:00Z`, mainReferee: selectedMReferee, lineRefereeRight: selectedAReferee2, lineRefereeLeft: selectedAReferee1, isfull: false })
         console.log(newMatch)
         console.log(selectedHTeam)
-        fetch("http://localhost:3000/matches", {
+        const response = await fetch("http://localhost:3000/matches", {
             method: "post",
             mode: "cors",
             headers: {
@@ -33,14 +33,36 @@ function MatchCreation(props) {
             },
             body: JSON.stringify(newMatch),
         })
-            .then((res) => res.json())
-            .then((res) => console.log(res))
-            .catch((err) => err);
+        if (response.ok) {
+            alert("Match Created Successfully");
+        } else {
+            alert("Match Creation Failed");
+        }
+        // Handle the parsed JSON data
+        
+        // Perform additional actions with the data if neeed
     }
-    function postMatch(e) {
+
+    function postMatch(e)
+     {
         e.preventDefault();
+        let isTeamsValid=true;
+        let isRefValid=true;
+        if (selectedHTeam === selectedATeam) {
+            alert("Home team and Away team must be different");
+            isTeamsValid = false
+        }
+       if(selectedAReferee1===selectedAReferee2)
+       {
+              alert("Assistant Referees must be different");
+              isRefValid=false
+       }
+       if(isTeamsValid&&isRefValid)
+       {
         callPostMatch();
+       }
     }
+    
 
     async function callTeamAPI() {
         fetch("http://localhost:3000/teams", {
@@ -159,7 +181,7 @@ function MatchCreation(props) {
                         </div>
                         <div>
                             <label htmlFor="time">Time:</label>
-                            <input type='time' name='time' onChange={(e) => setTime( e.target.value)} />
+                            <input type='time' name='time' onChange={(e) => setTime(e.target.value)} />
                         </div>
                         <div>
                             <label htmlFor="mainref">Main Refree:</label>
@@ -217,7 +239,7 @@ function MatchCreation(props) {
                             </select>
                         </div>
 
-                        <button className='mainbutton'onClick={postMatch}>Create</button>
+                        <button className='mainbutton' onClick={postMatch}>Create</button>
 
 
                     </form>
