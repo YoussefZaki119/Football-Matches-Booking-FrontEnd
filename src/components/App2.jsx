@@ -13,7 +13,7 @@ import ManagerCard from "./manager/MangerCard.jsx";
 import ManagerViewStadium from "./manager/ManagerViewStadium.jsx";
 import Seatbooking from "./Reservation.jsx";
 import PaymentForm from "./PaymentForm.jsx"
-import ViewUsers from "./ViewUsers.jsx"
+import ViewUsers from "./Admin/ViewUsers.jsx"
 import ResponsiveAppBar from "./main/Header.jsx";
 import EditProfile from "./EditData.jsx";
 import GuestCard from "./Guest/GuestCard.jsx";
@@ -22,6 +22,7 @@ import GuestViewStadium from "./Guest/GuestViewStadium.jsx";
 import CheckSeats from "./manager/CheckSeats.jsx";
 import EditProfileManager from "./manager/EditData.jsx"
 import ViewRes from "./ViewReservation.jsx";
+import AuthUsers from "./Admin/AuthorizeUsers.jsx";
 import {
     createBrowserRouter,
     RouterProvider,
@@ -302,6 +303,12 @@ function App2() {
             element: <div>
                 <ViewUsers />
             </div>
+        },{
+            path: "authorizeusers",
+            element: <div>
+                <AuthUsers />
+            </div>
+        
         }, {
             path: "viewstadiums",
             element: <div>
@@ -342,13 +349,6 @@ function App2() {
                 <ManagerResponsiveAppBar />
                 <EditProfileManager />
             </div>
-
-        }, {
-            path: "admin",
-            element: <div>
-                <ViewUsers />
-                {/* <AuthUsers/> */}
-                </div>
 
         },
         {

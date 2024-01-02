@@ -15,7 +15,7 @@ function Main() {
     useEffect(() => {
         
         async function logMovies() {
-            const response = await fetch("http://localhost:3000/users?user=" + loginusername , {
+            const response = await fetch("http://localhost:3000/users?user=" + id , {
               method: "get",
               mode: "cors"
             });
