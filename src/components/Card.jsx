@@ -4,15 +4,17 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link, useNavigate } from "react-router-dom";
-import { mainusername } from "./main/Main";
+
+import { useParams } from "react-router-dom";
 let stadiumid=0;
-let matchusername=mainusername;
+
 function Card(props) {
  
+    const{id}=useParams();
     const navigate = useNavigate();
     function GoTo(){
         stadiumid=props.venue;
-       navigate(`/reservation/${props.Key}`);
+       navigate(`/reservation/${props.Key}/${id}`);
     }
   return (
     <div>
@@ -61,6 +63,5 @@ function Card(props) {
     </div>
   );
 }
-export {matchusername};
 export {stadiumid};
 export default Card;

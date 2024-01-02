@@ -7,13 +7,13 @@ import { matchid } from "./Reservation";
 import {loginusername} from "./Login";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { resusername } from "./Reservation";
+// import { resusername } from "./Reservation";
 
 let itWillbeReseved =[];
 let temp=[];
-const FormWrapper = ({ children }) => {
+const FormWrapper = ({ children,ID }) => {
     const navigate = useNavigate();
-    console.log("hfhygug",resusername);
+    //console.log("hfhygug",resusername);
    temp= iWillBook.map(member => member.id);
 
     const useHookForm = useForm({
@@ -41,7 +41,7 @@ const FormWrapper = ({ children }) => {
                         'Content-Type': 'application/json',
                     },
                     
-                    body: JSON.stringify({userId:resusername,matchId:matchid,seatId:reserve.id}),
+                    body: JSON.stringify({userId:ID,matchId:matchid,seatId:reserve.id}),
                 }).then(res => res.json())    
             );
             const stadium = await response.json();
@@ -57,7 +57,7 @@ const FormWrapper = ({ children }) => {
         console.log(iWillBook);
        postStadium();
         itWillbeReseved = iWillBook.map(member => member.id);
-        navigate("/reservation/"+matchid);
+        navigate("/reservation/"+matchid+"/"+ID);
 
         console.log("itWillbeReserved");
     };

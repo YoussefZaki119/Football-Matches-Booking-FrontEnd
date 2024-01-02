@@ -7,15 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import { stadiumid } from "./Card";
-import { matchusername } from "./Card";
 
 
 
-let resusername = matchusername;
+
 let iWillBook = [];//ROWS 3 SEAT 5
 let matchid = 0;
 const Seatbooking = () => {
-  const { id } = useParams();
+  const { id,username} = useParams();
   matchid = id;
   const [rows, setRows] = useState(3);
   const [columns, setColumns] = useState(12);
@@ -24,6 +23,8 @@ const Seatbooking = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate = useNavigate();
   const [temp, settemp] = useState([]);
+
+  const [isFull,setIsFull]=useState(false);
 
   useEffect(() => {
     async function fetchMatches() {
@@ -68,16 +69,26 @@ const Seatbooking = () => {
     const generatedSeats = [];
     for (let i = 1; i <= rows; i++) {
       for (let j = 1; j <= columns; j++) {
+        const seatId = `Row ${i} Seat ${j}`;
+        const isReserved = seatReserved.includes(seatId);
+        
         const seat = {
-          id: `Row ${i} Seat ${j}`,
-          reserved: false,
+          id: seatId,
+          reserved: isReserved,
           selected: false,
         };
+  
         generatedSeats.push(seat);
       }
     }
+    const count=seatReserved.length();
+    if(count==rows*columns)
+    {
+      setIsFull(true);
+      
+    }
     setSeats(generatedSeats);
-  }, [rows, columns]);
+  }, [rows, columns, seatReserved]);
 
   const onClickData = (index) => {
     setSeats((prevSeats) => {
@@ -102,7 +113,7 @@ const Seatbooking = () => {
 
   const onReserveClick = () => {
     // Your reservation logic goes here
-    navigate("../../payment");
+    navigate(`../../payment/${username}`);
   };
 
   const renderReservedSeats = () => {
@@ -146,7 +157,7 @@ const Seatbooking = () => {
     </div>
   );
 };
-export {resusername};
+
 export{matchid};
 export { iWillBook };
 export default Seatbooking;

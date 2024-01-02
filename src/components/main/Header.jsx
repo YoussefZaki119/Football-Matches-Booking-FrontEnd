@@ -14,19 +14,26 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { Link, useNavigate } from "react-router-dom";
+import { mainusername } from "./Main";
+
+let husername = "";
+//husername=mainusername;
 
 
-const pages = [{ name: "Matches", link: "matches" }
-    , { name: "Stadium", link: "viewstadiums" }
-    , { name: "About", link: "main" }];
 
-const settings = [
-    { name: "Profile", link: "editprofile" },
-    { name: "Reservation", link: "./home.html" },
-    { name: "Logout", link: "/" },
-];
+
+
 
 function ResponsiveAppBar() {
+    husername = mainusername;
+    const settings = [
+        { name: "Profile", link:` ../editprofile/${husername}` },
+        { name: "Reservation", link:    `../viewres/${husername}` },
+        { name: "Logout", link: "/" },
+    ];    
+    const pages = [{ name: "Matches", link: `../matches/${husername}` }
+    , { name: "Stadium", link: "viewstadiums" }
+    , { name: "About", link: "main" }];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
@@ -103,7 +110,7 @@ function ResponsiveAppBar() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography component="a" href={page.link} textAlign="center"> {page.name}</Typography>
+                                    <Typography component="a" textAlign="center" onClick={() => navigate(page.link)}> {page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -134,8 +141,9 @@ function ResponsiveAppBar() {
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                component="a" href={page.link}
+                                component="a" 
                                 sx={{ my: 2, color: "white", display: "block" }}
+                                onClick={() => navigate(page.link)}
                             >
                                 {page.name}
                             </Button>
@@ -166,7 +174,7 @@ function ResponsiveAppBar() {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography component="a" href={setting.link} textAlign="center"> {setting.name}</Typography>
+                                    <Typography component="button" textAlign="center" onClick={() => navigate(setting.link)}> {setting.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -176,4 +184,5 @@ function ResponsiveAppBar() {
         </AppBar>
     );
 }
+export { husername };
 export default ResponsiveAppBar;
