@@ -93,7 +93,7 @@ function App2() {
                         mode: "cors"
                     }).then(res => res.json())
                 );
-                
+
                 const teamsA = await Promise.all(fetchPromisesA);
                 const teamsH = await Promise.all(fetchPromisesH);
                 const stadiums = await Promise.all(fetchPromisesStadium);
@@ -138,7 +138,7 @@ function App2() {
         if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
             // console.log(`ssssss${Matches[0].id}`)
             return Matches.map((match, index) => (
-                
+
                 <ManagerCard
                     Key={match.id}
                     team1={TeamA[index]?.name || 'Team A Name'}
@@ -179,27 +179,7 @@ function App2() {
 
 
     }
-    function createGuestMatch() {
-        if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
-            return Matches.map((match, index) => (
-                <GuestCard
-                    Key={match.id}
-                    team1={TeamA[index]?.name || 'Team A Name'}
-                    team2={TeamH[index]?.name || 'Team H Name'}
-                    date={match.time.slice(0, 10)}
-                    time={match.time.slice(11, 16)}
-                    image_url1={TeamA[index]?.logo || 'Image URL for Team A'}
-                    image_url2={TeamH[index]?.logo || 'Image URL for Team H'}
-                    venue={Stadiums[index]?.name || 'Stadium Name'}
-                    mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
-                    linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
-                />
-            ));
-        } else {
-            return <p>Loading...</p>;
-        }
 
-    }
 
 
 
@@ -225,7 +205,7 @@ function App2() {
                 )}
             </div>,
         },
-        { 
+        {
             path: "main",
             element: <Main />
 
@@ -248,17 +228,17 @@ function App2() {
                 {/* <PaymentForm /> */}
             </div>
         },
-        {
+        // {
 
 
-            path: "manager",
-            element: <div>
-                <ManagerResponsiveAppBar />
-                {
-                    // createMatch(Matches, TeamA, TeamH)
-                }
-            </div>
-        },
+        //     path: "manager",
+        //     element: <div>
+        //         <ManagerResponsiveAppBar />
+        //         {
+        //             // createMatch(Matches, TeamA, TeamH)
+        //         }
+        //     </div>
+        // },
         {
 
             path: "addstadium",
@@ -271,9 +251,8 @@ function App2() {
             path: "managermatches",
             element: <div>
                 <ManagerResponsiveAppBar />
-
                 {
-                     createManagerMatch()
+                    createManagerMatch()
                 }
 
             </div>
@@ -281,7 +260,7 @@ function App2() {
         {
             path: `editmatch/:id`,
             element: <div>
-              <EditMatch />
+                <EditMatch />
             </div>
         },
         {
@@ -289,8 +268,6 @@ function App2() {
             element: <div>
                 <ManagerViewStadium />
 
-
-                {/* <ViewUsers /> */}
 
             </div>
 
@@ -314,7 +291,7 @@ function App2() {
                 <ViewUsers />
             </div>
         }, {
-            path: "viewstadiums",
+            path: "main/viewstadiums",
             element: <div>
                 <ViewStadiums />
             </div>
@@ -330,7 +307,6 @@ function App2() {
             path: "guest",
             element: <div>
                 <GuestResponsiveAppBar />
-
                 {
                     createGuestMatch()
                 }
@@ -356,27 +332,31 @@ function App2() {
 
         }, {
             path: "admin",
-            element: <div>
-                <ViewUsers />
-                {/* <AuthUsers/> */}
+            
+                element: (
+                    <div>
+                        <ViewUsers />
+                        {/* <AuthUsers/> */}
+                    </div>
+                ),
+            },
+            {
+                path: "viewres/:id",
+                element: (
+                    <div>
+                        <ViewRes />
+                    </div>
+                ),
+            }
 
-        },
-        {
-            path:"viewres/:id",
-            element:<div>
-                <ViewRes />
 
-            </div>
-        }
+                ]);
 
+                return (
+                <RouterProvider router={router} />
 
-    ]);
-
-    return (
-        <RouterProvider router={router} />
-
-    );
+                );
 
 }
 
-export default App2;
+                export default App2;

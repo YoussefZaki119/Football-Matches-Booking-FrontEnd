@@ -69,6 +69,7 @@ function ManagerViewStadiums() {
                                 </tr>
                             ))}
 
+                    
                         </tbody>
                     </table>
                 </div>

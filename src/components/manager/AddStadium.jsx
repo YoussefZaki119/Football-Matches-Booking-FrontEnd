@@ -8,7 +8,9 @@ function AddStadium(props) {
     const [newStadium, setNewStadium] = useState({
         name: '',
         city: '',
-        location: '',
+        googleMapLocation: '',
+        seatingRows: 0,
+        seatingColumns: 0,
     });
 
     const handleInputChange = (event) => {
@@ -27,6 +29,14 @@ function AddStadium(props) {
                 body: JSON.stringify(newStadium),
             });
             const stadium = await response.json();
+            if(response.ok)
+            {
+                alert("Stadium Added Successfully")
+            }
+            else
+            {
+                alert("Something went wrong")
+            }
             console.log('Stadium added:', stadium);
         } catch (error) {
             console.error('Error adding stadium:', error);
@@ -76,9 +86,29 @@ function AddStadium(props) {
                             <label htmlFor="stadiumlocation">Location:</label>
                             <input
                                 type="text"
-                                name="location"
+                                name="googleMapLocation"
                                 id="stadiumlocation"
-                                value={newStadium.location}
+                                value={newStadium.googleMapLocation}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="seatingRows">Seating Rows:</label>
+                            <input
+                                type="number"
+                                name="seatingRows"
+                                id="seatingRows"
+                                value={newStadium.seatingRows}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="seatingColumns">Seating Columns:</label>
+                            <input
+                                type="number"
+                                name="seatingColumns"
+                                id="seatingColumns"
+                                value={newStadium.seatingColumns}
                                 onChange={handleInputChange}
                             />
                         </div>

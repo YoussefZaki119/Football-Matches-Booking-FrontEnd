@@ -43,22 +43,43 @@ function EditMatch(props) {
         // Clean up the timeout to prevent memory leaks
         return () => clearTimeout(timeout);
     }, []); // Run this effect only once (on initial render)
-    function postEditedMatch() {
-        setMatchDetails({ id: match.id, teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull })
-        fetch(`http://localhost:3000/matches/${id}`, {
-            method: "PUT", // Change "patch" to "put"
+    async function postEditedMatch() {
+        // Set matchDetails initially with the match data
+        setMatchDetails({
+            id: match.id,
+            teamAway: match.teamAway,
+            teamHome: match.teamHome,
+            stadiumId: match.stadiumId,
+            time: match.time,
+            mainReferee: match.mainReferee,
+            lineRefereeRight: match.lineRefereeRight,
+            lineRefereeLeft: match.lineRefereeRight, // Check this assignment, it's currently setting lineRefereeLeft to lineRefereeRight
+            isFull: match.isFull
+        });
+    
+        // Make the API call
+        const response = await fetch(`http://localhost:3000/matches/${id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
             body: JSON.stringify(matchDetails)
-        })
-            .then((res) => res.json())
-            .then((res) => console.log(res))
-            .catch((err) => err);
-        console.log("details")
-        console.log(matchDetails)
+        });
+    
+        // Check if the response was successful
+        if (response.ok) {
+            // Handle success
+            alert("Match Edited Successfully");
+        } else {
+            // Handle failure
+            alert("Match Not Edited");
+        }
+    
+        // Log matchDetails regardless of success or failure
+        console.log("details", matchDetails);
     }
+    
     function callPostEditedMatch(e) {
         e.preventDefault();
         postEditedMatch();
