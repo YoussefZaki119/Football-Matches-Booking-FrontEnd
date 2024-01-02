@@ -155,6 +155,28 @@ function App2() {
         } else {
             return <p>Loading...</p>;
         }
+
+    }
+    function createGuestMatch() {
+        if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
+            return Matches.map((match, index) => (
+                <GuestCard
+                    Key={match.id}
+                    team1={TeamA[index]?.name || 'Team A Name'}
+                    team2={TeamH[index]?.name || 'Team H Name'}
+                    date={match.time.slice(0, 10)}
+                    time={match.time.slice(11, 16)}
+                    image_url1={TeamA[index]?.logo || 'Image URL for Team A'}
+                    image_url2={TeamH[index]?.logo || 'Image URL for Team H'}
+                    venue={Stadiums[index]?.name || 'Stadium Name'}
+                    mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
+                    linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
+                />
+            ));
+        } else {
+            return <p>Loading...</p>;
+        }
+
     }
     function createGuestMatch() {
         if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
@@ -176,6 +198,8 @@ function App2() {
             return <p>Loading...</p>;
         }
     }
+
+
 
 
 
@@ -205,7 +229,9 @@ function App2() {
 
         },
         {
+
             path: "matches/:id",
+
             element: <div className="matchesviewing">
                 <ResponsiveAppBar />
                 {
@@ -243,9 +269,11 @@ function App2() {
             path: "managermatches",
             element: <div>
                 <ManagerResponsiveAppBar />
+
                 {
                      createManagerMatch()
                 }
+
             </div>
         },
         {
@@ -296,9 +324,11 @@ function App2() {
             path: "guest",
             element: <div>
                 <GuestResponsiveAppBar />
+
                 {
                     createGuestMatch()
                 }
+
             </div>
         }, {
             path: "gueststadium",
