@@ -1,12 +1,24 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import ResponsiveAppBar from "./main/Header";
+import { itWillbeReseved } from "./FormWrapper";
 
 import Grid from "@material-ui/core/Grid";
 
-import Col from "react-bootstrap/Col";
-import post from "./post.json";
-import { loginusername } from "./Login";
+
+let iWillBook=[];
+
+
+
+console.log("dsjofjas");
+console.log(itWillbeReseved);
+
+function sajkjdfk(){
+  console.log("sajkjdfk");
+  console.log(iWillBook);
+  console.log("sajkjdfk");
+  console.log(itWillbeReseved);
+}
 
 class Seatbooking extends React.Component {
   constructor() {
@@ -15,11 +27,12 @@ class Seatbooking extends React.Component {
       rows: 3,
       columns: 12,
       seats: [],
-      seatReserved: [],
-      seatSelected: post,
+      seatReserved: itWillbeReseved,
+      selectedSeats: [], // New property to store selected seats
     };
   }
-
+  
+  
   componentDidMount() {
     this.generateSeats();
   }
@@ -38,36 +51,41 @@ class Seatbooking extends React.Component {
         seats.push(seat);
       }
     }
-
+    
     this.setState({ seats });
   }
 
-  onClickData(seat) {
-    this.setState({
-      seats: this.state.seats.map((s) =>
-        s.id === seat ? { ...s, selected: !s.selected, reserved: !s.reserved } : s
-      ),
+  onClickData(index) {
+    this.setState((prevState) => {
+      const updatedSeats = [...prevState.seats];
+      const currentSeat = updatedSeats[index];
+  
+      // Toggle only the selected state
+      currentSeat.selected = !currentSeat.selected;
+  
+      // Update selectedSeats array based on the selected state
+      const selectedSeats = currentSeat.selected
+        ? [...prevState.selectedSeats, currentSeat]
+        : prevState.selectedSeats.filter((seat) => seat.id !== currentSeat.id);
+        iWillBook=selectedSeats;
+      return { seats: updatedSeats, selectedSeats };
     });
   }
 
+
+
   onReserveClick() {
-    const { seats } = this.state;
-    const seatReserved = seats
-      .filter((seat) => seat.selected)
-      .map((seat) => seat.id);
+  //   const { seats } = this.state;
+  //   const seatReserved = seats
+  //     .filter((seat) => seat.selected)
+  //     .map((seat) => seat.id);
 
-    this.setState({
-      seats: this.state.seats.map((s) =>
-        seatReserved.includes(s.id) ? { ...s, reserved: true, selected: false } : s
-      ),
-      seatReserved: [...this.state.seatReserved, ...seatReserved],
-    });
-
-    // Use history.push to navigate to the new page with selected values as URL parameters
-    this.props.history.push({
-      pathname: "/payment",
-      search: `?selectedSeats=${encodeURIComponent(JSON.stringify(seatReserved))}`,
-    });
+  //   this.setState({
+  //     seats: this.state.seats.map((s) =>
+  //       seatReserved.includes(s.id) ? { ...s, reserved: true, selected: false } : s
+  //     ),
+  //     seatReserved: [...this.state.seatReserved, ...seatReserved],
+  //   });
   }
 
   renderReservedSeats() {
@@ -83,11 +101,14 @@ class Seatbooking extends React.Component {
       </div>
     );
   }
+ 
+
 
   render() {
-    const { seats } = this.state;
+    const { seats, seatReserved } = this.state;
     const columns = 12;
     const seatWidth = `${100 / columns}%`;
+    
 
     return (
       <div>
@@ -95,26 +116,29 @@ class Seatbooking extends React.Component {
         <div className="containerforseats">
           <h1>Seat Reservation System</h1>
           <Grid container spacing={0}>
-            {seats.map((seat) => (
-              <Grid item xs={12 / columns} style={{ width: seatWidth }} key={seat.id}>
+            {seats.map((seat, index) => (
+              <Grid item xs={12 / columns} style={{ width: seatWidth }} key={index}>
                 <button
-                  onClick={() => this.onClickData(seat.id)}
+                  onClick={() => this.onClickData(index)}
                   disabled={seat.reserved}
-                  className={seat.selected ? "selected" : seat.reserved ? "reserved" : ""}
+                  className={seat.selected ? "selected" : seatReserved.includes(seat.id) ? "reserved" : ""}
                 >
                   {seat.id}
                 </button>
               </Grid>
             ))}
           </Grid>
-          <button onClick={() => this.onReserveClick()}>
-            Reserve
-          </button>
+          <button onClick={() => this.onReserveClick()}><Link to="../payment">Reserve</Link></button>
+        </div>
+        <div>
+        <button onClick={sajkjdfk}>fdzknfjsn</button>
         </div>
       </div>
     );
   }
+  
 }
 
 // Use withRouter to inject history object into the component's props
+export {iWillBook};
 export default Seatbooking;
