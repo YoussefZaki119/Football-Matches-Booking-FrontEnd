@@ -5,16 +5,20 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link, useNavigate } from "react-router-dom";
 
+let matchDetails = {};
+let ID=0;
 function MangerCard(props) {
+
     const navigate = useNavigate();
     function GoTo()
     {
-        navigate("/editmatch");
+        navigate(`/EditMatch/${props.Key}`);
     }
     function GoToCheck()
     {
         navigate("/checkseats");
     }
+   
   return (
     <div className="cardbody">
       <div className="card">
@@ -44,7 +48,7 @@ function MangerCard(props) {
           </div>
           <div className="test">
           <button className="buybutton" type="button" onClick={GoTo}>
-            Edit
+           Edit
          </button>
          <button className="buybutton" type="button" onClick={GoToCheck}>
           Check Seats
@@ -59,7 +63,10 @@ function MangerCard(props) {
       </div>
     </div>
   );
+  
 }
-
+export {ID};
+export {matchDetails};
 
 export default MangerCard;
+

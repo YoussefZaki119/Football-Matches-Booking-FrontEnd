@@ -20,19 +20,20 @@ let husername = "";
 //husername=mainusername;
 
 
-const pages = [{ name: "Matches", link: "../matches" }
-    , { name: "Stadium", link: "viewstadiums" }
-    , { name: "About", link: "main" }];
-
 
 
 function ResponsiveAppBar() {
     husername = mainusername;
     const settings = [
-        { name: "Profile", link: `../editprofile/${husername}` },
-        { name: "Reservation", link: "./home.html" },
+
+        { name: "Profile", link:` ../editprofile/${husername}` },
+        { name: "Reservation", link:    `../viewres/${husername}` },
         { name: "Logout", link: "/" },
     ];    
+    const pages = [{ name: "Matches", link: `../matches/${husername}` }
+    , { name: "Stadium", link: "viewstadiums" }
+    , { name: "About", link: "main" }];
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
@@ -109,7 +110,7 @@ function ResponsiveAppBar() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography component="a" href={page.link} textAlign="center"> {page.name}</Typography>
+                                    <Typography component="a" textAlign="center" onClick={() => navigate(page.link)}> {page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -140,8 +141,9 @@ function ResponsiveAppBar() {
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                component="a" href={page.link}
+                                component="a" 
                                 sx={{ my: 2, color: "white", display: "block" }}
+                                onClick={() => navigate(page.link)}
                             >
                                 {page.name}
                             </Button>
