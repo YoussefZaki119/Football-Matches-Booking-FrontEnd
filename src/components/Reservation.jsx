@@ -1,41 +1,71 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ResponsiveAppBar from "./main/Header";
 import { itWillbeReseved } from "./FormWrapper";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
+import { stadiumid } from "./Card";
+import { matchusername } from "./Card";
 
 
-let iWillBook=[];
 
+let resusername = matchusername;
+let iWillBook = [];//ROWS 3 SEAT 5
+let matchid = 0;
+const Seatbooking = () => {
+  const { id } = useParams();
+  matchid = id;
+  const [rows, setRows] = useState(3);
+  const [columns, setColumns] = useState(12);
+  const [seats, setSeats] = useState([]);
+  const [seatReserved, setSeatReserved] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const navigate = useNavigate();
+  const [temp, settemp] = useState([]);
 
+  useEffect(() => {
+    async function fetchMatches() {
+      try {
+        const response = await fetch("http://localhost:3000/stadiums?stadium=" + stadiumid, {
+          method: "GET",
+          mode: "cors",
+        });
+        const specificuser = await response.json();
+        setRows(specificuser[0].seatingRows);
+        setColumns(specificuser[0].seatingColumns);
+      } catch (error) {
+        console.error("Error fetching matches:", error);
+      }
+    }
 
-console.log("dsjofjas");
-console.log(itWillbeReseved);
+    fetchMatches();
+  }, []);
+  useEffect(() => {
+    async function fetchMatches() {
+      try {
+        const response = await fetch("http://localhost:3000/reservations/match/" + id, {
+          method: "GET",
+          mode: "cors",
+        });
+        const specificuser = await response.json();
+        setSeatReserved(specificuser.map((seat) => seat.seatId));
+        console.log(specificuser);
+        
+      } catch (error) {
+        console.error("Error fetching matches:", error);
+      }
+    }
 
+    fetchMatches();
 
-class Seatbooking extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      rows: 3,
-      columns: 12,
-      seats: [],
-      seatReserved: itWillbeReseved,
-      selectedSeats: [], // New property to store selected seats
-    };
-  }
+  }, []);
+
   
-  
-  componentDidMount() {
-    this.generateSeats();
-  }
 
-  generateSeats() {
-    const { rows, columns } = this.state;
-    const seats = [];
-
+  useEffect(() => {
+    const generatedSeats = [];
     for (let i = 1; i <= rows; i++) {
       for (let j = 1; j <= columns; j++) {
         const seat = {
@@ -43,48 +73,39 @@ class Seatbooking extends React.Component {
           reserved: false,
           selected: false,
         };
-        seats.push(seat);
+        generatedSeats.push(seat);
       }
     }
-    
-    this.setState({ seats });
-  }
+    setSeats(generatedSeats);
+  }, [rows, columns]);
 
-  onClickData(index) {
-    this.setState((prevState) => {
-      const updatedSeats = [...prevState.seats];
+  const onClickData = (index) => {
+    setSeats((prevSeats) => {
+      const updatedSeats = [...prevSeats];
       const currentSeat = updatedSeats[index];
-  
+
       // Toggle only the selected state
       currentSeat.selected = !currentSeat.selected;
-  
+
       // Update selectedSeats array based on the selected state
-      const selectedSeats = currentSeat.selected
-        ? [...prevState.selectedSeats, currentSeat]
-        : prevState.selectedSeats.filter((seat) => seat.id !== currentSeat.id);
-        iWillBook=selectedSeats;
-      return { seats: updatedSeats, selectedSeats };
+      const updatedSelectedSeats = currentSeat.selected
+        ? [...selectedSeats, currentSeat]
+        : selectedSeats.filter((seat) => seat.id !== currentSeat.id);
+      iWillBook = updatedSelectedSeats;
+
+      // Update the state
+      setSelectedSeats(updatedSelectedSeats);
+
+      return updatedSeats;
     });
-  }
+  };
 
+  const onReserveClick = () => {
+    // Your reservation logic goes here
+    navigate("../../payment");
+  };
 
-
-  onReserveClick() {
-  //   const { seats } = this.state;
-  //   const seatReserved = seats
-  //     .filter((seat) => seat.selected)
-  //     .map((seat) => seat.id);
-
-  //   this.setState({
-  //     seats: this.state.seats.map((s) =>
-  //       seatReserved.includes(s.id) ? { ...s, reserved: true, selected: false } : s
-  //     ),
-  //     seatReserved: [...this.state.seatReserved, ...seatReserved],
-  //   });
-  }
-
-  renderReservedSeats() {
-    const { seatReserved } = this.state;
+  const renderReservedSeats = () => {
     return (
       <div>
         <h2>Reserved Seats:</h2>
@@ -95,43 +116,37 @@ class Seatbooking extends React.Component {
         </ul>
       </div>
     );
-  }
- 
+  };
 
 
-  render() {
-    const { seats, seatReserved } = this.state;
-    const columns = 12;
-    const seatWidth = `${100 / columns}%`;
-    
+  const seatWidth = `${100 / columns}%`;
 
-    return (
-      <div>
-        <ResponsiveAppBar />
-        <div className="containerforseats">
-          <h1>Seat Reservation System</h1>
-          <Grid container spacing={0}>
-            {seats.map((seat, index) => (
-              <Grid item xs={12 / columns} style={{ width: seatWidth }} key={index}>
-                <button
-                  onClick={() => this.onClickData(index)}
-                  disabled={seat.reserved}
-                  className={seat.selected ? "selected" : seatReserved.includes(seat.id) ? "reserved" : ""}
-                >
-                  {seat.id}
-                </button>
-              </Grid>
-            ))}
-          </Grid>
-          <button onClick={() => this.onReserveClick()}><Link to="../payment">Reserve</Link></button>
-        </div>
-        
+  return (
+    <div>
+      <ResponsiveAppBar />
+      <div className="containerforseats">
+        <h1>Seat Reservation System</h1>
+        <Grid container spacing={0}>
+          {seats.map((seat, index) => (
+            <Grid item xs={12 / columns} style={{ width: seatWidth }} key={index}>
+              <button
+                onClick={() => onClickData(index)}
+                disabled={seat.reserved}
+                className={seat.selected ? "selected" : seatReserved.includes(seat.id) ? "reserved" : ""}
+              >
+                {seat.id}
+              </button>
+            </Grid>
+          ))}
+        </Grid>
+        <button onClick={() => onReserveClick()}>
+          <Link to="../payment">Reserve</Link>
+        </button>
       </div>
-    );
-  }
-  
-}
-
-// Use withRouter to inject history object into the component's props
-export {iWillBook};
+    </div>
+  );
+};
+export {resusername};
+export{matchid};
+export { iWillBook };
 export default Seatbooking;

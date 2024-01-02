@@ -3,8 +3,10 @@ import Header from "./Header";
 import { Link, useNavigate } from "react-router-dom";
 import { loginusername } from "../Login";
 
+let mainusername = "";
 function Main() {
     const [uname, setunmae] = useState("");
+    mainusername = loginusername;
     useEffect(() => {
         
         async function logMovies() {
@@ -52,4 +54,5 @@ function Main() {
     );
 }
 
+export {mainusername};
 export default Main;
