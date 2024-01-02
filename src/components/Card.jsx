@@ -5,10 +5,16 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link, useNavigate } from "react-router-dom";
 
+import { useParams } from "react-router-dom";
+let stadiumid=0;
+
 function Card(props) {
+ 
+    const{id}=useParams();
     const navigate = useNavigate();
     function GoTo(){
-        navigate("/reservation");
+        stadiumid=props.venue;
+       navigate(`/reservation/${props.Key}/${id}`);
     }
   return (
     <div>
@@ -57,6 +63,5 @@ function Card(props) {
     </div>
   );
 }
-
-
+export {stadiumid};
 export default Card;
