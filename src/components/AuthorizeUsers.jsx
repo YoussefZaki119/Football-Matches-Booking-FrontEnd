@@ -3,24 +3,20 @@ import ResponsiveAppBar from "./main/Header";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-function ChangeUserRole(role, username, setUsers) {
-    const updatedUserFan = {
-        role: 'Fan',
-    };
+
+function updateUser(username, setUsers) {
+
     const updatedUserManager = {
-        role: 'Manager',
+        status: 'approved',
     };
 
     let confirmationMessage = '';
-    let updatedRole = '';
+    let updatedStatus = '';
 
-    if (role === 'Fan') {
-        confirmationMessage = 'Do you want to change User Role to Manager?';
-        updatedRole = 'Manager';
-    } else if (role === 'Manager') {
-        confirmationMessage = 'Do you want to change User Role to Fan?';
-        updatedRole = 'Fan';
-    }
+  
+        confirmationMessage = 'Do you want to approve this manager?';
+        updatedStatus = 'approved';
+
 
     const result = window.confirm(confirmationMessage);
 
@@ -30,11 +26,11 @@ function ChangeUserRole(role, username, setUsers) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(role === 'Fan' ? updatedUserManager : updatedUserFan),
+            body: JSON.stringify(updatedUserManager),
         })
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error(`Failed to update user role: ${response.statusText}`);
+                    throw new Error(`Failed to update manager status: ${response.statusText}`);
                 }
                 return response.json();
             })
@@ -42,42 +38,21 @@ function ChangeUserRole(role, username, setUsers) {
                 // Update the local state to reflect the change
                 setUsers((prevUsers) =>
                     prevUsers.map((user) =>
-                        user.userName === username ? { ...user, role: updatedRole } : user
+                        user.userName === username ? { ...user, status: updatedStatus } : user
                     )
                 );
-                console.log(`User role updated: ${JSON.stringify(updatedUser)}`);
+                console.log(`Manager status updated: ${JSON.stringify(updatedUser)}`);
             })
             .catch((error) => {
-                console.error('Error updating user role:', error);
+                console.error('Error updating manager status:', error);
             });
     }
 }
-
-
-
-function ViewUsers() {
-
+function AuthUsers() {
     const [users, setUsers] = useState([]);
 
-    async function deleteUser(deletedUsername) {
-        const response = await fetch(`http://localhost:3000/users/${deletedUsername}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.ok) {
-            alert('User deleted successfully');
-            // Refresh the user list after successful deletion
-            logUsers();
-        } else {
-            alert('Failed to delete user');
-        }
-    }
-
     async function logUsers() {
-        const response = await fetch("http://localhost:3000/users");
+        const response = await fetch("http://localhost:3000/users/pending");
         const usersData = await response.json();
         setUsers(usersData);
     }
@@ -85,7 +60,7 @@ function ViewUsers() {
     useEffect(() => {
         logUsers();
     }, []);
-    
+
     return (
         <div>
             <ResponsiveAppBar />
@@ -95,21 +70,17 @@ function ViewUsers() {
                         <tr>
                             <th>User Name</th>
                             <th className='cityandLocation'>Role</th>
-                            <th className='cityandLocation'>Edit</th>
+                            <th className='cityandLocation'>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {users.map((user) => (
                             <tr key={user.id}>
                                 <td>{user.userName}</td>
-
-                               
-                                <td className='cityandLocation roleanddelete' onClick={() => ChangeUserRole(user.role, user.userName, setUsers)}>
+                                <td className='cityandLocation'>
                                     {user.role}
                                 </td>
-
-                                <td className='cityandLocation roleanddelete'><DeleteIcon /></td>
-
+                                <td className='cityandLocation roleanddeleteicon'onClick={() => updateUser(user.userName,setUsers)}>{user.status}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -119,4 +90,4 @@ function ViewUsers() {
     );
 }
 
-export default ViewUsers;
+export default AuthUsers;
