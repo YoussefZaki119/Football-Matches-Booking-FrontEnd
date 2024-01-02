@@ -8,7 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 function Card(props) {
     const navigate = useNavigate();
     function GoTo(){
-        navigate("/reservation");
+
+       navigate(`/reservation/${props.Key}`);
     }
   return (
     <div>

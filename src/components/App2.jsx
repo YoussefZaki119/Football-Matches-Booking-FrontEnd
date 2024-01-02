@@ -34,7 +34,7 @@ function App2() {
     function createMatch(Matches) {
         return (
             <Card
-                key={Matches.id}
+                Key={Matches.id}
                 team1={Matches.team1}
                 team2={Matches.team2}
                 date={Matches.date}
@@ -52,7 +52,7 @@ function App2() {
     function createManagerMatch(Matches) {
         return (
             <ManagerCard
-                key={Matches.id}
+                Key={Matches.id}
                 team1={Matches.team1}
                 team2={Matches.team2}
                 date={Matches.date}
@@ -70,7 +70,7 @@ function App2() {
     function createGuestMatch(Matches){
         return (
             <GuestCard
-                key={Matches.id}
+                Key={Matches.id}
                 team1={Matches.team1}
                 team2={Matches.team2}
                 date={Matches.date}
@@ -164,7 +164,7 @@ function App2() {
 
         },
         {
-            path: "reservation",
+            path: `reservation/:id`,
             element: <div>
                 <Seatbooking />
             </div>

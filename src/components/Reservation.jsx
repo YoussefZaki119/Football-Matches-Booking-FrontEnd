@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ResponsiveAppBar from "./main/Header";
 import { itWillbeReseved } from "./FormWrapper";
+import { useParams } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -13,12 +14,6 @@ let iWillBook=[];
 console.log("dsjofjas");
 console.log(itWillbeReseved);
 
-function sajkjdfk(){
-  console.log("sajkjdfk");
-  console.log(iWillBook);
-  console.log("sajkjdfk");
-  console.log(itWillbeReseved);
-}
 
 class Seatbooking extends React.Component {
   constructor() {
@@ -130,9 +125,7 @@ class Seatbooking extends React.Component {
           </Grid>
           <button onClick={() => this.onReserveClick()}><Link to="../payment">Reserve</Link></button>
         </div>
-        <div>
-        <button onClick={sajkjdfk}>fdzknfjsn</button>
-        </div>
+        
       </div>
     );
   }
