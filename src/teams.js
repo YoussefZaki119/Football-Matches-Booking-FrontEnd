@@ -3,7 +3,7 @@ const Teams= [
     {
       "id": 1,
       "name": "Al Ahly SC",
-      "image_url": "https://example.com/al_ahly_logo.png"
+      "image_url": "https://i.imgur.com/N0XsVNk.png"
     },
     {
       "id": 2,
