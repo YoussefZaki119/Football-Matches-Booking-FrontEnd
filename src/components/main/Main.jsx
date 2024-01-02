@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginusername } from "../Login";
 
 function Main() {
-    const [user, setUser] = useState({id: '', userName: '', password: '', firstName: '', lastName: '', birthDate: '', gender: '', city: '', address: '', email: '', role: '' });
+    const [uname, setunmae] = useState("");
     useEffect(() => {
         
         async function logMovies() {
@@ -15,9 +15,9 @@ function Main() {
       
       
             const specificuser = await response.json();
-            console.log(specificuser);
-            setunmae(specificuser[0].firstName);
-          
+            // console.log(specificuser);
+            setunmae(specificuser[0].firstName)
+            console.log(uname);
            
       
             // if (specificuser.role === "Fan") {

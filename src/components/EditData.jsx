@@ -46,7 +46,7 @@ function EditData(props) {
                 <input name="password" placeholder="Password" required minLength="8" value={user.password}/>
                 <input type="text" name="fname" placeholder="First Name" required value={user.firstName}/>
                 <input type="text" name="lname" placeholder="Last Name" required value={user.lastName} />
-                <input type="date" title="pick your birthdate" name="birthdate" value="Birthdate" required value={user.birthDate} />
+                <input type="date" title="pick your birthdate" name="birthdate" value="Birthdate" required />
                 <select id="gender" name="gender" placeholder="Gender" required value={user.gender}>
                     <option hidden>Gender</option>
                     <option value="Male">Male</option>
