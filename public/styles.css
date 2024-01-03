@@ -17,11 +17,21 @@ body {
 
 .App{
   background-image: url("./image(1).png");
+ height: 100%;
+  width: 100%;
+  background-size: cover;
+
+}
+
+.App2{
+  background-image: url("./image(1).png");
  height: 100vh;
   width: 100%;
   background-size: cover;
 
 }
+
+
 
 .container {
   width: 600px;
@@ -291,6 +301,69 @@ hr{
   width:88px;
 }
 
+#DivRegcontainer {
+  display: flex;
+  justify-content: center;
+  align-content: space-evenly;
+  flex-wrap: nowrap;
+}
+
+.Regcontainer {
+  width: 70%;
+  padding: 15px;
+  margin-top: 3%;
+  /* margin-left: 36%; */
+  text-align: center;
+  background-color: rgba(252, 252, 252, 0.2);
+  border: 1px solid rgba(252, 252, 252, 0.4);
+  border-radius: 15px;
+
+}
+
+.Regcontainer select {
+  width: 45%;
+  display: inline;
+
+}
+
+.Regcontainer label {
+  font-weight: 700;
+  color:white;
+  font-size: large;
+  text-align: left;
+  width: 120px;
+  display: inline-block;
+}
+
+.Regcontainer h1 {
+  font-weight: bold;
+  color:white;
+  text-align: center;
+  height: fit-content;
+  font-size: 88px;
+}
+
+.Regcontainer input {
+  width: 45%;
+  display: inline;
+  margin-left: 6px;
+  text-align: center;
+}
+
+.Regcontainer div {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.Regcontainer button {
+  width: 30%;
+}
+
+.regsettings
+{
+  color:white;
+}
+
 
 @media only screen and (min-width: 1024px) {
 
@@ -431,7 +504,7 @@ hr{
 
   .secondarybutton:hover {
     /* color:black; */
-    color: #bade07;
+    color:  rgb(80,140,196);
     /* zakaria */
   }
 
@@ -566,11 +639,21 @@ header h1 {
 
 .rightmiddle {
 
-  display: flow;
+  display: flex;
   width: 30%;
+  justify-content: center;
   align-content: flex-start;
-  flex-wrap: wrap;
+  flex-wrap: wrap
 
+}
+
+.checkseats
+{
+  width:90%;
+  margin-top: 0;
+  height:35%;
+  font-size: medium;
+  padding: 2%;
 
 }
 
@@ -613,7 +696,7 @@ header h1 {
 }
 
 #time {
-  margin-right: 38.5%;
+  margin-right: 15%;
 }
 
 .refrees {
@@ -969,7 +1052,7 @@ header h1 {
   }
 
   #time {
-    margin-right: 50%;
+    margin-right: 14%;
   }
 
   .refrees {

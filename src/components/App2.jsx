@@ -209,11 +209,15 @@ function App2() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <div className="App">
+            element: <div>
                 {isRegistered ? (
+                    <div className="App2">
                     <Login onChecked={notRegistered} />
+                    </div>
                 ) : (
+                    <div className="App">
                     <Register onChecked={registered} />
+                    </div>
                 )}
             </div>,
         },

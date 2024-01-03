@@ -50,10 +50,10 @@ function MangerCard(props) {
             <h3><StadiumIcon />{props.venue}</h3>
           </div>
           <div className="test">
-          <button className="buybutton" type="button" onClick={GoTo}>
+          <button className="buybutton checkseats" type="button" onClick={GoTo}>
            Edit
          </button>
-         <button className="buybutton" type="button" onClick={GoToCheck}>
+         <button  className="buybutton checkseats" type="button" onClick={GoToCheck}>
           Check Seats
          </button>
           </div>
