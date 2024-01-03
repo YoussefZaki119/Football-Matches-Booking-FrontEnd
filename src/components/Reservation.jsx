@@ -63,6 +63,28 @@ const Seatbooking = () => {
 
   }, []);
 
+  const postisfull = async () => {
+    try {
+        const matchId = matchid;  // Use the correct variable holding the match ID
+        const response = await fetch(`http://localhost:3000/matches/${matchId}`, {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "isFull": true }),  // Use "is_full" instead of "isFull"
+        });
+
+        if (response.ok) {
+            console.log('Match updated successfully:', matchId);
+        } else {
+            console.error('Failed to update match:', matchId);
+        }
+    } catch (error) {
+        console.error('Error updating match:', error);
+    }
+};
+
   
 
   useEffect(() => {
@@ -81,12 +103,15 @@ const Seatbooking = () => {
         generatedSeats.push(seat);
       }
     }
-    //onst count=seatReserved.length();
-    // if(count==rows*columns)
-    // {
-    //   setIsFull(true);
+    const count=seatReserved.length;
+    console.log("ana count",count);
+    console.log("ana rows",rows);
+    console.log("ana columns",columns);
+    if(count>=rows*columns)
+    {
+      postisfull();
       
-    // }
+    }
     setSeats(generatedSeats);
   }, [rows, columns, seatReserved]);
 
@@ -113,7 +138,7 @@ const Seatbooking = () => {
 
   const onReserveClick = () => {
     // Your reservation logic goes here
-    navigate(`../../payment/${id}`);
+    navigate(`../payment/${id}`);
   };
 
   const renderReservedSeats = () => {

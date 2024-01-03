@@ -37,6 +37,7 @@ function App2() {
     const [HeadRef, setHeadRef] = useState([]);
     const [RightMan, setRightMan] = useState([]);
     const [LeftMan, setLeftMan] = useState([]);
+    const [isFull, setIsFull] = useState([]);
 
     useEffect(() => {
         async function fetchMatches() {
@@ -94,19 +95,26 @@ function App2() {
                         mode: "cors"
                     }).then(res => res.json())
                 );
-                
+                const fetchPromisesIsFull = Matches.map(match =>
+                    fetch(`http://localhost:3000/reservations/match/${match.isFull}`, {
+                        method: "GET",
+                        mode: "cors"
+                }).then(res => res.json())
+                );
                 const teamsA = await Promise.all(fetchPromisesA);
                 const teamsH = await Promise.all(fetchPromisesH);
                 const stadiums = await Promise.all(fetchPromisesStadium);
                 const headRef = await Promise.all(fetchPromisesHeadRef);
                 const rightMan = await Promise.all(fetchPromisesRightMan);
                 const leftMan = await Promise.all(fetchPromisesLeftMan);
+                const isFull = await Promise.all(fetchPromisesIsFull);
                 setTeamA(teamsA);
                 setTeamH(teamsH);
                 setStadiums(stadiums);
                 setHeadRef(headRef);
                 setRightMan(rightMan);
                 setLeftMan(leftMan);
+                setIsFull(isFull);
             } catch (error) {
                 console.error('Error fetching teams:', error);
             }
@@ -129,7 +137,8 @@ function App2() {
                     venue={Stadiums[index]?.name || 'Stadium Name'}
                     mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
                     linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
-                />
+                    isFull={match.isFull===true ? true:false}
+             />
             ));
         } else {
             return <p>Loading...</p>;
@@ -228,7 +237,10 @@ function App2() {
         },
         { 
             path: "main/:id",
-            element: <Main />
+            element: <div>
+                <ResponsiveAppBar/>
+                <Main />
+            </div>
 
         },
         {

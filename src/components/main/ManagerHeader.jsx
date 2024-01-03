@@ -144,7 +144,7 @@ function ManagerResponsiveAppBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="M" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Fpremium-vector%2Fsoccer-ball-icon-european-football-equipment-hexagon-soccerball-sports-circle-object-field-game-realistic-flat-vector-illustration-isolated-white-background_37190300.htm&psig=AOvVaw25v-wK_aDIpocf3jDO7mQN&ust=1704331260012000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIid1u6GwIMDFQAAAAAdAAAAABAD" />
                             </IconButton>
                         </Tooltip>
                         <Menu
