@@ -20,12 +20,12 @@ function Register(props) {
         role: "",
         status: ""
     });
-        
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         const formattedValue = name === 'birthDate' ? new Date(value).toISOString() : value;
         let updatedFormData = { ...formData, [name]: formattedValue };
-        
+
         if (name === 'role') {
             updatedFormData = {
                 ...updatedFormData,
@@ -33,11 +33,11 @@ function Register(props) {
                 status: value === 'Manager' ? 'pending' : 'approved'
             };
         }
-    
+
         setFormData(updatedFormData);
     };
-    
-    
+
+
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -54,18 +54,18 @@ function Register(props) {
             if (response.ok) {
                 alert("Registration successful :) ");
                 console.log("Registration successful :) ");
-                if(formData.role === "Manager"){
+                if (formData.role === "Manager") {
                     props.onChecked()
-                    
-                } 
-                else{
+
+                }
+                else {
                     navigate(`main/${formData.userName}`)
                 }
-                
+
             } else {
                 alert("Registration failed. Please try again :(");
-               
-            
+
+
             }
         } catch (error) {
             console.error("Error during registration:", error);
@@ -73,33 +73,64 @@ function Register(props) {
 
     };
     return (
-        <div className="containersbody">
-            <div className="regcontainer" style={{ marginRight: 600 }}>
-                <h1>Welcome</h1>
+        <div id='DivRegcontainer'>
+
+            <div className="Regcontainer">
+
+                <h1 className="regsettings">Welcome</h1>
                 <form onSubmit={handleRegister}>
-                    <input name="userName" placeholder="UserName" required onChange={handleInputChange} />
+                    <div>
+                        <label className="regsettings" htmlFor="userName">UserName:</label>
+                        <input name="userName" placeholder="UserName" required onChange={handleInputChange} />
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="password">Password:</label>
                     <input name="password" placeholder="Password" required minLength="8" onChange={handleInputChange} />
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="firstName">First Name:</label>
                     <input type="text" name="firstName" placeholder="First Name" required onChange={handleInputChange} />
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="lastName">Last Name:</label>
                     <input type="text" name="lastName" placeholder="Last Name" required onChange={handleInputChange} />
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="email">Email:</label>
                     <input type="email" name="email" placeholder="Email" required onChange={handleInputChange} />
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="birthDate">BirthDate:</label>
                     <input type="date" title="pick your birthdate" name="birthDate" required onChange={handleInputChange} />
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="gender">Gender:</label>
                     <select id="gender" name="gender" placeholder="Gender" required onChange={handleInputChange}>
                         <option hidden>Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                         <option value="others">Others</option>
                     </select>
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="role">Role:</label>
                     <select id="role" name="role" placeholder="role" required onChange={handleInputChange}>
                         <option hidden>role</option>
                         <option key="Fan" value="Fan">Fan</option>
                         <option key="Manager" value="Manager">Manager</option>
                     </select>
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="city">City:</label>
                     <select id="city" name="city" placeholder="city" required onChange={handleInputChange}>
                         <option hidden>City</option>
                         {Cities.map(city => <option key={city.id} value={city.id}>{city.name}</option>)}
                     </select>
+                    </div>
+                    <div>
+                    <label className="regsettings" htmlFor="address">Address:</label>
                     <input type="text" name="address" placeholder="Address (optional)" onChange={handleInputChange} />
-
+                    </div>
                     <button className="mainbutton" type="submit" >Register</button>
                     <br />
                     <a className="secondarybutton" id="login" onClick={props.onChecked}>Login</a>

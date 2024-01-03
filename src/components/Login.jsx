@@ -110,7 +110,7 @@ function Login(props) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    {warning && <p style={{ color: "red" }}>{warning}</p>}
+                  {warning && <p style={{ color: "white" }}>{warning}</p>}
                     <button className="mainbutton" type="button" onClick={CheckType}>
                         Login
                     </button>

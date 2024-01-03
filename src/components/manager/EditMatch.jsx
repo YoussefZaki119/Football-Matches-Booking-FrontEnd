@@ -9,7 +9,8 @@ import { matchDetails } from "./MangerCard.jsx";
 import { ID } from "./MangerCard.jsx";
 import { useParams } from "react-router-dom";
 
-
+let bd = "";
+let T = "";
 function EditMatch(props) {
     const { id } = useParams();
     console.log(id);
@@ -33,35 +34,71 @@ function EditMatch(props) {
     const [assistantReferee, setAssistantReferee] = useState([])
     const [matchDetails, setMatchDetails] = useState({ teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull });
     const [isRerenderNeeded, setIsRerenderNeeded] = useState(false);
+    const [datetime, setdatetime] = useState("");
+    const [date, setdate] = useState("");
+    const [time, settime] = useState("");
     console.log(`match lineRefereeLeft: ${match.lineRefereeLeft}`)
     useEffect(() => {
         // Set a timeout to trigger a re-render after a specific time (e.g., 5 seconds)
         const timeout = setTimeout(() => {
             setIsRerenderNeeded(true);
-        }, 250);
+        }, 300);
 
         // Clean up the timeout to prevent memory leaks
         return () => clearTimeout(timeout);
-    }, []); // Run this effect only once (on initial render)
+    }, [date, time]); // Run this effect only once (on initial render)
     function postEditedMatch() {
-        setMatchDetails({ id: match.id, teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull })
-        fetch(`http://localhost:3000/matches/${id}`, {
-            method: "PUT", // Change "patch" to "put"
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
-            body: JSON.stringify(matchDetails)
-        })
-            .then((res) => res.json())
-            .then((res) => console.log(res))
-            .catch((err) => err);
-        console.log("details")
-        console.log(matchDetails)
+        //setMatchDetails({ id: match.id, teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull })
+        const updatedmatch = {
+            teamAway: selectedATeamId,
+            teamHome: selectedHTeamId,
+            stadiumId: selectedVenueId,
+            time: datetime,
+            mainReferee: selectedMRefereeId,
+            lineRefereeRight: selectedAReferee1Id,
+            lineRefereeLeft: selectedAReferee2Id,
+        };
+
+        let confirmationMessage = 'Do you want to Save?';
+
+
+        const result = window.confirm(confirmationMessage);
+
+        if (result) {
+            fetch(`http://localhost:3000/matches/${id}`, {
+                method: "PUT", // Change "patch" to "put"
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify(updatedmatch)
+            })
+                .then((res) => res.json())
+                .then(() => {
+                    setuser((prevmatch) => ({ ...prevmatch, ...updatedmatch }));
+                    console.log("match data updated");
+                })
+                .catch((err) => err);
+            console.log("details")
+            console.log(matchDetails)
+        }
     }
     function callPostEditedMatch(e) {
         e.preventDefault();
-        postEditedMatch();
+        let isTeamsValid = true;
+        let isRefValid = true;
+        if (selectedHTeam === selectedATeam) {
+            alert("Home team and Away team must be different");
+            isTeamsValid = false
+        }
+        if (selectedAReferee1 === selectedAReferee2) {
+            alert("Assistant Referees must be different");
+            isRefValid = false
+        }
+        if (isTeamsValid && isRefValid) {
+            postEditedMatch();
+        }
+
 
     }
 
@@ -74,28 +111,24 @@ function EditMatch(props) {
             .then((res) => res.json())
             .then((data) => {
                 setMatch(data);
-                setMatchDetails({
-                    id: data.id,
-                    teamAway: data.teamAway,
-                    teamHome: data.teamHome,
-                    stadiumId: data.stadiumId,
-                    time: data.time,
-                    mainReferee: data.mainReferee,
-                    lineRefereeRight: data.lineRefereeRight,
-                    lineRefereeLeft: data.lineRefereeLeft,
-                    isFull: data.isFull,
-                    teamAwayLogo: data.teamAwayLogo,
-                    teamHomeLogo: data.teamHomeLogo,
-                });
-            })
-            .catch((err) => console.log(err));
+                setSelectedATeamId(match.teamAway);
+                setSelectedHTeamId(match.teamHome);
+                setSelectedVenueId(match.stadiumId);
+                setSelectedMRefereeId(match.mainReferee);
+                setSelectedAReferee1Id(match.lineRefereeRight);
+                setSelectedAReferee2Id(match.lineRefereeLeft);
+                setdatetime(data.time);
+                setdate(data.time.substring(0, 10));
+                settime(data.time.substring(11, 16));
 
+            })
         fetch(`http://localhost:3000/teams/${match.teamAway}`, {
             method: "get",
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => {setSelectedATeam(res.name)
+            .then((res) => {
+                setSelectedATeam(res.name)
                 setSelectedATeamId(res.id)
             })
             .catch((err) => err);
@@ -105,7 +138,8 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => {setSelectedHTeam(res.name)
+            .then((res) => {
+                setSelectedHTeam(res.name)
                 selectedHTeamId(res.id)
             })
             .catch((err) => err);
@@ -115,7 +149,8 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) =>{ setSelectedMReferee(res.name)
+            .then((res) => {
+                setSelectedMReferee(res.name)
                 selectedMRefereeId(res.id)
             })
             .catch((err) => err);
@@ -137,7 +172,8 @@ function EditMatch(props) {
             mode: "cors"
         })
             .then((res) => res.json())
-            .then((res) => {setSelectedAReferee2(res.name)
+            .then((res) => {
+                setSelectedAReferee2(res.name)
                 selectedAReferee2Id(res.id)
             })
             .catch((err) => err);
@@ -184,26 +220,45 @@ function EditMatch(props) {
             .then((res) => res.json())
             .then((res) => setAssistantReferee(res))
             .catch((err) => err);
-
+        console.log(`aaaaaa${matchDetails}`);
         // setMatchDetails({ teamAway: selectedATeamId, teamHome: selectedHTeamId, stadiumId: selectedVenueId, time: match.time, mainReferee: selectedMRefereeId, lineRefereeRight: selectedAReferee2Id, lineRefereeLeft: selectedAReferee1Id, isFull: match.isFull })
 
     }, [id, isRerenderNeeded]);
-    useEffect(() => {
-        setMatchDetails({
-            id: match.id,
-            teamAway: parseInt(selectedATeamId),
-            teamHome: parseInt(selectedHTeamId),
-            stadiumId: parseInt(selectedVenueId),
-            time: match.time,
-            mainReferee: parseInt(selectedMRefereeId),
-            lineRefereeRight: parseInt(selectedAReferee2Id),
-            lineRefereeLeft: parseInt(selectedAReferee1Id),
-            isFull: match.isFull,
-            teamAwayLogo: match.teamAwayLogo,
-            teamHomeLogo: match.teamHomeLogo,
-        });
-    }, [selectedATeamId, selectedHTeamId, selectedVenueId, selectedMRefereeId, selectedAReferee2Id, selectedAReferee1Id, match.time, match.isFull]);
 
+    // useEffect(() => {
+    //     T = datetime ? datetime.substring(11, 16) : '';
+    //     console.log(T);
+    //     settime(T);
+    //     setdatetime(`${date} ${time}`);
+    // }, [date,isRerenderNeeded]); // Run this effect only once (on initial render)
+
+    // useEffect(() => {
+    //     bd = datetime ? datetime.substring(0, 10) : '';
+    //     settime(bd);
+    //     setdatetime(`${date} ${time}`);
+    // }, [time,isRerenderNeeded]); // Run this effect only once (on initial render)
+
+    useEffect(() => {
+        setdatetime(`${date} ${time}`);
+    }, [date, time]);
+    // useEffect(() => {
+    //     setMatchDetails({
+    //         id: match.id,
+    //         teamAway: parseInt(selectedATeamId),
+    //         teamHome: parseInt(selectedHTeamId),
+    //         stadiumId: parseInt(selectedVenueId),
+    //         time: match.time,
+    //         mainReferee: parseInt(selectedMRefereeId),
+    //         lineRefereeRight: parseInt(selectedAReferee2Id),
+    //         lineRefereeLeft: parseInt(selectedAReferee1Id),
+    //         isFull: match.isFull,
+    //         teamAwayLogo: match.teamAwayLogo,
+    //         teamHomeLogo: match.teamHomeLogo,
+    //     });
+    // }, [selectedATeamId, selectedHTeamId, selectedVenueId, selectedMRefereeId, selectedAReferee2Id, selectedAReferee1Id, match.time, match.isFull]);
+    // console.log(selectedATeamId);
+    // console.log(selectedHTeamId)
+    // console.log(match)
     return (
         <div>
             {isRerenderNeeded && (
@@ -300,11 +355,17 @@ function EditMatch(props) {
                                 </div>
                                 <div>
                                     <label htmlFor="date">Date:</label>
-                                    <input type='date' name='date ' />
+                                    <input type='date' name='date ' value={date} onChange={(e) => {
+                                        setdate(e.target.value)
+                                        // setSelectedVenue(e.target.value)
+                                    }} />
                                 </div>
                                 <div>
                                     <label htmlFor="time">Time:</label>
-                                    <input type='time' name='time' />
+                                    <input type='time' name='time' value={time} onChange={(e) => {
+                                        settime(e.target.value)
+                                        // setSelectedVenue(e.target.value)
+                                    }} />
                                 </div>
                                 <div>
                                     <label htmlFor="mainref">Main Refree:</label>
