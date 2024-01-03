@@ -46,6 +46,7 @@ function EditMatch(props) {
 
         // Clean up the timeout to prevent memory leaks
         return () => clearTimeout(timeout);
+
     }, [date, time]); // Run this effect only once (on initial render)
     function postEditedMatch() {
         //setMatchDetails({ id: match.id, teamAway: match.teamAway, teamHome: match.teamHome, stadiumId: match.stadiumId, time: match.time, mainReferee: match.mainReferee, lineRefereeRight: match.lineRefereeRight, lineRefereeLeft: match.lineRefereeRight, isFull: match.isFull })
@@ -82,7 +83,9 @@ function EditMatch(props) {
             console.log("details")
             console.log(matchDetails)
         }
+
     }
+    
     function callPostEditedMatch(e) {
         e.preventDefault();
         let isTeamsValid = true;

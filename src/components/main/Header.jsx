@@ -14,32 +14,53 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { Link, useNavigate } from "react-router-dom";
-import { mainusername } from "./Main";
 import { useParams } from "react-router-dom";
+import './style.css';
 
-let husername = "";
+
+
 //husername=mainusername;
+const settings = [
 
+    { name: "Profile"},
+    { name: "Reservation" },
+    { name: "Logout" },
+];    
+const pages = [{ name: "Matches" }
+//, { name: "Stadium", link: `../viewstadiums/${id}` }
+, { name: "About"}];
 
 
 
 function ResponsiveAppBar() {
     const{id}=useParams();
-    husername = mainusername;
-    const settings = [
 
-        { name: "Profile", link:`../../editprofile/${id}` },
-        { name: "Reservation", link: `../viewres/${id}` },
-        { name: "Logout", link: "/" },
-    ];    
-    const pages = [{ name: "Matches", link: `../matches/${id}` }
-    //, { name: "Stadium", link: `../viewstadiums/${id}` }
-    , { name: "About", link: `../main/${id}` }];
+
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
 
+    const goto = (page) => () => {
+        if(page.name=="Matches"){
+            
+            navigate(`../matches/${id}`);
+        }
+        else{
+            navigate(`../main/${id}`);
+        }
+    };
+    const gotoset = (setting) => () => {
+        if (setting.name == "Logout") {
+            navigate(`/`);
+        }
+        else if(setting.name=="Reservation"){
+            navigate(`../viewres/${id}`);
+        }
+        else{
+            navigate(`../editprofile/${id}`);
+        }
+    };
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -112,7 +133,7 @@ function ResponsiveAppBar() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography component="a" textAlign="center" onClick={() => navigate(page.link)}> {page.name}</Typography>
+                                    <Typography component="a" textAlign="center" onClick={goto(page)}> {page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -145,7 +166,7 @@ function ResponsiveAppBar() {
                                 onClick={handleCloseNavMenu}
                                 component="a" 
                                 sx={{ my: 2, color: "white", display: "block" }}
-                                onClick={() => navigate(page.link)}
+                                onClick={goto(page)}
                             >
                                 {page.name}
                             </Button>
@@ -155,7 +176,7 @@ function ResponsiveAppBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={id} src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -176,7 +197,7 @@ function ResponsiveAppBar() {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography component="button" textAlign="center" onClick={() => navigate(setting.link)}> {setting.name}</Typography>
+                                    <Typography component="button" textAlign="center" onClick={gotoset(setting)}> {setting.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -186,5 +207,5 @@ function ResponsiveAppBar() {
         </AppBar>
     );
 }
-export { husername };
+
 export default ResponsiveAppBar;

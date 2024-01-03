@@ -37,6 +37,7 @@ function App2() {
     const [HeadRef, setHeadRef] = useState([]);
     const [RightMan, setRightMan] = useState([]);
     const [LeftMan, setLeftMan] = useState([]);
+    const [isFull, setIsFull] = useState([]);
 
     useEffect(() => {
         async function fetchMatches() {
@@ -94,19 +95,28 @@ function App2() {
                         mode: "cors"
                     }).then(res => res.json())
                 );
-                
+
+                const fetchPromisesIsFull = Matches.map(match =>
+                    fetch(`http://localhost:3000/reservations/match/${match.isFull}`, {
+                        method: "GET",
+                        mode: "cors"
+                }).then(res => res.json())
+                );
+              
                 const teamsA = await Promise.all(fetchPromisesA);
                 const teamsH = await Promise.all(fetchPromisesH);
                 const stadiums = await Promise.all(fetchPromisesStadium);
                 const headRef = await Promise.all(fetchPromisesHeadRef);
                 const rightMan = await Promise.all(fetchPromisesRightMan);
                 const leftMan = await Promise.all(fetchPromisesLeftMan);
+                const isFull = await Promise.all(fetchPromisesIsFull);
                 setTeamA(teamsA);
                 setTeamH(teamsH);
                 setStadiums(stadiums);
                 setHeadRef(headRef);
                 setRightMan(rightMan);
                 setLeftMan(leftMan);
+                setIsFull(isFull);
             } catch (error) {
                 console.error('Error fetching teams:', error);
             }
@@ -129,7 +139,8 @@ function App2() {
                     venue={Stadiums[index]?.name || 'Stadium Name'}
                     mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
                     linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
-                />
+                    isFull={match.isFull===true ? true:false}
+             />
             ));
         } else {
             return <p>Loading...</p>;
@@ -139,7 +150,7 @@ function App2() {
         if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
             // console.log(`ssssss${Matches[0].id}`)
             return Matches.map((match, index) => (
-                
+
                 <ManagerCard
                     Key={match.id}
                     team1={TeamA[index]?.name || 'Team A Name'}
@@ -180,27 +191,7 @@ function App2() {
 
 
     }
-    // function createGuestMatch() {
-    //     if (Matches.length > 0 && TeamA.length === Matches.length && TeamH.length === Matches.length) {
-    //         return Matches.map((match, index) => (
-    //             <GuestCard
-    //                 Key={match.id}
-    //                 team1={TeamA[index]?.name || 'Team A Name'}
-    //                 team2={TeamH[index]?.name || 'Team H Name'}
-    //                 date={match.time.slice(0, 10)}
-    //                 time={match.time.slice(11, 16)}
-    //                 image_url1={TeamA[index]?.logo || 'Image URL for Team A'}
-    //                 image_url2={TeamH[index]?.logo || 'Image URL for Team H'}
-    //                 venue={Stadiums[index]?.name || 'Stadium Name'}
-    //                 mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
-    //                 linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
-    //             />
-    //         ));
-    //     } else {
-    //         return <p>Loading...</p>;
-    //     }
 
-    // }
 
 
 
@@ -230,9 +221,14 @@ function App2() {
                 )}
             </div>,
         },
+
         { 
             path: "main/:id",
-            element: <Main />
+            element: <div>
+                <ResponsiveAppBar/>
+                <Main />
+            </div>
+
 
         },
         {
@@ -255,6 +251,7 @@ function App2() {
         },
         {
 
+
             path: "addstadium",
             element: <div>
                 <AddStadium />
@@ -265,9 +262,8 @@ function App2() {
             path: "managermatches",
             element: <div>
                 <ManagerResponsiveAppBar />
-
                 {
-                     createManagerMatch()
+                    createManagerMatch()
                 }
 
             </div>
@@ -275,7 +271,7 @@ function App2() {
         {
             path: `editmatch/:id`,
             element: <div>
-              <EditMatch />
+                <EditMatch />
             </div>
         },
         {
@@ -283,8 +279,6 @@ function App2() {
             element: <div>
                 <ManagerViewStadium />
 
-
-                {/* <ViewUsers /> */}
 
             </div>
 
@@ -314,7 +308,7 @@ function App2() {
             </div>
         
         }, {
-            path: "viewstadiums",
+            path: "main/viewstadiums",
             element: <div>
                 <ViewStadiums />
             </div>
@@ -330,7 +324,6 @@ function App2() {
             path: "guest",
             element: <div>
                 <GuestResponsiveAppBar />
-
                 {
                     createGuestMatch()
                 }
@@ -343,7 +336,7 @@ function App2() {
                 <GuestViewStadium />
             </div>
         }, {
-            path: "checkseats",
+            path: "checkseats/:id",
             element: <div>
                 <CheckSeats />
             </div>
@@ -354,6 +347,7 @@ function App2() {
                 <EditProfileManager />
             </div>
 
+
         },
         {
             path:"viewres/:id",
@@ -363,14 +357,13 @@ function App2() {
             </div>
         }
 
+                ]);
 
-    ]);
+                return (
+                <RouterProvider router={router} />
 
-    return (
-        <RouterProvider router={router} />
-
-    );
+                );
 
 }
 
-export default App2;
+                export default App2;

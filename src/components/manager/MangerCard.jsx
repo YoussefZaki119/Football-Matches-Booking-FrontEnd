@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 let matchDetails = {};
 let ID=0;
+let stadiumid="";
 function MangerCard(props) {
 
     const navigate = useNavigate();
@@ -16,8 +17,10 @@ function MangerCard(props) {
     }
     function GoToCheck()
     {
-        navigate("/checkseats");
+      stadiumid=props.venue;
+        navigate(`../checkseats/${props.Key}`);
     }
+   
    
   return (
     <div className="cardbody">
@@ -67,6 +70,6 @@ function MangerCard(props) {
 }
 export {ID};
 export {matchDetails};
-
+export {stadiumid};
 export default MangerCard;
 

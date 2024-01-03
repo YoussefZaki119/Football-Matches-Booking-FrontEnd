@@ -48,7 +48,7 @@ function Main() {
     }
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className="welcome">
                 <h1 className="welcometext">Welcome Back {uname}<br/>to the best booking site for<br/>Booking EFA matches</h1>
                 <button className="viewmatchbutton" type="button" onClick={CheckType}>
