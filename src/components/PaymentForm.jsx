@@ -6,12 +6,13 @@ import { iWillBook } from "./Reservation";
 import { useParams } from "react-router-dom";
 
 function PaymentForm() {
-    const {id}=useParams();
+    const {id,usename}=useParams();
     return (
         <div className="creditcardcontainer">
             <div className="creditcardform">
-                <FormWrapper ID={id} >
+                <FormWrapper ID={id} USERNAME={usename} >
                     <CreditCardForm />
+                    <h1>Your Total {iWillBook.length*100} EGP</h1>
                 </FormWrapper>
             </div>
         </div>

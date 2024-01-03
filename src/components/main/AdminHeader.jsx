@@ -14,53 +14,19 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import { Link, useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import './style.css';
+
+
+const pages = [{ name: "Users", link: "viewusers" }
+    , { name: "Authorization", link: "authorizeusers" }
+    ,{ name: "Logout", link: "/" }];
 
 
 
-//husername=mainusername;
-const settings = [
-
-    { name: "Profile"},
-    { name: "Reservation" },
-    { name: "Logout" },
-];    
-const pages = [{ name: "Matches" }
-//, { name: "Stadium", link: `../viewstadiums/${id}` }
-, { name: "About"}];
-
-
-
-function ResponsiveAppBar() {
-    const{id}=useParams();
-
-
-
+function AdminResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
 
-    const goto = (page) => () => {
-        if(page.name=="Matches"){
-            
-            navigate(`../matches/${id}`);
-        }
-        else{
-            navigate(`../main/${id}`);
-        }
-    };
-    const gotoset = (setting) => () => {
-        if (setting.name == "Logout") {
-            navigate(`/`);
-        }
-        else if(setting.name=="Reservation"){
-            navigate(`../viewres/${id}`);
-        }
-        else{
-            navigate(`../editprofile/${id}`);
-        }
-    };
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -133,7 +99,7 @@ function ResponsiveAppBar() {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography component="a" textAlign="center" onClick={goto(page)}> {page.name}</Typography>
+                                    <Typography component="a" href={page.link} textAlign="center"> {page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -164,48 +130,18 @@ function ResponsiveAppBar() {
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
-                                component="a" 
+                                component="a" href={page.link}
                                 sx={{ my: 2, color: "white", display: "block" }}
-                                onClick={goto(page)}
                             >
                                 {page.name}
                             </Button>
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={id} src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right"
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right"
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography component="button" textAlign="center" onClick={gotoset(setting)}> {setting.name}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
+                   
                 </Toolbar>
             </Container>
         </AppBar>
     );
 }
-
-export default ResponsiveAppBar;
+export default AdminResponsiveAppBar;

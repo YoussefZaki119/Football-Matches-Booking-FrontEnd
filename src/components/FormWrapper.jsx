@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 let itWillbeReseved =[];
 let temp=[];
-const FormWrapper = ({ children,ID }) => {
+const FormWrapper = ({ children,ID,USERNAME }) => {
     const navigate = useNavigate();
     //console.log("hfhygug",resusername);
    temp= iWillBook.map(member => member.id);
@@ -57,7 +57,7 @@ const FormWrapper = ({ children,ID }) => {
         console.log(iWillBook);
        postStadium();
         itWillbeReseved = iWillBook.map(member => member.id);
-        navigate("/reservation/"+matchid+"/"+ID);
+        navigate("/reservation/"+ID+"/"+matchid);
 
         console.log("itWillbeReserved");
     };

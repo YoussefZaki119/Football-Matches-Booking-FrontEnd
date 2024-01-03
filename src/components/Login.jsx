@@ -53,9 +53,14 @@ function Login(props) {
         if (isMounted.current) {
         if (user.role === "Fan") {
           loginusername = user.userName;
-          navigate(`main`);
+          navigate(`main/${user.userName}`);
           } else if (user.role === "Manager") {
+            if(user.status === "pending"){
+              alert("Your request is still pending");
+            }
+            else{
             navigate("manager");
+            }
           }}else
           {
             isMounted.current = true;
@@ -81,7 +86,7 @@ function Login(props) {
         if (username === "M" && password === "M") {
            
             // Use navigate to navigate to the manager path
-            navigate("admin");
+            navigate("authorizeusers");
         }
     }
 

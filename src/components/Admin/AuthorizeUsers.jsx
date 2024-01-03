@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ResponsiveAppBar from "./main/Header";
+import AdminResponsiveAppBar from "../main/AdminHeader";
+
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
@@ -63,7 +64,7 @@ function AuthUsers() {
 
     return (
         <div>
-            <ResponsiveAppBar />
+            <AdminResponsiveAppBar />
             <div className='stadiumtable'>
                 <table>
                     <thead>
