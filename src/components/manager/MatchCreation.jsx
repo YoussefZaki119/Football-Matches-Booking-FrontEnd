@@ -22,7 +22,16 @@ function MatchCreation(props) {
     const [selectedVenue, setSelectedVenue] = useState(0);
     const [newMatch, setNewMatch] = useState({ teamAway: "", teamHome: "", stadiumId: "", time: "", mainReferee: "", lineRefereeRight: "", lineRefereeLeft: "", isFull: false })
     async function callPostMatch() {
-        setNewMatch({ teamAway: selectedATeam, teamHome: selectedHTeam, stadiumId: selectedVenue, time: `${date}T${time}:00Z`, mainReferee: selectedMReferee, lineRefereeRight: selectedAReferee2, lineRefereeLeft: selectedAReferee1, isfull: false })
+        setNewMatch({ teamAway: selectedATeam, teamHome: selectedHTeam, stadiumId: selectedVenue, time:`${date}T${time}:00Z`, mainReferee: selectedMReferee, lineRefereeRight: selectedAReferee2, lineRefereeLeft: selectedAReferee1, isfull: false })
+        const updatedmatch = {
+            teamAway: selectedATeam,
+            teamHome: selectedHTeam,
+            stadiumId: selectedVenue,
+            time:`${date} ${time}`,
+            mainReferee: selectedMReferee,
+            lineRefereeRight: selectedAReferee1,
+            lineRefereeLeft: selectedAReferee2,
+        };
         console.log(newMatch)
         console.log(selectedHTeam)
         const response = await fetch("http://localhost:3000/matches", {
@@ -31,7 +40,7 @@ function MatchCreation(props) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(newMatch),
+            body: JSON.stringify(updatedmatch),
         })
         if (response.ok) {
             alert("Match Created Successfully");
@@ -45,6 +54,8 @@ function MatchCreation(props) {
 
     function postMatch(e)
      {
+        setNewMatch({ teamAway: selectedATeam, teamHome: selectedHTeam, stadiumId: selectedVenue, time: `${date}T${time}:00Z`, mainReferee: selectedMReferee, lineRefereeRight: selectedAReferee2, lineRefereeLeft: selectedAReferee1, isfull: false })
+
         e.preventDefault();
         let isTeamsValid=true;
         let isRefValid=true;
@@ -128,7 +139,7 @@ function MatchCreation(props) {
                                 value={selectedHTeam}
                                 onChange={(e) => setSelectedHTeam(e.target.value)}
                             >
-                                <option value="" disabled>
+                                <option value="" >
                                     Select a Team
                                 </option>
                                 {Teams.map((team) => (
@@ -146,7 +157,7 @@ function MatchCreation(props) {
                                 value={selectedATeam}
                                 onChange={(e) => setSelectedATeam(e.target.value)}
                             >
-                                <option value="" disabled>
+                                <option value="" >
                                     Select a Team
                                 </option>
                                 {Teams.map((team) => (
@@ -165,7 +176,7 @@ function MatchCreation(props) {
                                 value={selectedVenue}
                                 onChange={(e) => setSelectedVenue(e.target.value)}
                             >
-                                <option value="" disabled>
+                                <option value="" >
                                     Select a Venue
                                 </option>
                                 {Venues.map((venue) => (
@@ -191,7 +202,7 @@ function MatchCreation(props) {
                                 value={selectedMReferee}
                                 onChange={(e) => setSelectedMReferee(e.target.value)}
                             >
-                                <option value="" disabled>
+                                <option value="" >
                                     Select a Refree
                                 </option>
                                 {mainReferee.map((mReferee) => (
@@ -210,7 +221,7 @@ function MatchCreation(props) {
                                 value={selectedAReferee1}
                                 onChange={(e) => setSelectedAReferee1(e.target.value)}
                             >
-                                <option value="" disabled>
+                                <option value="" >
                                     Select a Left Line Man
                                 </option>
                                 {assistantReferee.map((aReferee) => (
@@ -228,7 +239,7 @@ function MatchCreation(props) {
                                 value={selectedAReferee2}
                                 onChange={(e) => setSelectedAReferee2(e.target.value)}
                             >
-                                <option value="" disabled>
+                                <option value="" >
                                     Select a Right Line Man
                                 </option>
                                 {assistantReferee.map((aReferee) => (

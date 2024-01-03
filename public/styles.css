@@ -364,6 +364,11 @@ hr{
   color:white;
 }
 
+#guestbb
+{
+  width:100%;
+}
+
 
 @media only screen and (min-width: 1024px) {
 
@@ -589,7 +594,7 @@ header h1 {
   border-radius: 5px;
   height: 48px;
   width: 100%;
-  background-color: #30b7f1;
+  background-color: rgb(80,140,196);
   position: absolute;
   top: 0;
   left: 0;
@@ -645,6 +650,21 @@ header h1 {
   align-content: flex-start;
   flex-wrap: wrap
 
+}
+
+.rightmiddle2 {
+
+  display: flex;
+  width: 30%;
+  justify-content: center;
+  align-content:flex-start;
+  flex-wrap: wrap
+
+}
+
+#bb
+{
+  width:100%;
 }
 
 .checkseats
@@ -932,7 +952,7 @@ header h1 {
     border-radius: 5px;
     height: 48px;
     width: 100%;
-    background-color: #30b7f1;
+    background-color: rgb(80,140,196);
     position: absolute;
     top: 0;
     left: 0;

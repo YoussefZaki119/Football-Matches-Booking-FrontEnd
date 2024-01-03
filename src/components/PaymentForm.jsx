@@ -2,7 +2,7 @@ import React from "react";
 import FormWrapper from "./FormWrapper";
 import CreditCardForm from "./CreditCardForm";
 import { loginusername } from "./Login";
-import { iWillBook } from "./Reservation";
+import { iWillBook1 } from "./Reservation";
 import { useParams } from "react-router-dom";
 
 function PaymentForm() {
@@ -12,7 +12,7 @@ function PaymentForm() {
             <div className="creditcardform">
                 <FormWrapper ID={id} USERNAME={usename} >
                     <CreditCardForm />
-                    <h1>Your Total {iWillBook.length*100} EGP</h1>
+                    <h1>Your Total {iWillBook1.length*100} EGP</h1>
                 </FormWrapper>
             </div>
         </div>

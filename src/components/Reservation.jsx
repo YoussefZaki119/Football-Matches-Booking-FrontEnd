@@ -12,6 +12,7 @@ import { stadiumid } from "./Card";
 
 
 let iWillBook = [];//ROWS 3 SEAT 5
+let iWillBook1 = [];//ROWS 3 SEAT 5
 let matchid = 0;
 const Seatbooking = () => {
   const { id,username} = useParams();
@@ -91,7 +92,7 @@ const Seatbooking = () => {
     const generatedSeats = [];
     for (let i = 1; i <= rows; i++) {
       for (let j = 1; j <= columns; j++) {
-        const seatId = `Row ${i} Seat ${j}`;
+        const seatId =`Row ${i} Seat ${j}`;
         const isReserved = seatReserved.includes(seatId);
         
         const seat = {
@@ -128,6 +129,7 @@ const Seatbooking = () => {
         ? [...selectedSeats, currentSeat]
         : selectedSeats.filter((seat) => seat.id !== currentSeat.id);
       iWillBook = updatedSelectedSeats;
+      iWillBook1 = updatedSelectedSeats;
 
       // Update the state
       setSelectedSeats(updatedSelectedSeats);
@@ -185,4 +187,5 @@ const Seatbooking = () => {
 
 export{matchid};
 export { iWillBook };
+export { iWillBook1 };
 export default Seatbooking;

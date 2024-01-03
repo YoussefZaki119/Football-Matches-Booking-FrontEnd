@@ -31,36 +31,40 @@ const FormWrapper = ({ children,ID,USERNAME }) => {
 
   
 
-    const postStadium = async () => {
-        try {
-            const fetchPromisesHeadRef = iWillBook.map(reserve =>
-                fetch(`http://localhost:3000/reservations`, {
-                    method: "POST",
-                    mode: "cors",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    
-                    body: JSON.stringify({userId:ID,matchId:matchid,seatId:reserve.id}),
-                }).then(res => res.json())    
-            );
+ const postStadium = async () => {
+    try {
+        for (const reserve of iWillBook) {
+            const response = await fetch(`http://localhost:3000/reservations`, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: ID, matchId: matchid, seatId: reserve.id }),
+            });
             const stadium = await response.json();
             console.log('Stadium added:', stadium);
-        } catch (error) {
-            console.error('Error adding stadium:', error);
         }
-      
-     };
+        navigate(`/reservation/${ID}/${matchid}`);
+    } catch (error) {
+        console.error('Error adding stadium:', error);
+    }
+};
 
-    const goTo = () => {
-        console.log("iWillBook");
-        console.log(iWillBook);
-       postStadium();
-        itWillbeReseved = iWillBook.map(member => member.id);
-        navigate("/reservation/"+ID+"/"+matchid);
 
-        console.log("itWillbeReserved");
-    };
+const goTo = async () => {
+    console.log("iWillBook");
+    console.log(iWillBook);
+    
+    await postStadium();
+    
+    itWillbeReseved = iWillBook.map(member => member.id);
+    navigate(`/reservation/${ID}/${matchid}`);
+    
+    console.log("itWillbeReserved");
+};
+
+
     return (
         <FormContext {...useHookForm}>
             <form noValidate onSubmit={useHookForm.handleSubmit(onFormSubmit)}>

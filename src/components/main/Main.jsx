@@ -22,10 +22,10 @@ function Main() {
       
       
             const specificuser = await response.json();
-            setunmae(specificuser.firstName)
+            setunmae(specificuser[0].firstName)
             console.log("loginusername");
             console.log(loginusername);
-            console.log(mainusername);
+            console.log(uname);
       
             // if (specificuser.role === "Fan") {
             //   navigate("main");

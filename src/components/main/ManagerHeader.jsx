@@ -18,7 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const pages = [{ name: "Matches", link: "../managermatches" }
     , { name: "Stadium", link: "../managerstadium" }
-    , { name: "About", link: "manager" }];
+    , { name: "Create Match", link: "manager" }];
 
 const settings = [
     // { name: "Profile", link: "editprofilemanager" },

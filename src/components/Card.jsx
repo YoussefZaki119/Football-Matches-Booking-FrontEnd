@@ -42,14 +42,14 @@ function Card(props) {
               <div id="date"> <CalendarMonthIcon /> {props.date} </div>
               <div id="time"><AccessAlarmIcon />{props.time}</div>
             </div>
-            <div className="rightmiddle">
+            <div className="rightmiddle2">
 
               <div className="test">
                 <h3><StadiumIcon />{props.venue}</h3>
               </div>
               <div className="test">
                 {!props.isFull ? (
-                  <button className="buybutton" type="button" onClick={GoTo}>
+                  <button id="bb" className="buybutton" type="button" onClick={GoTo}>
                     Buy Ticket
                   </button>
                 ) : (

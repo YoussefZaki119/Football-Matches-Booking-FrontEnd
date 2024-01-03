@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const pages = [{ name: "Matches", link: "matches" }
-    , { name: "Stadium", link: "viewstadiums" }
+    // , { name: "Stadium", link: "viewstadiums" }
     ,{ name: "Login", link: "/" }];
 
 

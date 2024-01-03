@@ -39,7 +39,7 @@ function GuestCard(props) {
             <h3><StadiumIcon />{props.venue}</h3>
           </div>
           <div className="test">
-          <button className="buybutton" type="button" onClick={GoTo}>
+          <button id="guestbb" className="buybutton" type="button" onClick={GoTo}>
             Login to Buy Ticket
          </button>
           </div>
