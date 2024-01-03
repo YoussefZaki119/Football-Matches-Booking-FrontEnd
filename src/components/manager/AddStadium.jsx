@@ -63,6 +63,7 @@ function AddStadium(props) {
                                 id="stadiumname"
                                 value={newStadium.name}
                                 onChange={handleInputChange}
+                                required
                             />
                         </div>
                         <div>
@@ -90,6 +91,7 @@ function AddStadium(props) {
                                 id="stadiumlocation"
                                 value={newStadium.googleMapLocation}
                                 onChange={handleInputChange}
+                                required
                             />
                         </div>
                         <div>
@@ -100,6 +102,7 @@ function AddStadium(props) {
                                 id="seatingRows"
                                 value={newStadium.seatingRows}
                                 onChange={handleInputChange}
+                                required
                             />
                         </div>
                         <div>
@@ -110,6 +113,7 @@ function AddStadium(props) {
                                 id="seatingColumns"
                                 value={newStadium.seatingColumns}
                                 onChange={handleInputChange}
+                                required
                             />
                         </div>
                         <Button variant="contained" type="submit">
