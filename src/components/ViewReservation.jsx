@@ -56,6 +56,36 @@ function ViewRes() {
         fetchMatches();
     }, []);
 
+
+    const postisfull = async (matchId) => {
+        try {
+            const response = await fetch(`http://localhost:3000/matches/${matchId}`, {
+                method: "PUT",
+                mode: "cors",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ "isFull": false }),
+            });
+    
+            if (response.ok) {
+                console.log(`Match ${matchId} updated successfully`);
+            } else {
+                console.error(`Failed to update match ${matchId}`);
+            }
+        } catch (error) {
+            console.error('Error updating match:', error);
+        }
+    };
+    
+    
+    
+
+    function ondelete(reservationid,matchid) {
+        postisfull(matchid);
+        deleteUser(reservationid);
+    }
+
     useEffect(() => {
         async function fetchMatches() {
             try {
@@ -140,7 +170,7 @@ function ViewRes() {
                                     
                                     <td>{stadium.name}</td>
                                     <td className='cityandLocation'>{reservation.seatId}</td>
-                                    <td className='cityandLocation roleanddeleteicon' onClick={() => deleteUser(reservation.id)}><DeleteIcon /></td>
+                                    <td className='cityandLocation roleanddeleteicon' onClick={() => ondelete(reservation.id,reservation.matchId)}><DeleteIcon /></td>
                                 </tr>
                             );
                         })}
