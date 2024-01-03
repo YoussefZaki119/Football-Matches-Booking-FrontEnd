@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import ResponsiveAppBar from "./main/Header";
+import ResponsiveAppBar from "../main/Header";
 import DeleteIcon from '@mui/icons-material/Delete';
+import AdminResponsiveAppBar from "../main/AdminHeader";
 
 // function ChangeUserRole(role) {
 //     if (role === "Fan") {
@@ -31,7 +32,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 //         alert('Failed to delete user');
 //     }
 // }
-
 
 function ViewUsers() {
     const [users, setUsers] = useState([]);
@@ -65,7 +65,7 @@ function ViewUsers() {
     
     return (
         <div>
-            <ResponsiveAppBar />
+            <AdminResponsiveAppBar />
             <div className='stadiumtable'>
                 <table>
                     <thead>
@@ -93,3 +93,6 @@ function ViewUsers() {
 }
 
 export default ViewUsers;
+
+
+//export default ViewUsers;

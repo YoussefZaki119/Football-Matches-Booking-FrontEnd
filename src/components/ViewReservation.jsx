@@ -17,6 +17,10 @@ import { useParams } from 'react-router-dom';
 function ViewRes() {
     const { id } = useParams();
     const [reservations, setReservations] = useState([]);
+    const [Matches, setMatches] = useState([]);
+    const [TeamA, setTeamA] = useState([]);
+    const [TeamH, setTeamH] = useState([]);
+    const [Stadiums, setStadiums] = useState([]);
 
     const fetchMatches = async () => {
         try {
@@ -40,17 +44,74 @@ function ViewRes() {
         });
 
         if (response.ok) {
-            alert('User deleted successfully');
+            alert('Ticket Refunded successfully');
             // Refresh the user list after successful deletion
             fetchMatches();
         } else {
-            alert('Failed to delete user');
+            alert('Failed to refunded ticket');
         }
     };
 
     useEffect(() => {
         fetchMatches();
     }, []);
+
+    useEffect(() => {
+        async function fetchMatches() {
+            try {
+                const response = reservations.map(reserve=> fetch("http://localhost:3000/matches?match="+reserve.matchId, {
+                    method: "GET",
+                    mode: "cors"
+                }).then(res => res.json())
+                );
+                const data = await Promise.all(response);
+                setMatches(data);
+            } catch (error) {
+                console.error('Error fetching matches:', error);
+            }
+        }
+
+        fetchMatches();
+    }, [reservations]);
+
+
+    useEffect(() => {
+        async function fetchTeams() {
+            try {
+                const fetchPromisesA = Matches.map(match =>
+                    fetch(`http://localhost:3000/teams/${match.teamAway}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesH = Matches.map(match =>
+                    fetch(`http://localhost:3000/teams/${match.teamHome}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                const fetchPromisesStadium = Matches.map(match =>
+                    fetch(`http://localhost:3000/stadiums/${match.stadiumId}`, {
+                        method: "GET",
+                        mode: "cors"
+                    }).then(res => res.json())
+                );
+                
+                
+                const teamsA = await Promise.all(fetchPromisesA);
+                const teamsH = await Promise.all(fetchPromisesH);
+                const stadiums = await Promise.all(fetchPromisesStadium);
+                setTeamA(teamsA);
+                setTeamH(teamsH);
+                setStadiums(stadiums);            
+            } catch (error) {
+                console.error('Error fetching teams:', error);
+            }
+        }
+
+        fetchTeams();
+    }, [Matches]);
+
 
     return (
         <div>
@@ -59,19 +120,30 @@ function ViewRes() {
                 <table>
                     <thead>
                         <tr>
-                            <th>Stadium Name</th>
-                            <th className='cityandLocation'>City</th>
-                            <th className='cityandLocation'>Location</th>
+                            <th>Match</th>
+                            <th>Stadium</th>
+                            <th className='cityandLocation'>Seat</th>
+                            <th className='cityandLocation'>Refund</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {reservations.map((reservation, index) => (
-                            <tr key={index}>
-                                <td>{reservation.seatId}</td>
-                                <td className='cityandLocation'>{reservation.matchId}</td>
-                                <td className='cityandLocation roleanddeleteicon' onClick={() => deleteUser(reservation.id)}><DeleteIcon /></td>
-                            </tr>
-                        ))}
+                        {reservations.map((reservation, index) => {
+                            const matchIndex = index < Matches.length ? index : 0; // Ensure match data exists
+                            const teamA = TeamA[matchIndex] || {};
+                            const teamH = TeamH[matchIndex] || {};
+                            const stadium = Stadiums[matchIndex] || {};
+
+                            return (
+                                <tr key={index}>
+
+                                    <td>{teamA.name} vs {teamH.name}</td>
+                                    
+                                    <td>{stadium.name}</td>
+                                    <td className='cityandLocation'>{reservation.seatId}</td>
+                                    <td className='cityandLocation roleanddeleteicon' onClick={() => deleteUser(reservation.id)}><DeleteIcon /></td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>

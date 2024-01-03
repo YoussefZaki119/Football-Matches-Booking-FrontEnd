@@ -6,6 +6,7 @@ import Cities from "../cities"
 import { Link, useNavigate } from "react-router-dom";
 
 function Register(props) {
+    const navigate = useNavigate();
     const [formData, setFormData] = React.useState({
         userName: "",
         password: "",
@@ -29,7 +30,7 @@ function Register(props) {
             updatedFormData = {
                 ...updatedFormData,
                 role: value,
-                status: value === 'Manager' ? 'pending' : 'accepted'
+                status: value === 'Manager' ? 'pending' : 'approved'
             };
         }
     
@@ -53,6 +54,14 @@ function Register(props) {
             if (response.ok) {
                 alert("Registration successful :) ");
                 console.log("Registration successful :) ");
+                if(formData.role === "Manager"){
+                    props.onChecked()
+                    
+                } 
+                else{
+                    navigate(`main/${formData.userName}`)
+                }
+                
             } else {
                 alert("Registration failed. Please try again :(");
                
@@ -61,6 +70,7 @@ function Register(props) {
         } catch (error) {
             console.error("Error during registration:", error);
         }
+
     };
     return (
         <div className="containersbody">
@@ -90,7 +100,7 @@ function Register(props) {
                     </select>
                     <input type="text" name="address" placeholder="Address (optional)" onChange={handleInputChange} />
 
-                    <button className="mainbutton" type="submit">Register</button>
+                    <button className="mainbutton" type="submit" >Register</button>
                     <br />
                     <a className="secondarybutton" id="login" onClick={props.onChecked}>Login</a>
                     <a className="secondarybutton"><Link to="main">Continue as a Guest</Link></a>

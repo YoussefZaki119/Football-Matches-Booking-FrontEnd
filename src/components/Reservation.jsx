@@ -15,7 +15,7 @@ let iWillBook = [];//ROWS 3 SEAT 5
 let matchid = 0;
 const Seatbooking = () => {
   const { id,username} = useParams();
-  matchid = id;
+  matchid = username;
   const [rows, setRows] = useState(3);
   const [columns, setColumns] = useState(12);
   const [seats, setSeats] = useState([]);
@@ -46,7 +46,7 @@ const Seatbooking = () => {
   useEffect(() => {
     async function fetchMatches() {
       try {
-        const response = await fetch("http://localhost:3000/reservations/match/" + id, {
+        const response = await fetch("http://localhost:3000/reservations/match/" + username, {
           method: "GET",
           mode: "cors",
         });
@@ -62,6 +62,28 @@ const Seatbooking = () => {
     fetchMatches();
 
   }, []);
+
+  const postisfull = async () => {
+    try {
+        const matchId = matchid;  // Use the correct variable holding the match ID
+        const response = await fetch(`http://localhost:3000/matches/${matchId}`, {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "isFull": true }),  // Use "is_full" instead of "isFull"
+        });
+
+        if (response.ok) {
+            console.log('Match updated successfully:', matchId);
+        } else {
+            console.error('Failed to update match:', matchId);
+        }
+    } catch (error) {
+        console.error('Error updating match:', error);
+    }
+};
 
   
 
@@ -81,10 +103,13 @@ const Seatbooking = () => {
         generatedSeats.push(seat);
       }
     }
-    const count=seatReserved.length();
-    if(count==rows*columns)
+    const count=seatReserved.length;
+    console.log("ana count",count);
+    console.log("ana rows",rows);
+    console.log("ana columns",columns);
+    if(count>=rows*columns)
     {
-      setIsFull(true);
+      postisfull();
       
     }
     setSeats(generatedSeats);
@@ -113,7 +138,7 @@ const Seatbooking = () => {
 
   const onReserveClick = () => {
     // Your reservation logic goes here
-    navigate(`../../payment/${username}`);
+    navigate(`../payment/${id}`);
   };
 
   const renderReservedSeats = () => {

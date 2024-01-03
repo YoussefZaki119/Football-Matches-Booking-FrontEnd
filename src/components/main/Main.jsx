@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { Link, useNavigate } from "react-router-dom";
 import { loginusername } from "../Login";
+import { useParams } from "react-router-dom";
 
 let mainusername = "";
 let mainusername1 = "";
 function Main() {
+    const { id } = useParams();
     const [uname, setunmae] = useState("");
     mainusername = loginusername;
     mainusername1 = loginusername;
@@ -13,7 +15,7 @@ function Main() {
     useEffect(() => {
         
         async function logMovies() {
-            const response = await fetch("http://localhost:3000/users?user=" + loginusername , {
+            const response = await fetch("http://localhost:3000/users?user=" + id , {
               method: "get",
               mode: "cors"
             });
@@ -41,12 +43,12 @@ function Main() {
     function CheckType() {
             // Use navigate to navigate to the manager path
             
-            navigate("/matches");
+            navigate("../matches/"+id);
         
     }
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className="welcome">
                 <h1 className="welcometext">Welcome Back {uname}<br/>to the best booking site for<br/>Booking EFA matches</h1>
                 <button className="viewmatchbutton" type="button" onClick={CheckType}>

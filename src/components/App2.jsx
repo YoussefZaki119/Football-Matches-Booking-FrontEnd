@@ -13,7 +13,7 @@ import ManagerCard from "./manager/MangerCard.jsx";
 import ManagerViewStadium from "./manager/ManagerViewStadium.jsx";
 import Seatbooking from "./Reservation.jsx";
 import PaymentForm from "./PaymentForm.jsx"
-import ViewUsers from "./ViewUsers.jsx"
+import ViewUsers from "./Admin/ViewUsers.jsx"
 import ResponsiveAppBar from "./main/Header.jsx";
 import EditProfile from "./EditData.jsx";
 import GuestCard from "./Guest/GuestCard.jsx";
@@ -22,6 +22,7 @@ import GuestViewStadium from "./Guest/GuestViewStadium.jsx";
 import CheckSeats from "./manager/CheckSeats.jsx";
 import EditProfileManager from "./manager/EditData.jsx"
 import ViewRes from "./ViewReservation.jsx";
+import AuthUsers from "./Admin/AuthorizeUsers.jsx";
 import {
     createBrowserRouter,
     RouterProvider,
@@ -36,6 +37,7 @@ function App2() {
     const [HeadRef, setHeadRef] = useState([]);
     const [RightMan, setRightMan] = useState([]);
     const [LeftMan, setLeftMan] = useState([]);
+    const [isFull, setIsFull] = useState([]);
 
     useEffect(() => {
         async function fetchMatches() {
@@ -94,18 +96,27 @@ function App2() {
                     }).then(res => res.json())
                 );
 
+                const fetchPromisesIsFull = Matches.map(match =>
+                    fetch(`http://localhost:3000/reservations/match/${match.isFull}`, {
+                        method: "GET",
+                        mode: "cors"
+                }).then(res => res.json())
+                );
+              
                 const teamsA = await Promise.all(fetchPromisesA);
                 const teamsH = await Promise.all(fetchPromisesH);
                 const stadiums = await Promise.all(fetchPromisesStadium);
                 const headRef = await Promise.all(fetchPromisesHeadRef);
                 const rightMan = await Promise.all(fetchPromisesRightMan);
                 const leftMan = await Promise.all(fetchPromisesLeftMan);
+                const isFull = await Promise.all(fetchPromisesIsFull);
                 setTeamA(teamsA);
                 setTeamH(teamsH);
                 setStadiums(stadiums);
                 setHeadRef(headRef);
                 setRightMan(rightMan);
                 setLeftMan(leftMan);
+                setIsFull(isFull);
             } catch (error) {
                 console.error('Error fetching teams:', error);
             }
@@ -128,7 +139,8 @@ function App2() {
                     venue={Stadiums[index]?.name || 'Stadium Name'}
                     mainRefree={HeadRef[index]?.name || 'Head Referee Name'}
                     linesmen={`${LeftMan[index]?.name || 'Left Linesman Name'} & ${RightMan[index]?.name || 'Right Linesman Name'}`}
-                />
+                    isFull={match.isFull===true ? true:false}
+             />
             ));
         } else {
             return <p>Loading...</p>;
@@ -205,9 +217,14 @@ function App2() {
                 )}
             </div>,
         },
-        {
-            path: "main",
-            element: <Main />
+
+        { 
+            path: "main/:id",
+            element: <div>
+                <ResponsiveAppBar/>
+                <Main />
+            </div>
+
 
         },
         {
@@ -228,18 +245,8 @@ function App2() {
                 {/* <PaymentForm /> */}
             </div>
         },
-        // {
-
-
-        //     path: "manager",
-        //     element: <div>
-        //         <ManagerResponsiveAppBar />
-        //         {
-        //             // createMatch(Matches, TeamA, TeamH)
-        //         }
-        //     </div>
-        // },
         {
+
 
             path: "addstadium",
             element: <div>
@@ -290,6 +297,12 @@ function App2() {
             element: <div>
                 <ViewUsers />
             </div>
+        },{
+            path: "authorizeusers",
+            element: <div>
+                <AuthUsers />
+            </div>
+        
         }, {
             path: "main/viewstadiums",
             element: <div>
@@ -297,10 +310,10 @@ function App2() {
             </div>
         }, {
 
-            path: "editprofile/:username",
+            path: "editprofile/:id",
 
             element: <div>
-                <ResponsiveAppBar />
+                
                 <EditProfile />
             </div>
         }, {
@@ -319,7 +332,7 @@ function App2() {
                 <GuestViewStadium />
             </div>
         }, {
-            path: "checkseats",
+            path: "checkseats/:id",
             element: <div>
                 <CheckSeats />
             </div>
@@ -330,25 +343,15 @@ function App2() {
                 <EditProfileManager />
             </div>
 
-        }, {
-            path: "admin",
-            
-                element: (
-                    <div>
-                        <ViewUsers />
-                        {/* <AuthUsers/> */}
-                    </div>
-                ),
-            },
-            {
-                path: "viewres/:id",
-                element: (
-                    <div>
-                        <ViewRes />
-                    </div>
-                ),
-            }
 
+        },
+        {
+            path:"viewres/:id",
+            element:<div>
+                <ViewRes />
+
+            </div>
+        }
 
                 ]);
 
